@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    /** text **/
+    <dimen name="_text_big">28sp</dimen>
+    <dimen name="_text_medium_relativePlus">19sp</dimen>
+    <dimen name="_text_medium">18sp</dimen>
+    <dimen name="_text_smale">14sp</dimen>
+    <dimen name="_text_smale_smale">11sp</dimen>
+    <dimen name="_text_very_smale">6sp</dimen>
+
+    /** border **/
+    <dimen name="_big_stroke">2.5dp</dimen>
+    <dimen name="_medium_stroke">2dp</dimen>
+    <dimen name="_smale_stroke">1dp</dimen>
+
+    /** Modeles des boites **/
+    <dimen name="_main_padding_horizontal">37dp</dimen>
+    <dimen name="_home_padding_horizontal">14dp</dimen>
+    <dimen name="_home_margin_vertical">6dp</dimen>
+</resources>
