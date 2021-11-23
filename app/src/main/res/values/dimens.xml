@@ -18,4 +18,14 @@
     <dimen name="_main_padding_horizontal">37dp</dimen>
     <dimen name="_home_padding_horizontal">14dp</dimen>
     <dimen name="_home_margin_vertical">6dp</dimen>
+    <dimen name="_new_corner_width">50dp</dimen>
+    <dimen name="_new_corner_height">25dp</dimen>
+
+    /** radius **/
+    <dimen name="_survey_corner_rounded">10dp</dimen>
+    <dimen name="_new_corner_rounded">15dp</dimen>
+
+    /** padding **/
+    <dimen name="_survey_corner_padding">28dp</dimen>
+
 </resources>
