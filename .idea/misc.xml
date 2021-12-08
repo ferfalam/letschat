@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Amir SOULEY/AndroidStudioProjects/letschat/app/src/main/res/drawable-anydpi/ic_dots-vertical-rounded.xml" value="0.290625" />
+        <entry key="..\:/Users/Amir SOULEY/AndroidStudioProjects/letschat/app/src/main/res/drawable/a.xml" value="0.2723076923076923" />
+        <entry key="..\:/Users/Amir SOULEY/AndroidStudioProjects/letschat/app/src/main/res/drawable/border.xml" value="0.2723076923076923" />
+        <entry key="..\:/Users/Amir SOULEY/AndroidStudioProjects/letschat/app/src/main/res/drawable/bottom_sheet_shape.xml" value="0.28615384615384615" />
+        <entry key="..\:/Users/Amir SOULEY/AndroidStudioProjects/letschat/app/src/main/res/layout/activity_inscription.xml" value="0.264" />
+        <entry key="..\:/Users/Amir SOULEY/AndroidStudioProjects/letschat/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/Amir SOULEY/AndroidStudioProjects/letschat/app/src/main/res/layout/insccription.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/Amir SOULEY/AndroidStudioProjects/letschat/app/src/main/res/layout/inscri.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/Amir SOULEY/AndroidStudioProjects/letschat/app/src/main/res/layout/inscription.xml" value="0.27447916666666666" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

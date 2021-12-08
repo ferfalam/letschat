@@ -10,10 +10,13 @@
     <color name="_text_color_tertiaire">#636363</color>
     <color name="_text_hint_Field_color">#636363</color>
 
+
     <color name="_floatActionButton">#33AFF4</color>
     <color name="_floatActionButton_icon">#DBDBDB</color>
 
-    <color name="_field_color">#33AFF4</color>
+
+
+    <color name="_field_color">#EFF9FF</color>
     
     <color name="_icon_primary_color">#DBDBDB</color>
     <color name="_icon_secondary_color">#505050</color>
