@@ -22,7 +22,7 @@
         <EditText
             android:layout_width="300dp"
             android:layout_height="45dp"
-            android:text="+229     __ __ __ __   __ __ __    "
+            android:text="+229     __ __ __ __ __ __    "
             android:textSize="18dp"
             android:background="@drawable/a"
             android:paddingLeft="@dimen/_text_smale_smale"
