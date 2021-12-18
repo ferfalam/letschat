@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_anchor="@+id/linearLayout"
+        app:layout_anchorGravity="center">
+
+        <TextView
+            android:layout_width="215dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="37dp"
+            android:layout_marginTop="320dp"
+            android:layout_marginRight="83dp"
+            android:layout_marginBottom="28dp"
+            android:text="Entrez votre numéro de téléphone" />
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="@dimen/_main_padding_horizontal"
+            android:layout_marginRight="@dimen/_main_padding_horizontal"
+            android:layout_marginBottom="@dimen/_text_big"
+            android:background="@drawable/a"
+            android:paddingLeft="@dimen/_text_smale_smale"
+            android:paddingTop="@dimen/_text_smale_smale"
+            android:paddingRight="100dp"
+            android:text="+229     __ __ __ __ __ __    "
+            android:textSize="18dp" />
+
+        <Button
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="112dp"
+            android:layout_marginRight="112dp"
+            android:backgroundTint="@color/_primary"
+            android:text="Envoyez le code"
+            android:textColor="@color/white"
+
+            />
+
+        <TextView
+            android:layout_width="221dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="100dp"
+            android:text=" S'inscrire sur Let'schat voudra dire que vous avez lu et accepté les politiques de confidentialité "
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textColor="@color/_primary"
+            android:textSize="@dimen/_text_smale_smale" />
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
