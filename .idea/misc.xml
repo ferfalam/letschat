@@ -20,9 +20,13 @@
         <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/drawable/ic_launcher_background.xml" value="0.24114583333333334" />
         <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/drawable/rounded.xml" value="0.1" />
         <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/layout/actionview_view.xml" value="0.21666666666666667" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/layout/activity_discussion.xml" value="0.1046875" />
         <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/layout/activity_discussion2.xml" value="0.1" />
         <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/layout/content_discussion.xml" value="0.1046875" />
         <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/layout/fragment_discussions.xml" value="0.1" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/layout/fragment_first.xml" value="0.1046875" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/layout/fragment_second.xml" value="0.1046875" />
         <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/layout/fragment_sondages.xml" value="0.22083333333333333" />
         <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/layout/regular_discussion_items.xml" value="0.176" />
         <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/layout/regular_survey_items.xml" value="0.40827338129496404" />
