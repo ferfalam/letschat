@@ -6,11 +6,12 @@
     tools:context=".MediaFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <GridLayout
+    <GridView
+        android:id="@+id/media_grid"
+        android:numColumns="3"
         android:layout_margin="@dimen/_text_medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-    </GridLayout>
+    </GridView>
 
 </FrameLayout>

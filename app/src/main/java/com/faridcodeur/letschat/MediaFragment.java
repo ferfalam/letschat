@@ -1,58 +1,49 @@
 package com.faridcodeur.letschat;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.GridView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MediaFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.faridcodeur.letschat.databinding.FragmentMediaBinding;
+
 public class MediaFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-
-    public MediaFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MediaFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MediaFragment newInstance(String param1, String param2) {
-        MediaFragment fragment = new MediaFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    int[] images = {R.drawable.deku,R.drawable.deku,R.drawable.deku,R.drawable.ic_image,R.drawable.deku,R.drawable.ic_block,R.drawable.deku,R.drawable.deku,R.drawable.deku,R.drawable.deku,R.drawable.deku,R.drawable.deku,R.drawable.deku,R.drawable.deku,R.drawable.deku,R.drawable.deku};
+    FragmentMediaBinding fragmentMediaBinding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        fragmentMediaBinding = FragmentMediaBinding.inflate(inflater, container, false);
+        GridViewCustomAdapter gridViewCustomAdapter = new GridViewCustomAdapter(getActivity().getApplicationContext(), images);
+        fragmentMediaBinding.mediaGrid.setAdapter(gridViewCustomAdapter);
+        fragmentMediaBinding.mediaGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent =  new Intent(getActivity().getApplicationContext(), MediaViewActivity.class);
+                intent.putExtra("extra", images[position]);
+                startActivity(intent);
+            }
+        });
+        return fragmentMediaBinding.getRoot();
+    }
 
-        return inflater.inflate(R.layout.fragment_media, container, false);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
     }
 }
