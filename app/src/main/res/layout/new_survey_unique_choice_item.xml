@@ -19,13 +19,14 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Question"
+        app:hintEnabled="false"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/input_shape"
+            android:hint="Question"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -99,7 +100,7 @@
             android:singleLine="true"
             android:layout_weight="1"
             android:ellipsize="end"
-            android:hint="Reponse"
+            app:hintEnabled="false"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -107,6 +108,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_shape"
+                android:hint="Reponse"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
