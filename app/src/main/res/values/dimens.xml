@@ -6,7 +6,7 @@
     <dimen name="_text_medium_relativePlus">19sp</dimen>
     <dimen name="_text_medium">18sp</dimen>
     <dimen name="_text_smale">14sp</dimen>
-    <dimen name="_text_smale_smale">11sp</dimen>
+    <dimen name="_text_smale_smale">13sp</dimen>
     <dimen name="_text_very_smale">6sp</dimen>
 
     /** border **/
