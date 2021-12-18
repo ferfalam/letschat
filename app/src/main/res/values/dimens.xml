@@ -26,6 +26,6 @@
     <dimen name="_new_corner_rounded">15dp</dimen>
 
     /** padding **/
-    <dimen name="_survey_corner_padding">28dp</dimen>
+    <dimen name="_survey_corner_padding">18dp</dimen>
 
 </resources>
