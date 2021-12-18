@@ -7,12 +7,14 @@
     tools:context=".NewSurveyFragment">
 
     <ScrollView
+        android:id="@+id/survey_content_layout_scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="60dp"
         >
 
         <LinearLayout
+            android:id="@+id/survey_content_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -32,12 +34,13 @@
                 android:id="@+id/outlinedTextField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Titre"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/input_shape"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -55,12 +58,13 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Description"
+                app:hintAnimationEnabled="false"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/input_shape"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -72,10 +76,6 @@
                 android:layout_marginTop="@dimen/_text_smale"
                 android:backgroundTint="@color/_primary"
                 android:background="?android:attr/listDivider" />
-
-            <include layout="@layout/new_survey_textquestion_item"/>
-
-            <include layout="@layout/new_survey_unique_choice_item"/>
 
         </LinearLayout>
 

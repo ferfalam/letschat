@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Reponse choix unique"
+        android:text="Reponse à choix unique"
         android:textColor="@color/_text_color_primary"
         android:textStyle="bold"
         android:textSize="@dimen/_text_medium"
@@ -25,6 +25,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/input_shape"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -49,7 +50,6 @@
         android:checkable="true">
 
         <RadioButton
-            android:id="@+id/radioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:singleLine="true"
@@ -58,7 +58,8 @@
             android:text="Oui"/>
 
         <Button
-            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+            android:id="@+id/deleteRadio"
+            style="@style/Widget.App.Button.OutlinedButton.IconOnly.Red"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -76,6 +77,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </RadioGroup>
 
         <RadioButton
             android:layout_width="50dp"
@@ -96,13 +103,16 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/new_radio_text_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/input_shape"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
+            android:id="@+id/addRadio"
             style="@style/Widget.App.Button.OutlinedButton.IconOnly"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -113,6 +123,16 @@
             app:strokeColor="@color/white"/>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/delView"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:textStyle="bold"
+        android:backgroundTint="@color/_icon_secondary_color"
+        android:text="Retirer"
+        />
 
     <View
         android:layout_width="match_parent"
