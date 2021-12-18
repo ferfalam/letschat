@@ -1,6 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/drawable-anydpi/ic_action_name.xml" value="0.24114583333333334" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/drawable-anydpi/ic_action_search.xml" value="0.14629629629629629" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/drawable-anydpi/ic_arrow_to_bottom.xml" value="0.24114583333333334" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/drawable-anydpi/ic_bx_chat.xml" value="0.24114583333333334" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/drawable-anydpi/ic_chart_alt.xml" value="0.24114583333333334" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/drawable-anydpi/ic_chevron_left.xml" value="0.24114583333333334" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/drawable-anydpi/ic_group.xml" value="0.24114583333333334" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/drawable-anydpi/ic_navigation.xml" value="0.24114583333333334" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/drawable-anydpi/ic_search.xml" value="0.24114583333333334" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/drawable-anydpi/ic_upload.xml" value="0.24114583333333334" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/drawable-hdpi/ic_launcher_background.xml" value="0.24114583333333334" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/drawable-hdpi/ic_search_black_24dp.xml" value="0.121875" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/drawable-hdpi/rounded_corner.xml" value="0.24114583333333334" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.24114583333333334" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/drawable/ic_launcher_background.xml" value="0.24114583333333334" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/drawable/rounded.xml" value="0.1" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/layout/actionview_view.xml" value="0.21666666666666667" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/layout/activity_discussion2.xml" value="0.1" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/layout/fragment_discussions.xml" value="0.1" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/layout/fragment_sondages.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/layout/regular_discussion_items.xml" value="0.176" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/layout/regular_survey_items.xml" value="0.40827338129496404" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/layout/testy.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/menu/menu_action_view.xml" value="0.2171875" />
+        <entry key="..\:/Users/Rodi Rich/AndroidStudioProjects/letschat/app/src/main/res/menu/search_menu.xml" value="0.152" />
+        <entry key="..\:/Users/Rodi Rich/AppData/Local/Android/Sdk/platforms/android-31/data/res/layout/simple_list_item_1.xml" value="0.22083333333333333" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="15" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
