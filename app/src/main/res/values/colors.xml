@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    /** COLORS PROJET ( CHAT APP ) FROM FIGMA **/
+    /** COLORS PROJECT ( CHAT APP ) FROM FIGMA **/
 
     <color name="_primary">#33AFF4</color>
+    <color name="_primary_fonce">#2581B3</color>
     <color name="_secondary">#DCF2FF</color>
+    <color name="_secondary_fonce">#B9E3FB</color>
 
     <color name="_text_color_primary"> #262626 </color>
     <color name="_text_color_secondary">#505050</color>
@@ -13,12 +15,14 @@
     <color name="_floatActionButton">#33AFF4</color>
     <color name="_floatActionButton_icon">#DBDBDB</color>
 
-    <color name="_field_color">#33AFF4</color>
+    <color name="_field_color">#4D33AFF4</color>
     
     <color name="_icon_primary_color">#DBDBDB</color>
     <color name="_icon_secondary_color">#505050</color>
-    
-    /** DEFOLTE COLORS IN ANDROID-STUDIO **/
+
+    <color name="_transparent_color">#00505050</color>
+
+    /** DEFAULT COLORS IN ANDROID-STUDIO **/
 
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>

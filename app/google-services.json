@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "117075397854",
-    "project_id": "letschat-insti",
-    "storage_bucket": "letschat-insti.appspot.com"
+    "project_number": "603301405331",
+    "project_id": "let-schat-instiapp",
+    "storage_bucket": "let-schat-instiapp.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:117075397854:android:e6ce16a73795e9e479c64f",
+        "mobilesdk_app_id": "1:603301405331:android:f253d6def084d1200d2366",
         "android_client_info": {
           "package_name": "com.faridcodeur.letschat"
         }
       },
       "oauth_client": [
         {
-          "client_id": "117075397854-pajpfe3mrte1l69la51k923muqcmh6ja.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.faridcodeur.letschat",
-            "certificate_hash": "89bc751efc94b79b5d5013ee60652674289d0766"
-          }
-        },
-        {
-          "client_id": "117075397854-9qkcgk7oh3l1gni57ee4p387vimd024v.apps.googleusercontent.com",
+          "client_id": "603301405331-fv2fbhtoriil4davvumvak4v81uih29g.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCd7GKYqrSza8axYoDmBP3-cqOp-kaTA-c"
+          "current_key": "AIzaSyAhSjP3xcByt_yZ1YBUqAvlyjijtkwV7OE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "117075397854-9qkcgk7oh3l1gni57ee4p387vimd024v.apps.googleusercontent.com",
+              "client_id": "603301405331-fv2fbhtoriil4davvumvak4v81uih29g.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

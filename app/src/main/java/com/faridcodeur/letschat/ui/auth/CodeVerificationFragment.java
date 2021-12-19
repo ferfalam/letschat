@@ -54,7 +54,7 @@ public class CodeVerificationFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        binding.buttonSecond.setOnClickListener(new View.OnClickListener() {
+        binding.verifyCodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 code = binding.code.getText().toString();

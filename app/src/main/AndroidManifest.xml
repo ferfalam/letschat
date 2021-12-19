@@ -13,6 +13,9 @@
             android:name=".ConfigProfileActivity"
             android:exported="true" />
         <activity
+            android:name=".AuthActivity"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

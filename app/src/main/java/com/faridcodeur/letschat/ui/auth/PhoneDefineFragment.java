@@ -44,7 +44,7 @@ public class PhoneDefineFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonFirst.setOnClickListener(new View.OnClickListener() {
+        binding.sendCodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 phoneNum = binding.phoneNumber.getText().toString();

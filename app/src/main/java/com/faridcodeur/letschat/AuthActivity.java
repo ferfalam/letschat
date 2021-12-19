@@ -50,7 +50,7 @@ public class AuthActivity extends AppCompatActivity implements AuthCallback {
         binding = ActivityAuthBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setSupportActionBar(binding.toolbar);
+        //setSupportActionBar(binding.toolbar);
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_auth);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
@@ -131,7 +131,7 @@ public class AuthActivity extends AppCompatActivity implements AuthCallback {
                                 // User is signed in
                                 appPreference.setUserId(user.getUid());
                             }
-                            Intent i = new Intent(AuthActivity.this, MainActivity.class);
+                            Intent i = new Intent(AuthActivity.this, ConfigProfileActivity.class);
                             startActivity(i);
                             finish();
                         } else {

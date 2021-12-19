@@ -37,4 +37,14 @@ public class AppPreference {
     public String getUserId() {
         return preferences.getString("USER_ID", "");
     }
+
+    public void setUserName(String username) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("USER_NAME", username);
+        editor.apply();
+    }
+
+    public String getUserName() {
+        return preferences.getString("USER_NAME", "");
+    }
 }
