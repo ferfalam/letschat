@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<!--<androidx.appcompat.widget.LinearLayoutCompat-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:orientation="vertical">-->
+
+<!--    <androidx.appcompat.widget.AppCompatImageView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="50dp"-->
+<!--        android:layout_marginBottom="50dp"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:src="@drawable/profil"-->
+
+<!--        />-->
+
+<!--    <androidx.appcompat.widget.AppCompatAutoCompleteTextView-->
+<!--        android:layout_width="350dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:text="Nom"-->
+<!--        android:textSize="@dimen/_text_smale_smale"-->
+<!--        android:layout_marginBottom="40dp"-->
+<!--        />-->
+
+<!--    <androidx.appcompat.widget.AppCompatAutoCompleteTextView-->
+<!--        android:layout_width="350dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:text="Téléphone"-->
+<!--        android:textSize="@dimen/_text_smale_smale"-->
+
+<!--        />-->
+<!--</androidx.appcompat.widget.LinearLayoutCompat>-->
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="70dp"
+                android:layout_gravity="center"
+                android:src="@drawable/profil"
+
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/_primary">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nom"
+                    android:imeOptions="actionNext"
+                    android:layout_marginBottom="50dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="10dp"
+                     />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Téléphone"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="10dp"
+                     />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

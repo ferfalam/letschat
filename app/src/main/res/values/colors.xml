@@ -20,6 +20,7 @@
     
     <color name="_icon_primary_color">#DBDBDB</color>
     <color name="_icon_secondary_color">#505050</color>
+    <color name="_profil_color">#BFBFBF</color>
     
     /** DEFOLTE COLORS IN ANDROID-STUDIO **/
 
