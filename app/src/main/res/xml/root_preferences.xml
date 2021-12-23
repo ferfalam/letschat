@@ -1,0 +1,42 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SwitchPreferenceCompat
+
+        app:key="attachment"
+        app:title="Notifications en mode silencieux"
+        />
+
+    <Preference
+        app:title="Bloquer"
+        app:icon="@drawable/ic_block"/>
+    <Preference
+        app:title="Signaler"
+        app:icon="@drawable/ic_down_thumb"/>
+    <Preference
+        app:title="Supprimer la discussion"
+        app:icon="@drawable/ic_delete"/>
+
+        <!--            app:summaryOff="@string/attachment_summary_off"-->
+        <!--            app:summaryOn="@string/attachment_summary_on"-->
+
+<!--        <ListPreference-->
+<!--            app:defaultValue="reply"-->
+<!--            app:entries="@array/reply_entries"-->
+<!--            app:entryValues="@array/reply_values"-->
+<!--            app:key="reply"-->
+<!--            app:title="@string/reply_title"-->
+<!--            app:useSimpleSummaryProvider="true" />-->
+
+
+<!--    <PreferenceCategory app:title="@string/sync_header">-->
+
+<!--        <SwitchPreferenceCompat-->
+<!--            app:dependency="sync"-->
+<!--            app:key="sync"-->
+<!--            app:title="@string/sync_title" />-->
+
+
+
+<!--    </PreferenceCategory>-->
+
+</PreferenceScreen>

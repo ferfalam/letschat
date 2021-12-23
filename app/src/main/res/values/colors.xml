@@ -2,6 +2,8 @@
 <resources>
     /** COLORS PROJECT ( CHAT APP ) FROM FIGMA **/
 
+    <color name="_SPLASH_SCREEN_STATUS_BAR">#81CEF8</color>
+
     <color name="_primary">#33AFF4</color>
     <color name="_primary_fonce">#2581B3</color>
     <color name="_secondary">#DCF2FF</color>
@@ -12,15 +14,22 @@
     <color name="_text_color_tertiaire">#636363</color>
     <color name="_text_hint_Field_color">#636363</color>
 
+    <color name="_spacer">#E3E3E3</color>
+    <color name="_status_green">#20D23D</color>
+    <color name="_status_red">#FF6565</color>
+
+
     <color name="_floatActionButton">#33AFF4</color>
     <color name="_floatActionButton_icon">#DBDBDB</color>
 
     <color name="_field_color">#4D33AFF4</color>
-    
-    <color name="_icon_primary_color">#DBDBDB</color>
-    <color name="_icon_secondary_color">#505050</color>
+
 
     <color name="_transparent_color">#00505050</color>
+
+    /** DEFAULT COLORS IN ANDROID-STUDIO **/
+    <color name="_icon_primary_color">#DBDBDB</color>
+    <color name="_icon_secondary_color">#505050</color>
 
     /** DEFAULT COLORS IN ANDROID-STUDIO **/
 
@@ -31,4 +40,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
+    <color name="light_blue_A200">#FF40C4FF</color>
+    <color name="light_blue_A400">#FF00B0FF</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="_survey_back_color">#F1F1F1</color>
 </resources>

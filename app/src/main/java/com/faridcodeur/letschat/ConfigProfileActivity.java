@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.faridcodeur.letschat.activity.MainActivity;
 import com.faridcodeur.letschat.databinding.ActivityAuthBinding;
 import com.faridcodeur.letschat.databinding.ActivityConfigProfileBinding;
 import com.google.android.material.textfield.TextInputEditText;
