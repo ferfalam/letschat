@@ -18,11 +18,12 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         app:hintEnabled="false"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/question"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/input_shape"
@@ -43,36 +44,10 @@
         />
 
     <LinearLayout
+        android:id="@+id/radioLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:clickable="true"
-        android:focusable="true"
-        android:checkable="true">
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:text="Oui"/>
-
-        <Button
-            android:id="@+id/deleteRadio"
-            style="@style/Widget.App.Button.OutlinedButton.IconOnly.Red"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:singleLine="true"
-            android:layout_weight="0"
-            android:ellipsize="end"
-            app:cornerRadius="50dp"
-            app:icon="@drawable/ic_forget"
-            app:strokeColor="@color/white"
-            />
-
-    </LinearLayout>
+        android:orientation="vertical" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -96,7 +71,7 @@
             />
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:singleLine="true"
             android:layout_weight="1"
             android:ellipsize="end"
@@ -140,6 +115,7 @@
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:layout_marginTop="@dimen/_text_smale"
+        android:backgroundTint="@color/_primary"
         android:background="?android:attr/listDivider" />
 
 </LinearLayout>

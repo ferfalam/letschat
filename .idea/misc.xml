@@ -9,18 +9,34 @@
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/drawable-anydpi/ic_forget.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/drawable-anydpi/ic_upload.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/drawable/ic_launcher_background.xml" value="0.22552083333333334" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/drawable/ic_menu_camera.xml" value="0.23692307692307693" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/drawable/ic_menu_gallery.xml" value="0.23692307692307693" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.23692307692307693" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/drawable/input_shape.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/drawable/rounded_corner.xml" value="0.22552083333333334" />
-        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/activity_main.xml" value="0.12771739130434784" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/drawable/side_nav_bar.xml" value="0.23692307692307693" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/activity_main2.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/app_bar_main.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/check_button_layout_content.xml" value="0.209375" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/contact_fragment.xml" value="0.209375" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/contact_items.xml" value="0.209375" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/content_main.xml" value="0.11041666666666666" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/fragment_blank.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/fragment_discussions.xml" value="0.19722222222222222" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/fragment_surveys.xml" value="0.20185185185185187" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/new_survey_fragment.xml" value="0.25" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/new_survey_multiple_choice_item.xml" value="0.209375" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/new_survey_textquestion_item.xml" value="0.209375" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/new_survey_unique_choice_item.xml" value="0.209375" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/radio_button_layout_content.xml" value="0.209375" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/regular_discussion_items.xml" value="0.19722222222222222" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/survey_items.xml" value="0.25" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/testy.xml" value="0.1" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/menu/activity_main_drawer.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.209375" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/menu/main.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/menu/search_menu.xml" value="0.22447916666666667" />
       </map>
     </option>
   </component>

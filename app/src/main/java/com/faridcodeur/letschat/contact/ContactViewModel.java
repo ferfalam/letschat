@@ -1,4 +1,4 @@
-package com.faridcodeur.letschat;
+package com.faridcodeur.letschat.contact;
 
 import androidx.lifecycle.ViewModel;
 

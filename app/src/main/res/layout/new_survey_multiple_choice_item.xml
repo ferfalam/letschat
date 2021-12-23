@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:style="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <TextView
@@ -19,8 +18,8 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Question"
+        android:layout_height="50dp"
+        app:hintEnabled="false"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -28,6 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/input_shape"
+            android:hint="Question"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -44,37 +44,10 @@
         />
 
         <LinearLayout
+            android:id="@+id/checkboxLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:clickable="true"
-            android:focusable="true"
-            android:checkable="true">
-
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:text="Oui"/>
-
-            <Button
-                android:id="@+id/deleteCheckbox"
-                style="@style/Widget.App.Button.OutlinedButton.IconOnly.Red"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:singleLine="true"
-                android:layout_weight="0"
-                android:ellipsize="end"
-                app:cornerRadius="50dp"
-                app:icon="@drawable/ic_forget"
-                app:strokeColor="@color/white"
-                />
-
-        </LinearLayout>
-
+            android:orientation="vertical"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -92,11 +65,11 @@
             />
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:singleLine="true"
             android:layout_weight="1"
             android:ellipsize="end"
-            android:hint="Reponse"
+            app:hintEnabled="false"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -104,6 +77,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_shape"
+                android:hint="Reponse"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -113,7 +87,7 @@
             style="@style/Widget.App.Button.OutlinedButton.IconOnly"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_text_smale"
+            android:layout_marginStart="@dimen/_text_smale"
             android:layout_gravity="center"
             app:cornerRadius="50dp"
             app:icon="@drawable/ic_add"
@@ -127,7 +101,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:textStyle="bold"
-        android:backgroundTint="@color/_icon_secondary_color"
+        android:backgroundTint="@color/_text_color_secondary"
         android:text="Retirer"
         />
 
@@ -135,6 +109,7 @@
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:layout_marginTop="@dimen/_text_smale"
+        android:backgroundTint="@color/_primary"
         android:background="?android:attr/listDivider" />
 
 </LinearLayout>

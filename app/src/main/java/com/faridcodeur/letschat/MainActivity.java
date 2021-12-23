@@ -1,54 +1,58 @@
 package com.faridcodeur.letschat;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
+import android.view.Menu;
 
-import com.faridcodeur.letschat.survey.model.MultipleChoiceQuestion;
-import com.faridcodeur.letschat.survey.model.TextQuestion;
-import com.faridcodeur.letschat.survey.model.UniqueChoiceQuestion;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager2.widget.ViewPager2;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import com.faridcodeur.letschat.adapters.FragmentAdapter;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
+
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
+    ViewPager2 viewPager2;
+    TabLayout tabLayout;
+    private final String[] titles = new String[]{"Discussions", "Sondages"};
+    private FragmentAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_survey_fragment);
+        setContentView(R.layout.activity_main);
 
-        AtomicInteger ids = new AtomicInteger();
+        //setting toolbar on main activity interface
+        setSupportActionBar(findViewById(R.id.toolbar1));
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+        // setting event on  toolbar when we touch it
 
-        LayoutInflater  layoutInflater = getLayoutInflater();
+        viewPager2= findViewById(R.id.viewer);
+        tabLayout= findViewById(R.id.tablayout1);
 
-        LinearLayout layout = findViewById(R.id.survey_content_layout);
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        ScrollView scrollView = findViewById(R.id.survey_content_layout_scroll);
+        tabLayout.addTab(tabLayout.newTab().setText("Discussions"));
+        tabLayout.addTab(tabLayout.newTab().setText("Sondages"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        init();
+    }
 
-        bottomNavigationView.setOnItemSelectedListener(item -> {
-            if (item.getItemId() == R.id.textQuestion) {
-                TextQuestion textQuestions = new TextQuestion(this, this, layout);
-                textQuestions.setId(ids.getAndIncrement());
-                layout.addView(textQuestions.getView());
-                scrollView.fullScroll(View.FOCUS_DOWN);
-            }else if (item.getItemId() == R.id.uniqueChoice){
-                UniqueChoiceQuestion uniqueChoiceQuestion = new UniqueChoiceQuestion(this, this, layout);
-                uniqueChoiceQuestion.setId(ids.getAndIncrement());
-                layout.addView(uniqueChoiceQuestion.getView());
-                scrollView.fullScroll(View.FOCUS_DOWN);
-            }else if (item.getItemId() == R.id.multipleChoice){
-                MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion(this, this, layout);
-                layout.addView(multipleChoiceQuestion.getView());
-                scrollView.fullScroll(View.FOCUS_DOWN);
-            }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
-            return false;
-        });
+
+    public void init() {
+        Objects.requireNonNull(getSupportActionBar()).setElevation(0);
+        adapter = new FragmentAdapter(getSupportFragmentManager(), getLifecycle());
+        viewPager2.setAdapter(adapter);
+
+        // attaching tab mediator
+        new TabLayoutMediator(this.tabLayout, this.viewPager2,
+                (tab, position) -> tab.setText(titles[position])).attach();
 
     }
 }
