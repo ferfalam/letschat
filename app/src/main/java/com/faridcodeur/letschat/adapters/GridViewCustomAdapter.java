@@ -1,4 +1,4 @@
-package com.faridcodeur.letschat;
+package com.faridcodeur.letschat.adapters;
 
 import android.content.Context;
 import android.media.Image;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+
+import com.faridcodeur.letschat.R;
 
 public class GridViewCustomAdapter extends BaseAdapter {
     Context context;

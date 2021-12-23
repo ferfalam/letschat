@@ -1,4 +1,4 @@
-package com.faridcodeur.letschat;
+package com.faridcodeur.letschat.activity;
 
 import android.annotation.SuppressLint;
 import androidx.appcompat.app.ActionBar;
@@ -11,6 +11,8 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowInsets;
+
+import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.databinding.ActivityMediaViewBinding;
 
 /**

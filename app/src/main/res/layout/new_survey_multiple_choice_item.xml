@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Reponse à choix multiple"
+        android:textColor="@color/_text_color_primary"
+        android:textStyle="bold"
+        android:textSize="@dimen/_text_medium"
+        android:paddingBottom="@dimen/_text_smale"
+        android:paddingTop="@dimen/_text_smale"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:hintEnabled="false"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/input_shape"
+            android:hint="Question"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Reponses possibles"
+        android:textColor="@color/_text_color_secondary"
+        android:textStyle="bold"
+        android:textSize="@dimen/_text_medium"
+        android:paddingBottom="@dimen/_text_smale"
+        android:paddingTop="@dimen/_text_smale"
+        />
+
+        <LinearLayout
+            android:id="@+id/checkboxLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:singleLine="true"
+            android:layout_weight="0"
+            android:ellipsize="end"
+            android:enabled="false"
+            />
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:singleLine="true"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            app:hintEnabled="false"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/new_checkbox_text_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_shape"
+                android:hint="Reponse"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/addCheckbox"
+            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_text_smale"
+            android:layout_gravity="center"
+            app:cornerRadius="50dp"
+            app:icon="@drawable/ic_add"
+            app:strokeColor="@color/white"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/delView"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:textStyle="bold"
+        android:backgroundTint="@color/_text_color_secondary"
+        android:text="Retirer"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_marginTop="@dimen/_text_smale"
+        android:backgroundTint="@color/_primary"
+        android:background="?android:attr/listDivider" />
+
+</LinearLayout>

@@ -1,7 +1,6 @@
 package com.faridcodeur.letschat.ui.main;
 
 import android.content.Context;
-import android.widget.Switch;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -9,9 +8,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.faridcodeur.letschat.MediaFragment;
+import com.faridcodeur.letschat.fragments.MediaFragment;
 import com.faridcodeur.letschat.R;
-import com.faridcodeur.letschat.SettingsFragment;
+import com.faridcodeur.letschat.fragments.SettingsFragment;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to

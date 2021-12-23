@@ -1,8 +1,10 @@
-package com.faridcodeur.letschat;
+package com.faridcodeur.letschat.fragments;
 
 import android.os.Bundle;
 
 import androidx.preference.PreferenceFragmentCompat;
+
+import com.faridcodeur.letschat.R;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 

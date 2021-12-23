@@ -1,4 +1,4 @@
-package com.faridcodeur.letschat;
+package com.faridcodeur.letschat.activity;
 
 import android.os.Bundle;
 

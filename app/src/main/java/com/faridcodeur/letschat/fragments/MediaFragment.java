@@ -1,4 +1,4 @@
-package com.faridcodeur.letschat;
+package com.faridcodeur.letschat.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.GridView;
 
+import com.faridcodeur.letschat.R;
+import com.faridcodeur.letschat.activity.MediaViewActivity;
+import com.faridcodeur.letschat.adapters.GridViewCustomAdapter;
 import com.faridcodeur.letschat.databinding.FragmentMediaBinding;
 
 public class MediaFragment extends Fragment {

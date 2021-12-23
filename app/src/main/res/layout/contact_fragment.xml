@@ -3,15 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.MediaFragment">
+    tools:context=".contact.ContactFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <GridView
-        android:id="@+id/media_grid"
-        android:numColumns="3"
-        android:layout_margin="@dimen/_text_medium"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </GridView>
+        android:layout_height="match_parent"
+        android:text="Hello" />
 
 </FrameLayout>

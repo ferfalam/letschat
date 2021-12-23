@@ -1,4 +1,4 @@
-package com.faridcodeur.letschat;
+package com.faridcodeur.letschat.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.databinding.ChatScreenActivityBinding;
 
 public class ChatScreenActivity extends AppCompatActivity {
