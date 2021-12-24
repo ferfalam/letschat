@@ -90,7 +90,7 @@ public class NewSurveyFragment extends Fragment {
                     mViewModel.createSurveys(surveys, textQuestionList, uniqueChoiceQuestionList, multipleChoiceQuestionList);
                 }
             }
-            return false;
+            return true;
         });
     }
 
