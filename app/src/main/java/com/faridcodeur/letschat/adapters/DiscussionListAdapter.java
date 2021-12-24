@@ -1,5 +1,6 @@
 package com.faridcodeur.letschat.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,7 +43,7 @@ public class DiscussionListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        MaterialCardView myView = (MaterialCardView) LayoutInflater.from(context).inflate(R.layout.regular_discussion_items, viewGroup, false);
+        @SuppressLint("ViewHolder") MaterialCardView myView = (MaterialCardView) LayoutInflater.from(context).inflate(R.layout.regular_discussion_items, viewGroup, false);
         TextView nameContact = myView.findViewById(R.id.contactName);
         TextView message = myView.findViewById(R.id.extraitChat);
         TextView time = myView.findViewById(R.id.timeSend);
@@ -51,7 +52,7 @@ public class DiscussionListAdapter extends BaseAdapter {
         time.setText(discussions.get(i).getTime());
         myView.setOnClickListener(view1 -> {
             Log.e("CLIKCED", "LIST ITEM");
-            Toast.makeText(context,"Clicked", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context,"Clicked Discussion " + i, Toast.LENGTH_SHORT).show();
         });
         return myView;
     }

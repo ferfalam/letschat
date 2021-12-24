@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -24,12 +24,14 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_image"
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp"
                 android:src="@drawable/profile_photo"
                 app:civ_border_width="0dp"
                 app:civ_border_color="#2196F3"
-                tools:ignore="MissingConstraints" />
+                 android:clickable="true"
+                android:focusable="true"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -63,4 +65,49 @@
         android:theme="@style/MyStyle"
         android:id="@+id/viewer"/>
 
-</FrameLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="16dp"
+        app:srcCompat="@drawable/ic_add"
+        android:visibility="invisible"
+        android:contentDescription="FloatingButton"
+        />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="16dp"
+        app:srcCompat="@drawable/ic_validate"
+        android:visibility="invisible"
+        android:contentDescription="FloatingButton"
+        />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="16dp"
+        app:srcCompat="@drawable/ic_bx_chat"
+        android:visibility="invisible"
+        android:contentDescription="FloatingButton"
+        />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/expand_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="16dp"
+        app:srcCompat="@drawable/ic_navigation"
+        android:contentDescription="FloatingButton"
+        />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

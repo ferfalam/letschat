@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.faridcodeur.letschat.adapters.DiscussionListAdapter;
 import com.faridcodeur.letschat.databinding.FragmentDiscussionsBinding;
 import com.faridcodeur.letschat.entities.Discussions;
+import com.faridcodeur.letschat.entities.Surveys;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,33 +72,11 @@ public class DiscussionsFragment extends Fragment {
     private void buidCustomAdapter() {
         discussionListAdapter = new DiscussionListAdapter(getContext(), discussions);
         binding.listDiscussions.setAdapter(discussionListAdapter);
-
-//        binding.listDiscussions.setOnItemClickListener((adapterView, view, i, l) -> {
-//            Log.e("CLIKCED", "LIST ITEM");
-//            Toast.makeText(getContext(),"Clicked", Toast.LENGTH_SHORT).show();
-//        });
     }
 
     private void generateDiscussions(){
-        discussions.add(new Discussions("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussions("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussions("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussions("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussions("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussions("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussions("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussions("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussions("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussions("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussions("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussions("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussions("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussions("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussions("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussions("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-    }
-
-    public FragmentDiscussionsBinding getBinding() {
-        return binding;
+        for (int i=0; i<=20; i++) {
+            discussions.add(new Discussions("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5min"));
+        }
     }
 }
