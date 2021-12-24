@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/drawable-anydpi/ic_add.xml" value="0.22552083333333334" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/drawable-anydpi/ic_chart_alt.xml" value="0.23692307692307693" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/drawable-anydpi/ic_check.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/drawable-anydpi/ic_dots-vertical-rounded.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/drawable-anydpi/ic_forget.xml" value="0.22552083333333334" />
@@ -26,7 +27,7 @@
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/fragment_blank.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/fragment_discussions.xml" value="0.19722222222222222" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/fragment_surveys.xml" value="0.20185185185185187" />
-        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/new_survey_fragment.xml" value="0.25" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/new_survey_fragment.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/new_survey_multiple_choice_item.xml" value="0.209375" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/new_survey_textquestion_item.xml" value="0.209375" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/new_survey_unique_choice_item.xml" value="0.209375" />

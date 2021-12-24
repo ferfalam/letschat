@@ -1,11 +1,24 @@
 package com.faridcodeur.letschat.entities;
 
-public class Surveys {
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+import java.io.Serializable;
+
+@Entity
+public class Surveys implements Serializable {
+    @PrimaryKey(autoGenerate = true)
     private int id;
+    @ColumnInfo(name = "title")
     private String title;
+    @ColumnInfo(name = "description")
     private String description;
+    @ColumnInfo(name = "created_at")
     private String created_at;
 
+    @Ignore
     public Surveys(String title, String description) {
         this.title = title;
         this.description = description;

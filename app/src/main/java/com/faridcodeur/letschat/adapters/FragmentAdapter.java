@@ -8,6 +8,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.faridcodeur.letschat.activity.DiscussionsFragment;
 import com.faridcodeur.letschat.activity.SurveysFragment;
+import com.faridcodeur.letschat.survey.fragements.NewSurveyFragment;
 
 public class FragmentAdapter extends FragmentStateAdapter {
     private String[] titles = new String[]{"Discussions", "Sondages"};

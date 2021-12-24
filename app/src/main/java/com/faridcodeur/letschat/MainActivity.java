@@ -1,12 +1,12 @@
 package com.faridcodeur.letschat;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.faridcodeur.letschat.adapters.FragmentAdapter;
@@ -22,9 +22,9 @@ public class MainActivity extends AppCompatActivity {
     private final String[] titles = new String[]{"Discussions", "Sondages"};
     private FragmentAdapter adapter;
     private boolean isFabOpen = false;
-    private FloatingActionButton fab1;
-    private FloatingActionButton fab2;
-    private FloatingActionButton fab3;
+    private FloatingActionButton settings;
+    private FloatingActionButton new_surveys;
+    private FloatingActionButton new_sms;
 
 
     @Override
@@ -39,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager2= findViewById(R.id.viewer);
         tabLayout= findViewById(R.id.tablayout1);
-        fab1 = findViewById(R.id.fab1);
-        fab2 = findViewById(R.id.fab2);
-        fab3 = findViewById(R.id.fab3);
+        settings = findViewById(R.id.settings);
+        new_surveys = findViewById(R.id.new_surveys);
+        new_sms = findViewById(R.id.new_sms);
 
         tabLayout.addTab(tabLayout.newTab().setText("Discussions"));
         tabLayout.addTab(tabLayout.newTab().setText("Sondages"));
@@ -69,36 +69,49 @@ public class MainActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.expand_button).setOnClickListener(view -> {
-            if (!isFabOpen) {
-                showFabMenu();
-                Toast.makeText(getBaseContext(), "Show", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                closeFabMenu();
-                Toast.makeText(getBaseContext(), "Close", Toast.LENGTH_SHORT).show();
-            }
+            if (!isFabOpen)showFabMenu();
+            else closeFabMenu();
+        });
+
+        settings.setOnClickListener(view -> {
+            //TODO Call Settings activity here
+            Toast.makeText(getBaseContext(), "Go to Settings", Toast.LENGTH_SHORT).show();
+        });
+
+        new_surveys.setOnClickListener(view -> {
+            //TODO Call new Survey activity here
+            Toast.makeText(getBaseContext(), "Create new surveys", Toast.LENGTH_SHORT).show();
+        });
+
+        new_sms.setOnClickListener(view -> {
+            //TODO Call contact activity here
+            Toast.makeText(getBaseContext(), "Create new discussion", Toast.LENGTH_SHORT).show();
         });
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     public void showFabMenu(){
         isFabOpen = true;
-        fab1.setVisibility(View.VISIBLE);
-        fab2.setVisibility(View.VISIBLE);
-        fab3.setVisibility(View.VISIBLE);
+        ((FloatingActionButton)findViewById(R.id.expand_button)).setImageDrawable(getResources().getDrawable(R.drawable.ic_close));
+        settings.setVisibility(View.VISIBLE);
+        new_surveys.setVisibility(View.VISIBLE);
+        new_sms.setVisibility(View.VISIBLE);
 
-        fab1.animate().translationY(-getResources().getDimension(R.dimen.st75));
-        fab2.animate().translationY(-getResources().getDimension(R.dimen.st105));
-        fab3.animate().translationY(-getResources().getDimension(R.dimen.st255));
+        settings.animate().translationY(-getResources().getDimension(R.dimen.st75));
+        new_surveys.animate().translationY(-getResources().getDimension(R.dimen.st105));
+        new_sms.animate().translationY(-getResources().getDimension(R.dimen.st255));
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     public void closeFabMenu(){
         isFabOpen = false;
-        fab1.animate().translationY(0);
-        fab2.animate().translationY(0);
-        fab3.animate().translationY(0);
+        settings.animate().translationY(0);
+        new_surveys.animate().translationY(0);
+        new_sms.animate().translationY(0);
 
-        fab1.setVisibility(View.INVISIBLE);
-        fab2.setVisibility(View.INVISIBLE);
-        fab3.setVisibility(View.INVISIBLE);
+        settings.setVisibility(View.INVISIBLE);
+        new_surveys.setVisibility(View.INVISIBLE);
+        new_sms.setVisibility(View.INVISIBLE);
+        ((FloatingActionButton)findViewById(R.id.expand_button)).setImageDrawable(getResources().getDrawable(R.drawable.ic_navigation));
     }
 }

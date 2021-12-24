@@ -6,39 +6,61 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.Insert;
+import androidx.room.PrimaryKey;
 
 import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.utiles.InputValidation;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.Gson;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MultipleChoiceQuestion {
+@Entity
+public class MultipleChoiceQuestion implements Serializable {
+    @PrimaryKey(autoGenerate = true)
     private int id;
+    @ColumnInfo(name = "surveyId")
+    private int surveyId;
+    @ColumnInfo(name = "question")
+    private String question;
+    @ColumnInfo(name = "checkBoxTextList")
+    private String checkBoxTextList;
+
+    @Ignore
     private View view;
+    @Ignore
     private LinearLayout checkboxLayout;
-    private TextInputEditText question;
+
+    @Ignore
     protected final List<CheckBox> checkBoxList = new ArrayList<>();
 
     @SuppressLint("InflateParams")
-    public MultipleChoiceQuestion(Fragment fragment, LinearLayout linearLayout) {
+    @Ignore
+    public MultipleChoiceQuestion(Fragment fragment, LinearLayout linearLayout, List<MultipleChoiceQuestion> multipleChoiceQuestionList) {
         view = fragment.getLayoutInflater().inflate(R.layout.new_survey_multiple_choice_item, null);
         checkboxLayout = view.findViewById(R.id.checkboxLayout);
-        question = view.findViewById(R.id.question);
-        setListener(fragment, linearLayout);
+        setListener(fragment, linearLayout, multipleChoiceQuestionList);
     }
 
-    public MultipleChoiceQuestion() {
-
+    public MultipleChoiceQuestion(int id, int surveyId, String question, String checkBoxTextList) {
+        this.id = id;
+        this.surveyId = surveyId;
+        this.question = question;
+        this.checkBoxTextList = checkBoxTextList;
     }
 
-    public void setListener(Fragment fragment, LinearLayout linearLayout){
+    public void setListener(Fragment fragment, LinearLayout linearLayout, List<MultipleChoiceQuestion> multipleChoiceQuestionList){
         view.findViewById(R.id.delView).setOnClickListener(view1 -> {
             linearLayout.removeView(getView());
+            multipleChoiceQuestionList.remove(this);
         });
 
         view.findViewById(R.id.addCheckbox).setOnClickListener(view1 -> {
@@ -52,20 +74,50 @@ public class MultipleChoiceQuestion {
 
     }
 
+    public boolean build(){
+        TextInputEditText question = view.findViewById(R.id.question);
+        if (!InputValidation.isEmptyInput(question, false)){
+            this.question = Objects.requireNonNull(question.getText()).toString();
+            List<String> list = new ArrayList<>();
+            for (CheckBox checkBox: checkBoxList) {
+                list.add(checkBox.getText().toString());
+            }
+            checkBoxTextList = new Gson().toJson(list);
+            return true;
+        }else {question.setError("Aucune question renseigner");}
+        return false;
+    }
+
     public View getView() {
         return view;
     }
 
     public String getQuestion() {
-        return Objects.requireNonNull(question.getText()).toString();
+        return Objects.requireNonNull(((TextInputEditText)view.findViewById(R.id.question)).getText()).toString();
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public List<CheckBox> getCheckBoxList() {
-        return checkBoxList;
+    public int getId() {
+        return id;
+    }
+
+    public String getCheckBoxTextList() {
+        return checkBoxTextList;
+    }
+
+    public void setCheckBoxTextList(String checkBoxTextList) {
+        this.checkBoxTextList = checkBoxTextList;
+    }
+
+    public int getSurveyId() {
+        return surveyId;
+    }
+
+    public void setSurveyId(int surveyId) {
+        this.surveyId = surveyId;
     }
 }
 
