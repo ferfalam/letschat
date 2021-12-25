@@ -23,27 +23,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Entity
 public class MultipleChoiceQuestion implements Serializable {
-    @PrimaryKey(autoGenerate = true)
     private int id;
-    @ColumnInfo(name = "surveyId")
     private int surveyId;
-    @ColumnInfo(name = "question")
     private String question;
-    @ColumnInfo(name = "checkBoxTextList")
     private String checkBoxTextList;
 
-    @Ignore
     private View view;
-    @Ignore
     private LinearLayout checkboxLayout;
 
-    @Ignore
     protected final List<CheckBox> checkBoxList = new ArrayList<>();
 
     @SuppressLint("InflateParams")
-    @Ignore
     public MultipleChoiceQuestion(Fragment fragment, LinearLayout linearLayout, List<MultipleChoiceQuestion> multipleChoiceQuestionList) {
         view = fragment.getLayoutInflater().inflate(R.layout.new_survey_multiple_choice_item, null);
         checkboxLayout = view.findViewById(R.id.checkboxLayout);

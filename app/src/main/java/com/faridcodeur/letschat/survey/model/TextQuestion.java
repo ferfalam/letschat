@@ -22,22 +22,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Entity
 public class TextQuestion implements Serializable {
-    @PrimaryKey(autoGenerate = true)
     private int id;
-    @ColumnInfo(name = "surveyId")
     private int surveyId;
-    @ColumnInfo(name = "question")
     private String question;
-    @ColumnInfo(name = "response")
     private String response;
 
-    @Ignore
     private View view;
 
     @SuppressLint("InflateParams")
-    @Ignore
     public TextQuestion(Fragment fragment, LinearLayout linearLayout, List<TextQuestion> textQuestionList) {
         view = fragment.getLayoutInflater().inflate(R.layout.new_survey_textquestion_item, null);
         setListener(linearLayout, textQuestionList);

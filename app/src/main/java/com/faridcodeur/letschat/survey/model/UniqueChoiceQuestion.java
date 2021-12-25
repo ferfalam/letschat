@@ -21,26 +21,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Entity
 public class UniqueChoiceQuestion implements Serializable {
-    @PrimaryKey(autoGenerate = true)
     private int id;
-    @ColumnInfo(name = "surveyId")
     private int surveyId;
-    @ColumnInfo(name = "question")
     private String question;
-    @ColumnInfo(name = "checkBoxTextList")
     private String radioTextList;
 
-    @Ignore
     private View view;
-    @Ignore
     private LinearLayout radioLayout;
-    @Ignore
     protected final List<RadioButton> radioButtonList = new ArrayList<>();
 
     @SuppressLint("InflateParams")
-    @Ignore
     public UniqueChoiceQuestion(Fragment fragment, LinearLayout linearLayout, List<UniqueChoiceQuestion> uniqueChoiceQuestionList) {
         view = fragment.getLayoutInflater().inflate(R.layout.new_survey_unique_choice_item, null);
         radioLayout = view.findViewById(R.id.radioLayout);
