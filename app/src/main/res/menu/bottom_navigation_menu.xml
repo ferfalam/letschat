@@ -4,22 +4,22 @@
         android:id="@+id/textQuestion"
         android:enabled="true"
         android:icon="@drawable/ic_textfiled"
-        android:title="Reponse court"
+        android:title="@string/reponse_court"
         />
     <item
         android:id="@+id/uniqueChoice"
         android:enabled="true"
-        android:icon="@drawable/ic_radio"
-        android:title="Case à cocher"/>
+        android:icon="@drawable/ic_survey_radio"
+        android:title="@string/choix_unique"/>
     <item
         android:id="@+id/multipleChoice"
         android:enabled="true"
         android:icon="@drawable/ic_check"
-        android:title="Choix multiple"/>
+        android:title="@string/choix_multiple"/>
 
     <item
         android:id="@+id/validate"
         android:enabled="true"
         android:icon="@drawable/ic_validate"
-        android:title="Valider"/>
+        android:title="@string/valider"/>
 </menu>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Let\'sChat</string>
+    <string name="app_name">uChat</string>
     <string name="politique_de_confidentialite">S\'inscrire sur Letschat voudra dire que vous avez lu et accepté les politiques de confidentialité</string>
     <string name="verify_code_text">Vérifier le code</string>
     <string name="resend_code_text">Renvoyer le code</string>
@@ -40,7 +40,7 @@
     <string name="title_activity_media_view">MediaViewActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="let_s_chat">Let\'s chat</string>
+    <string name="let_s_chat">uChat</string>
     <string name="_new">New</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -53,5 +53,9 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="reponse_court">Reponse court</string>
+    <string name="choix_unique">Choix unique</string>
+    <string name="choix_multiple">Choix multiple</string>
+    <string name="valider">Valider</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

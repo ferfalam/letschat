@@ -10,12 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Letschat" >
         <activity
-            android:name=".ConfigProfileActivity"
-            android:exported="true" />
-        <activity
-            android:name=".AuthActivity"
-            android:exported="true" />
-        <activity
             android:name=".activity.MediaViewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true"
@@ -43,6 +37,26 @@
         </activity>
         <activity
             android:name=".activity.ChatScreenActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Letschat.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.AuthActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Letschat.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.ConfigProfileActivity"
             android:exported="true"
             android:theme="@style/Theme.Letschat.NoActionBar" >
             <intent-filter>

@@ -1,17 +1,13 @@
-package com.faridcodeur.letschat;
+package com.faridcodeur.letschat.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import com.faridcodeur.letschat.activity.MainActivity;
-import com.faridcodeur.letschat.databinding.ActivityAuthBinding;
 import com.faridcodeur.letschat.databinding.ActivityConfigProfileBinding;
-import com.google.android.material.textfield.TextInputEditText;
 
 public class ConfigProfileActivity extends AppCompatActivity {
     private ActivityConfigProfileBinding binding;
@@ -39,12 +35,16 @@ public class ConfigProfileActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                appPreference.setUserName(binding.username.getText().toString());
-                Toast.makeText(ConfigProfileActivity.this, appPreference.getUserName(),Toast.LENGTH_LONG).show();
+                if (binding.username.getText().toString().isEmpty()){
+                    binding.username.setError("Veuillez entrer votre nom d'utilisateur");
+                } else{
+                    appPreference.setUserName(binding.username.getText().toString());
+                    Toast.makeText(ConfigProfileActivity.this, appPreference.getUserName(),Toast.LENGTH_LONG).show();
 
-                Intent intent = new Intent(ConfigProfileActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                    Intent intent = new Intent(ConfigProfileActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         };
     }
