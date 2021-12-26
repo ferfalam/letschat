@@ -7,34 +7,16 @@
     tools:context=".activity.SurveysFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <androidx.core.widget.NestedScrollView
+    <ListView
+        android:id="@+id/listSurveys"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <include layout="@layout/survey_items"/>
-            <include layout="@layout/survey_items"/>
-            <include layout="@layout/survey_items"/>
-            <include layout="@layout/survey_items"/>
-            <include layout="@layout/survey_items"/>
-            <include layout="@layout/survey_items"/>
-            <include layout="@layout/survey_items"/>
-            <include layout="@layout/survey_items"/>
-            <include layout="@layout/survey_items"/>
-            <include layout="@layout/survey_items"/>
-            <include layout="@layout/survey_items"/>
-            <include layout="@layout/survey_items"/>
-            <include layout="@layout/survey_items"/>
-            <include layout="@layout/survey_items"/>
-            <include layout="@layout/survey_items"/>
-            <include layout="@layout/survey_items"/>
-            <include layout="@layout/survey_items"/>
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+        android:clickable="true"
+        tools:listitem="@layout/survey_items"
+        android:nestedScrollingEnabled="true"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        android:focusable="true"
+        android:divider="@null"
+        android:dividerHeight="0dp"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

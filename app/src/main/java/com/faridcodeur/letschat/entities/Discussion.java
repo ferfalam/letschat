@@ -1,6 +1,8 @@
 package com.faridcodeur.letschat.entities;
 
-public class Discussion {
+import java.io.Serializable;
+
+public class Discussion implements Serializable {
 
     private String name;
     private String profileImg;

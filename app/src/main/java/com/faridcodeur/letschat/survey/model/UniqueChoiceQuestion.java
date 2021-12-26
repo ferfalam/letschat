@@ -5,40 +5,50 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
 import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.utiles.InputValidation;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.Gson;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class UniqueChoiceQuestion {
+public class UniqueChoiceQuestion implements Serializable {
+    private int id;
+    private int surveyId;
+    private String question;
+    private String radioTextList;
+
     private View view;
     private LinearLayout radioLayout;
     protected final List<RadioButton> radioButtonList = new ArrayList<>();
 
-    //Database params
-    private int id;
-    private String question;
-
     @SuppressLint("InflateParams")
-    public UniqueChoiceQuestion(Fragment fragment, LinearLayout linearLayout) {
+    public UniqueChoiceQuestion(Fragment fragment, LinearLayout linearLayout, List<UniqueChoiceQuestion> uniqueChoiceQuestionList) {
         view = fragment.getLayoutInflater().inflate(R.layout.new_survey_unique_choice_item, null);
         radioLayout = view.findViewById(R.id.radioLayout);
-        setListener(fragment, linearLayout);
+        setListener(fragment, linearLayout, uniqueChoiceQuestionList);
     }
 
-    public UniqueChoiceQuestion(String question) {
+    public UniqueChoiceQuestion(int id, int surveyId, String question, String radioTextList) {
+        this.id = id;
+        this.surveyId = surveyId;
         this.question = question;
+        this.radioTextList = radioTextList;
     }
 
-    public void setListener(Fragment fragment, LinearLayout linearLayout){
+    public void setListener(Fragment fragment, LinearLayout linearLayout, List<UniqueChoiceQuestion> uniqueChoiceQuestionList){
         view.findViewById(R.id.delView).setOnClickListener(view1 -> {
             linearLayout.removeView(getView());
+            uniqueChoiceQuestionList.remove(this);
         });
 
         view.findViewById(R.id.addRadio).setOnClickListener(view1 -> {
@@ -49,6 +59,20 @@ public class UniqueChoiceQuestion {
                 ((TextInputEditText) view.findViewById(R.id.new_radio_text_input)).setText(null);
             }
         });
+    }
+
+    public boolean build(){
+        TextInputEditText question = view.findViewById(R.id.question);
+        if (!InputValidation.isEmptyInput(question, false)){
+            this.question = Objects.requireNonNull(question.getText()).toString();
+            List<String> list = new ArrayList<>();
+            for (RadioButton radioButton: radioButtonList) {
+                list.add(radioButton.getText().toString());
+            }
+            radioTextList = new Gson().toJson(list);
+            return true;
+        }else {question.setError("Aucune question renseigner");}
+        return false;
     }
 
     public View getView() {
@@ -71,19 +95,26 @@ public class UniqueChoiceQuestion {
         this.id = id;
     }
 
-    public List<RadioButton> getRadioButtonList() {
-        return radioButtonList;
+    public String getRadioTextList() {
+        return radioTextList;
+    }
+
+    public void setRadioTextList(String radioTextList) {
+        this.radioTextList = radioTextList;
+    }
+
+    public int getSurveyId() {
+        return surveyId;
+    }
+
+    public void setSurveyId(int surveyId) {
+        this.surveyId = surveyId;
     }
 }
 
 class RadioButtonLayout{
-    private View view;
-    private RadioButton radioButton;
-
-    //Database params
-    private int id;
-    private int uniqueChoiceQuestionId;
-    private String radioText;
+    private final View view;
+    private final RadioButton radioButton;
 
     @SuppressLint("InflateParams")
     public RadioButtonLayout(Fragment fragment, LinearLayout parent, String radioText, List<RadioButton> radioButtonList) {
@@ -96,32 +127,11 @@ class RadioButtonLayout{
         });
     }
 
-    public RadioButtonLayout(int uniqueChoiceQuestionId, String radioText) {
-        this.uniqueChoiceQuestionId = uniqueChoiceQuestionId;
-        this.radioText = radioText;
-    }
-
     public View getView() {
         return view;
     }
 
     public RadioButton getRadioButton() {
         return radioButton;
-    }
-
-    public int getUniqueChoiceQuestionId() {
-        return uniqueChoiceQuestionId;
-    }
-
-    public void setUniqueChoiceQuestionId(int uniqueChoiceQuestionId) {
-        this.uniqueChoiceQuestionId = uniqueChoiceQuestionId;
-    }
-
-    public String getRadioText() {
-        return radioText;
-    }
-
-    public void setRadioText(String radioText) {
-        this.radioText = radioText;
     }
 }

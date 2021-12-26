@@ -12,8 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
-        tools:listitem="@layout/regular_discussion_items"
+        android:focusable="true"
+        android:nestedScrollingEnabled="true"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-        android:focusable="true" />
+        tools:listitem="@layout/regular_discussion_items"
+        android:divider="@null"
+        android:dividerHeight="0dp"/>
 
 </FrameLayout>

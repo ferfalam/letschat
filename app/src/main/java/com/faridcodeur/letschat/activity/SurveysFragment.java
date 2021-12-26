@@ -9,6 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.faridcodeur.letschat.R;
+import com.faridcodeur.letschat.adapters.DiscussionListAdapter;
+import com.faridcodeur.letschat.adapters.SurveyListAdapter;
+import com.faridcodeur.letschat.databinding.FragmentDiscussionsBinding;
+import com.faridcodeur.letschat.databinding.FragmentSurveysBinding;
+import com.faridcodeur.letschat.entities.Discussions;
+import com.faridcodeur.letschat.entities.Surveys;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +34,9 @@ public class SurveysFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private List<Surveys> surveys = new ArrayList<>();
+    private SurveyListAdapter surveyListAdapter;
+    private FragmentSurveysBinding binding;
     private static SurveysFragment surveysFragment;
 
     public SurveysFragment() {
@@ -50,7 +62,22 @@ public class SurveysFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        binding = FragmentSurveysBinding.inflate(inflater, container, false);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_surveys, container, false);
+        generateDiscussions();
+        buidCustomAdapter();
+
+        return binding.getRoot();
+    }
+
+    private void buidCustomAdapter() {
+        surveyListAdapter = new SurveyListAdapter(getContext(), surveys);
+        binding.listSurveys.setAdapter(surveyListAdapter);
+    }
+
+    private void generateDiscussions(){
+        for (int i=0; i<=20; i++) {
+            surveys.add(new Surveys(1, "Proposer aux prospects des services informatiques pouvant améliorer leurs chiffres d’affaires ou d’améliorer leur quotidien", "Analyser les systèmes informatiques des entreprises et de quelques particuliers", "il y a 3min"));
+        }
     }
 }
