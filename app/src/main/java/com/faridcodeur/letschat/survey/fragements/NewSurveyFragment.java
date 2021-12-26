@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.faridcodeur.letschat.R;
-import com.faridcodeur.letschat.activity.DiscussionsFragment;
 import com.faridcodeur.letschat.databinding.NewSurveyFragmentBinding;
 import com.faridcodeur.letschat.entities.Surveys;
 import com.faridcodeur.letschat.survey.model.MultipleChoiceQuestion;
@@ -51,6 +51,7 @@ public class NewSurveyFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = NewSurveyFragmentBinding.inflate(inflater, container, false);
+
         return binding.getRoot();
     }
 
@@ -65,6 +66,7 @@ public class NewSurveyFragment extends Fragment {
         ScrollView scrollView = binding.surveyContentLayoutScroll;
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
+            Log.e("ITEM", item.toString());
             if (item.getItemId() == R.id.textQuestion) {
                 TextQuestion textQuestions = new TextQuestion(this, layout, textQuestionList);
                 layout.addView(textQuestions.getView());

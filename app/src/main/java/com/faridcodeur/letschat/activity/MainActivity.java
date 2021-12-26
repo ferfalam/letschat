@@ -1,7 +1,9 @@
 package com.faridcodeur.letschat.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
@@ -11,6 +13,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.adapters.FragmentAdapter;
+import com.faridcodeur.letschat.survey.fragements.NewSurveyFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -57,13 +60,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void init() {
+    private void init() {
         Objects.requireNonNull(getSupportActionBar()).setElevation(0);
         adapter = new FragmentAdapter(getSupportFragmentManager(), getLifecycle());
         viewPager2.setAdapter(adapter);
 
         // attaching tab mediator
         new TabLayoutMediator(this.tabLayout, this.viewPager2, (tab, position) -> tab.setText(titles[position])).attach();
+
         findViewById(R.id.profile_image).setOnClickListener(view -> {
             //TODO Call Setting activity here
             Toast.makeText(getBaseContext(), "Go to Settings", Toast.LENGTH_SHORT).show();
@@ -76,17 +80,29 @@ public class MainActivity extends AppCompatActivity {
 
         settings.setOnClickListener(view -> {
             //TODO Call Settings activity here
-            Toast.makeText(getBaseContext(), "Go to Settings", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getBaseContext(), "Go to Settings", Toast.LENGTH_SHORT).show();
+            Log.e("TAG", "settings");
+            Intent intent = new Intent(MainActivity.this, FabActionActivity.class);
+            intent.putExtra("ACTION", "SETTINGS");
+            startActivity(intent);
         });
 
         new_surveys.setOnClickListener(view -> {
             //TODO Call new Survey activity here
-            Toast.makeText(getBaseContext(), "Create new surveys", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getBaseContext(), "Create new surveys", Toast.LENGTH_SHORT).show();
+            Log.e("TAG", "new surveys");
+            Intent intent = new Intent(MainActivity.this, FabActionActivity.class);
+            intent.putExtra("ACTION", "NEW_SURVEY");
+            startActivity(intent);
         });
 
         new_sms.setOnClickListener(view -> {
             //TODO Call contact activity here
-            Toast.makeText(getBaseContext(), "Create new discussion", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getBaseContext(), "Create new discussion", Toast.LENGTH_SHORT).show();
+            Log.e("TAG", "new discussion");
+            Intent intent = new Intent(MainActivity.this, FabActionActivity.class);
+            intent.putExtra("ACTION", "NEW_DISCUSSION");
+            startActivity(intent);
         });
     }
 

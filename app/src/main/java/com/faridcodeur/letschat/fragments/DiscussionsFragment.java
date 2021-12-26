@@ -1,4 +1,4 @@
-package com.faridcodeur.letschat.activity;
+package com.faridcodeur.letschat.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import com.faridcodeur.letschat.adapters.DiscussionListAdapter;
 import com.faridcodeur.letschat.databinding.FragmentDiscussionsBinding;
 import com.faridcodeur.letschat.entities.Discussion;
-import com.faridcodeur.letschat.entities.Surveys;
 
 import java.util.ArrayList;
 import java.util.List;
