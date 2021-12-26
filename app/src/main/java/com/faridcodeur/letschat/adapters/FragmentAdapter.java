@@ -1,5 +1,7 @@
 package com.faridcodeur.letschat.adapters;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -8,6 +10,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.faridcodeur.letschat.activity.DiscussionsFragment;
 import com.faridcodeur.letschat.activity.SurveysFragment;
+import com.faridcodeur.letschat.contact.ContactFragment;
 import com.faridcodeur.letschat.survey.fragements.NewSurveyFragment;
 
 public class FragmentAdapter extends FragmentStateAdapter {

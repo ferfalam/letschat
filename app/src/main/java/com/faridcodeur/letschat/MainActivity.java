@@ -1,6 +1,8 @@
 package com.faridcodeur.letschat;
 
 import android.annotation.SuppressLint;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -26,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton new_surveys;
     private FloatingActionButton new_sms;
 
+    //TODO Ce est code est partie est a couper et coller dans l'activity qui gère le ContactFragment
+    private static ContentResolver appContentResolver;
+    //TODO fin
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("Discussions"));
         tabLayout.addTab(tabLayout.newTab().setText("Sondages"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        //TODO Ce est code est partie est a couper et coller dans l'activity qui gère le ContactFragment
+        appContentResolver = getApplicationContext().getContentResolver();
+        //TODO fin
         init();
     }
 
@@ -114,4 +123,10 @@ public class MainActivity extends AppCompatActivity {
         new_sms.setVisibility(View.INVISIBLE);
         ((FloatingActionButton)findViewById(R.id.expand_button)).setImageDrawable(getResources().getDrawable(R.drawable.ic_navigation));
     }
+
+    //TODO Ce est code est partie est a couper et coller dans l'activity qui gère le ContactFragment
+    public static ContentResolver getAppContentResolver() {
+        return appContentResolver;
+    }
+    //TODO fin
 }
