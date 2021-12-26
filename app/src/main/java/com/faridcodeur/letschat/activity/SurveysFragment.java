@@ -13,7 +13,6 @@ import com.faridcodeur.letschat.adapters.DiscussionListAdapter;
 import com.faridcodeur.letschat.adapters.SurveyListAdapter;
 import com.faridcodeur.letschat.databinding.FragmentDiscussionsBinding;
 import com.faridcodeur.letschat.databinding.FragmentSurveysBinding;
-import com.faridcodeur.letschat.entities.Discussions;
 import com.faridcodeur.letschat.entities.Surveys;
 
 import java.util.ArrayList;
