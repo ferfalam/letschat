@@ -1,5 +1,6 @@
 package com.faridcodeur.letschat.adapters;
 
+import android.content.ContentResolver;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -26,7 +27,7 @@ public class FabActionFragmentAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        Log.e("TAG", String.valueOf(position));
+        Log.e("TAG", elmt);
         switch (elmt) {
             case "NEW_DISCUSSION":
                 return ContactFragment.newInstance();

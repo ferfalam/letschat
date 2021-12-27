@@ -3,6 +3,7 @@ package com.faridcodeur.letschat.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.ContentResolver;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -19,6 +20,7 @@ public class FabActionActivity extends AppCompatActivity {
 
     private FabActionFragmentAdapter adapter;
     private ViewPager2 viewPager2;
+    private static ContentResolver appContentResolver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,9 +33,10 @@ public class FabActionActivity extends AppCompatActivity {
         viewPager2.setAdapter(adapter);*/
 
         String action = (String) getIntent().getSerializableExtra("ACTION");
-        Log.e("ACTION", action);
         switch (action) {
             case "NEW_DISCUSSION":
+                appContentResolver = getApplicationContext().getContentResolver();
+                Log.e("ACTION", action);
                 adapter = new FabActionFragmentAdapter(getSupportFragmentManager(), getLifecycle(), "NEW_DISCUSSION");
                 break;
             case "NEW_SURVEY":
@@ -43,6 +46,12 @@ public class FabActionActivity extends AppCompatActivity {
                 // TODO Start Settings fragment
                 break;
         }
+        Log.e("ACTION2", action);
         viewPager2.setAdapter(adapter);
+    }
+
+
+    public static ContentResolver getAppContentResolver() {
+        return appContentResolver;
     }
 }

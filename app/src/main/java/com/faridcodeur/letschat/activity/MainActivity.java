@@ -2,6 +2,8 @@ package com.faridcodeur.letschat.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton settings;
     private FloatingActionButton new_surveys;
     private FloatingActionButton new_sms;
+
+
 
 
     @Override

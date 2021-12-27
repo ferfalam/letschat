@@ -1,5 +1,7 @@
 package com.faridcodeur.letschat.adapters;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -21,7 +23,7 @@ public class FragmentAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         if (position == 1) {
-            return SurveysFragment.newInstance();
+            return ContactFragment.newInstance();
         }
         return DiscussionsFragment.newInstance();
     }
