@@ -1,6 +1,6 @@
-package com.faridcodeur.letschat;
+package com.faridcodeur.letschat.entities;
 
-public class Discussions {
+public class Discussion {
 
     private String name;
     private String profileImg;
@@ -8,7 +8,7 @@ public class Discussions {
     private String time;
 
 
-    public Discussions(String name, String profileImg,String messsage,String time) {
+    public Discussion(String name, String profileImg, String messsage, String time) {
         this.name = name;
         this.profileImg = profileImg;
         this.message=messsage;

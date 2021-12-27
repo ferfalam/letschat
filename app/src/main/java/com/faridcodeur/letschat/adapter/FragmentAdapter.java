@@ -1,9 +1,12 @@
-package com.faridcodeur.letschat;
+package com.faridcodeur.letschat.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import com.faridcodeur.letschat.DiscussionsFragment;
+import com.faridcodeur.letschat.SondagesFragment;
 
 public abstract class FragmentAdapter extends FragmentStateAdapter {
 

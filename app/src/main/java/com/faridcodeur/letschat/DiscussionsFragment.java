@@ -1,7 +1,5 @@
 package com.faridcodeur.letschat;
 
-import static android.content.ContentValues.TAG;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,7 +9,8 @@ import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.faridcodeur.letschat.adapter.DiscussionListAdapter;
+import com.faridcodeur.letschat.entities.Discussion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +26,8 @@ public class DiscussionsFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    public List<Discussions> discussions=new ArrayList<>();
-    public ListView simpleList;
-    public DiscussionListAdapter adapter;
-    public FloatingActionButton fab;
+    public List<Discussion> discussions = new ArrayList<>();
+    public DiscussionListAdapter discussionListAdapter;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -60,45 +57,31 @@ public class DiscussionsFragment extends Fragment {
 
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_discussions,container,false);
+        View view = inflater.inflate(R.layout.fragment_discussions, container, false);
         // Inflate the layout for this fragment
 
-        simpleList=(ListView)view.findViewById(R.id.contactsList);
-        adapter=new DiscussionListAdapter(getContext(),discussions);
-        discussions.add(new Discussions("Ariel AHOGNISSE","bof","je suis amoureux de toi ","il y a 5"));
-        discussions.add(new Discussions("Ariel AHOGNISSE","bof","je suis amoureux de toi ","il y a 5"));
-        discussions.add(new Discussions("Ariel AHOGNISSE","bof","je suis amoureux de toi ","il y a 5"));
-        discussions.add(new Discussions("Ariel AHOGNISSE","bof","je suis amoureux de toi ","il y a 5"));
-        discussions.add(new Discussions("Ariel AHOGNISSE","bof","je suis amoureux de toi ","il y a 5"));
-        discussions.add(new Discussions("Ariel AHOGNISSE","bof","je suis amoureux de toi ","il y a 5"));
-        discussions.add(new Discussions("Ariel AHOGNISSE","bof","je suis amoureux de toi ","il y a 5"));
-        discussions.add(new Discussions("Ariel AHOGNISSE","bof","je suis amoureux de toi ","il y a 5"));
+        ListView simpleList = (ListView) view.findViewById(R.id.discussionsList);
+
+        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
+        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
+        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
+        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
+        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
+        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
+        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
+        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
+
+        discussionListAdapter = new DiscussionListAdapter(getActivity(), discussions);
 
         // products=(List<Product>) productWebService.getProducts();
         //adapter=new CustomAdapter(this,productWebService.getProducts());
-        simpleList.setAdapter(adapter);
+        simpleList.setAdapter(discussionListAdapter);
 
-//        //envoie des informations d'un produit vers lactivité ProductInformation
-//        simpleList.setOnItemClickListener((adapterView, view, i, l) -> {
-//           Intent intent=new Intent(getContext(),Discussion.class);
-//           startActivity(intent);
-//       });
-        Log.d(TAG,""+discussions);
+        Log.e("DISCUSSIONFRAGMENT", "" + discussions);
         return view;
     }
 }
