@@ -1,4 +1,4 @@
-package com.faridcodeur.letschat;
+package com.faridcodeur.letschat.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.faridcodeur.letschat.databinding.ActivityConfigProfileBinding;
 import com.faridcodeur.letschat.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {

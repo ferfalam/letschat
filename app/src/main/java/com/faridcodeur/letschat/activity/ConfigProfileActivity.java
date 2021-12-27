@@ -1,16 +1,13 @@
-package com.faridcodeur.letschat;
+package com.faridcodeur.letschat.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import com.faridcodeur.letschat.databinding.ActivityAuthBinding;
 import com.faridcodeur.letschat.databinding.ActivityConfigProfileBinding;
-import com.google.android.material.textfield.TextInputEditText;
 
 public class ConfigProfileActivity extends AppCompatActivity {
     private ActivityConfigProfileBinding binding;
