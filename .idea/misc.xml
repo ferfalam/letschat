@@ -5,9 +5,12 @@
       <map>
         <entry key="app/src/main/res/drawable/backgound_message.xml" value="0.2328125" />
         <entry key="app/src/main/res/drawable/edit_text_project_style.xml" value="0.2328125" />
+        <entry key="app/src/main/res/drawable/ic_baseline_show_chart_24.xml" value="0.12083333333333333" />
         <entry key="app/src/main/res/drawable/left_strock.xml" value="0.2328125" />
         <entry key="app/src/main/res/drawable/primary.xml" value="0.2328125" />
+        <entry key="app/src/main/res/drawable/rounded.xml" value="0.22923076923076924" />
         <entry key="app/src/main/res/drawable/sondage_message_style.xml" value="0.2328125" />
+        <entry key="app/src/main/res/layout/actionbar_sondage.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.12228260869565218" />
         <entry key="app/src/main/res/layout/activity_main2.xml" value="0.25" />
         <entry key="app/src/main/res/layout/question_multichoice_type.xml" value="0.21666666666666667" />

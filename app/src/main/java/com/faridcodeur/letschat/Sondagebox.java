@@ -1,8 +1,12 @@
 package com.faridcodeur.letschat;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.net.LinkAddress;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -13,6 +17,7 @@ import com.faridcodeur.letschat.entities.SondageMapping;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Sondagebox extends AppCompatActivity {
     private List<SondageMapping> listSondage = new ArrayList<SondageMapping>();
@@ -23,6 +28,12 @@ public class Sondagebox extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMain2Binding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_main2);
+
+        Objects.requireNonNull(getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+
+
+
+        getSupportActionBar().setCustomView(R.layout.actionbar_sondage);
 
         generateQuestion();
 
@@ -45,9 +56,7 @@ public class Sondagebox extends AppCompatActivity {
         List<String> strList1 = Arrays.asList("je suis content" , "je suis là", "Nous sommes tous là");
         listSondage.add(new SondageMapping("1 . que pensz vous" , "text"));
         listSondage.add(new SondageMapping("2 . que voulez vous" , "uniChoice",strList.size(),strList));
-        listSondage.add(new SondageMapping("2 . que voulez vous" , "uniChoice",strList.size(),strList));
-        listSondage.add(new SondageMapping("2 . que voulez vous" , "uniChoice",strList.size(),strList));
-        listSondage.add(new SondageMapping("2 . que voulez vous" , "uniChoice",strList.size(),strList));
+        listSondage.add(new SondageMapping("2 . Vous aimez le sucre" , "uniChoice",strList.size(),strList));
         listSondage.add(new SondageMapping("3 . Liste de question multiChoice" , "multiChoice",strList1.size(),strList1));
     }
 }
