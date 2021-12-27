@@ -23,7 +23,7 @@ public class FragmentAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         if (position == 1) {
-            return ContactFragment.newInstance();
+            return SurveysFragment.newInstance();
         }
         return DiscussionsFragment.newInstance();
     }
