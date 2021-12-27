@@ -15,6 +15,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.adapters.FragmentAdapter;
+import com.faridcodeur.letschat.databinding.ActivityMainBinding;
 import com.faridcodeur.letschat.survey.fragements.NewSurveyFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -23,14 +24,10 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-    ViewPager2 viewPager2;
-    TabLayout tabLayout;
+    private ActivityMainBinding binding;
     private final String[] titles = new String[]{"Discussions", "Sondages"};
     private FragmentAdapter adapter;
     private boolean isFabOpen = false;
-    private FloatingActionButton settings;
-    private FloatingActionButton new_surveys;
-    private FloatingActionButton new_sms;
 
 
 
@@ -38,22 +35,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         //setting toolbar on main activity interface
-        setSupportActionBar(findViewById(R.id.toolbar1));
+        setSupportActionBar(binding.toolbar1);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         // setting event on  toolbar when we touch it
 
-        viewPager2= findViewById(R.id.viewer);
-        tabLayout= findViewById(R.id.tablayout1);
-        settings = findViewById(R.id.settings);
-        new_surveys = findViewById(R.id.new_surveys);
-        new_sms = findViewById(R.id.new_sms);
 
-        tabLayout.addTab(tabLayout.newTab().setText("Discussions"));
-        tabLayout.addTab(tabLayout.newTab().setText("Sondages"));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        binding.tablayout1.addTab(binding.tablayout1.newTab().setText("Discussions"));
+        binding.tablayout1.addTab(binding.tablayout1.newTab().setText("Sondages"));
+        binding.tablayout1.setTabGravity(TabLayout.GRAVITY_FILL);
         init();
     }
 
@@ -67,10 +61,10 @@ public class MainActivity extends AppCompatActivity {
     private void init() {
         Objects.requireNonNull(getSupportActionBar()).setElevation(0);
         adapter = new FragmentAdapter(getSupportFragmentManager(), getLifecycle());
-        viewPager2.setAdapter(adapter);
+        binding.viewer.setAdapter(adapter);
 
         // attaching tab mediator
-        new TabLayoutMediator(this.tabLayout, this.viewPager2, (tab, position) -> tab.setText(titles[position])).attach();
+        new TabLayoutMediator(this.binding.tablayout1, this.binding.viewer, (tab, position) -> tab.setText(titles[position])).attach();
 
         findViewById(R.id.profile_image).setOnClickListener(view -> {
             //TODO Call Setting activity here
@@ -82,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
             else closeFabMenu();
         });
 
-        settings.setOnClickListener(view -> {
+        binding.settings.setOnClickListener(view -> {
             //TODO Call Settings activity here
             //Toast.makeText(getBaseContext(), "Go to Settings", Toast.LENGTH_SHORT).show();
             Log.e("TAG", "settings");
@@ -91,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        new_surveys.setOnClickListener(view -> {
+        binding.newSurveys.setOnClickListener(view -> {
             //TODO Call new Survey activity here
             //Toast.makeText(getBaseContext(), "Create new surveys", Toast.LENGTH_SHORT).show();
             Log.e("TAG", "new surveys");
@@ -100,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        new_sms.setOnClickListener(view -> {
+        binding.newSms.setOnClickListener(view -> {
             //TODO Call contact activity here
             //Toast.makeText(getBaseContext(), "Create new discussion", Toast.LENGTH_SHORT).show();
             Log.e("TAG", "new discussion");
@@ -114,25 +108,25 @@ public class MainActivity extends AppCompatActivity {
     public void showFabMenu(){
         isFabOpen = true;
         ((FloatingActionButton)findViewById(R.id.expand_button)).setImageDrawable(getResources().getDrawable(R.drawable.ic_close));
-        settings.setVisibility(View.VISIBLE);
-        new_surveys.setVisibility(View.VISIBLE);
-        new_sms.setVisibility(View.VISIBLE);
+        binding.settings.setVisibility(View.VISIBLE);
+        binding.newSurveys.setVisibility(View.VISIBLE);
+        binding.newSms.setVisibility(View.VISIBLE);
 
-        settings.animate().translationY(-getResources().getDimension(R.dimen.st75));
-        new_surveys.animate().translationY(-getResources().getDimension(R.dimen.st105));
-        new_sms.animate().translationY(-getResources().getDimension(R.dimen.st255));
+        binding.settings.animate().translationY(-getResources().getDimension(R.dimen.st75));
+        binding.newSurveys.animate().translationY(-getResources().getDimension(R.dimen.st105));
+        binding.newSms.animate().translationY(-getResources().getDimension(R.dimen.st255));
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     public void closeFabMenu(){
         isFabOpen = false;
-        settings.animate().translationY(0);
-        new_surveys.animate().translationY(0);
-        new_sms.animate().translationY(0);
+        binding.settings.animate().translationY(0);
+        binding.newSurveys.animate().translationY(0);
+        binding.newSms.animate().translationY(0);
 
-        settings.setVisibility(View.INVISIBLE);
-        new_surveys.setVisibility(View.INVISIBLE);
-        new_sms.setVisibility(View.INVISIBLE);
+        binding.settings.setVisibility(View.INVISIBLE);
+        binding.newSurveys.setVisibility(View.INVISIBLE);
+        binding.newSms.setVisibility(View.INVISIBLE);
         ((FloatingActionButton)findViewById(R.id.expand_button)).setImageDrawable(getResources().getDrawable(R.drawable.ic_navigation));
     }
 }
