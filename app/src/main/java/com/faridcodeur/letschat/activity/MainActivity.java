@@ -106,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
             //Toast.makeText(getBaseContext(), "Go to Settings", Toast.LENGTH_SHORT).show();
             Log.e("TAG", "settings");
             Intent intent = new Intent(MainActivity.this, FabActionActivity.class);
-            intent.putExtra("ACTION", "SETTINGS");
             startActivity(intent);
         });
 
