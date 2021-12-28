@@ -11,8 +11,10 @@
         <entry key="app/src/main/res/drawable/rounded.xml" value="0.22923076923076924" />
         <entry key="app/src/main/res/drawable/sondage_message_style.xml" value="0.2328125" />
         <entry key="app/src/main/res/layout/actionbar_sondage.xml" value="0.21666666666666667" />
+        <entry key="app/src/main/res/layout/activity_config_profile.xml" value="0.2321167883211679" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.12228260869565218" />
         <entry key="app/src/main/res/layout/activity_main2.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/chat_screen_activity.xml" value="0.1" />
         <entry key="app/src/main/res/layout/question_multichoice_type.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/layout/question_text_type.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/layout/question_texte.xml" value="0.21666666666666667" />

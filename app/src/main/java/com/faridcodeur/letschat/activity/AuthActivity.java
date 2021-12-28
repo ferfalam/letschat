@@ -52,7 +52,7 @@ public class AuthActivity extends AppCompatActivity implements AuthCallback {
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_auth);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
 
     }
@@ -78,6 +78,7 @@ public class AuthActivity extends AppCompatActivity implements AuthCallback {
                         Log.d("TAG", "onCodeSent: " + verificationId);
                         Bundle bundle = new Bundle();
                         bundle.putString("phoneNumber", phoneNumber);
+                        AppPreference appPreference = AppPreference.getInstance(AuthActivity.this);
                         navController.navigate(R.id.action_First2Fragment_to_Second2Fragment, bundle);
                     }
 
