@@ -1,4 +1,4 @@
-package com.faridcodeur.letschat.Adapter;
+package com.faridcodeur.letschat.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

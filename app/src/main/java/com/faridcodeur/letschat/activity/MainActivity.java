@@ -60,10 +60,23 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, AuthActivity.class);
             startActivity(intent);
             finish();
+        }else if(appPreference.getUserName().equals("")) {
+            Intent intent = new Intent(this, ConfigProfileActivity.class);
+            startActivity(intent);
+            finish();
         }
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+
+        final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
+        if (firebaseAuth.getCurrentUser() != null) {
+            firebaseUser = firebaseAuth.getCurrentUser();
+        }
+        Uri uri = firebaseUser.getPhotoUrl();
+        Glide.with(MainActivity.this).load(uri).into(binding.profileImage);
 
         //setting toolbar on main activity interface
         setSupportActionBar(binding.toolbar1);
@@ -163,14 +176,6 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(binding.getRoot(), "No Permission", Snackbar.LENGTH_LONG).setAction("Ok", container_view -> {
                     Log.e("onRequest", "onRequestPermissionsResult: No permission");
                 }).show();
-            }else{
-                final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-
-                if (firebaseAuth.getCurrentUser() != null) {
-                    firebaseUser = firebaseAuth.getCurrentUser();
-                }
-                Uri uri = firebaseUser.getPhotoUrl();
-                Glide.with(MainActivity.this).load(uri).into(binding.profileImage);
             }
         }
     }

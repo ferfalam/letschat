@@ -26,10 +26,10 @@ import java.util.List;
 public class ContactFragment extends Fragment {
 
     private ContactViewModel mViewModel;
+    private ContactFragmentBinding binding;
+    private static ContactFragment contactFragment;
     private List<Contact> contacts = new ArrayList<>();
     private ContactListAdapter contactListAdapter;
-    private static ContactFragment contactFragment;
-    private ContactFragmentBinding binding;
     final int PERMISSIONS_REQUEST = 2215;
 
     public static ContactFragment newInstance() {
@@ -42,8 +42,6 @@ public class ContactFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        binding = ContactFragmentBinding.inflate(inflater, container, false);
-
         String[] PERMISSIONS_CONTACT = {Manifest.permission.READ_CONTACTS};
 
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
@@ -55,6 +53,8 @@ public class ContactFragment extends Fragment {
                 ActivityCompat.requestPermissions(requireActivity(), PERMISSIONS_CONTACT, PERMISSIONS_REQUEST);
             }
         }
+
+        binding = ContactFragmentBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 

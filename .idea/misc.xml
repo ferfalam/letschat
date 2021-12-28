@@ -14,7 +14,11 @@
         <entry key="app/src/main/res/layout/activity_config_profile.xml" value="0.2321167883211679" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.12228260869565218" />
         <entry key="app/src/main/res/layout/activity_main2.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/chat_screen_activity.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_sondage_box.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/chat_screen_activity.xml" value="0.15" />
+        <entry key="app/src/main/res/layout/contact_fragment.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/contact_items.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/new_survey_fragment.xml" value="0.14722222222222223" />
         <entry key="app/src/main/res/layout/question_multichoice_type.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/layout/question_text_type.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/layout/question_texte.xml" value="0.21666666666666667" />

@@ -3,14 +3,11 @@ package com.faridcodeur.letschat.activity;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.net.LinkAddress;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.faridcodeur.letschat.Adapter.SondageAdapter;
+import com.faridcodeur.letschat.adapters.SondageAdapter;
 import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.databinding.ActivitySondageBoxBinding;
 import com.faridcodeur.letschat.entities.SondageMapping;
@@ -28,13 +25,8 @@ public class SondageBoxActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySondageBoxBinding.inflate(getLayoutInflater());
-        setContentView(R.layout.activity_sondage_box);
-
-        Objects.requireNonNull(getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-
-
-
-        getSupportActionBar().setCustomView(R.layout.actionbar_sondage);
+        setContentView(binding.getRoot());
+        setSupportActionBar(binding.sondageBoxToolbar);
 
         generateQuestion();
 
