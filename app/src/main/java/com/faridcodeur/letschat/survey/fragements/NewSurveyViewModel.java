@@ -11,7 +11,10 @@ import com.faridcodeur.letschat.survey.model.UniqueChoiceQuestion;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class NewSurveyViewModel extends AndroidViewModel {
     // TODO: Implement the ViewModel
@@ -25,32 +28,20 @@ public class NewSurveyViewModel extends AndroidViewModel {
                               @Nullable List<UniqueChoiceQuestion> uniqueChoiceQuestionList,
                               @Nullable List<MultipleChoiceQuestion> multipleChoiceQuestionList){
 
+        List<Map<String, String>> questionsList = new ArrayList<>();
+
         assert textQuestionList != null;
         boolean hasError = false;
         for (TextQuestion textQuestion : textQuestionList){
-            if (textQuestion.build()) {
+            Map<String, String> map = textQuestion.get();
+            if (map != null) {
                 textQuestion.setSurveyId(surveys.getId());
             }else {
                 hasError = true;
                 break;
             }
         }
-        assert uniqueChoiceQuestionList != null;
-        for (UniqueChoiceQuestion uniqueChoiceQuestion : uniqueChoiceQuestionList){
-            if (uniqueChoiceQuestion.build()) {
-                uniqueChoiceQuestion.setSurveyId(surveys.getId());
-            }else {
-                hasError = true;
-                break;
-            }
-        }
 
-        assert multipleChoiceQuestionList != null;
-        for (MultipleChoiceQuestion multipleChoiceQuestion : multipleChoiceQuestionList){
-            if (multipleChoiceQuestion.build()) {
-                multipleChoiceQuestion.setSurveyId(surveys.getId());
-            }else break;
-        }
     }
 
 }

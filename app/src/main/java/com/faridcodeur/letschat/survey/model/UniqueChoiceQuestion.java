@@ -14,7 +14,9 @@ import com.google.gson.Gson;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class UniqueChoiceQuestion implements Serializable {
@@ -57,18 +59,25 @@ public class UniqueChoiceQuestion implements Serializable {
         });
     }
 
-    public boolean build(){
+    public Map<String, String> get(){
         TextInputEditText question = view.findViewById(R.id.question);
         if (!InputValidation.isEmptyInput(question, false)){
+
             this.question = Objects.requireNonNull(question.getText()).toString();
             List<String> list = new ArrayList<>();
             for (RadioButton radioButton: radioButtonList) {
                 list.add(radioButton.getText().toString());
             }
-            radioTextList = new Gson().toJson(list);
-            return true;
+
+            Map<String, String> uniqueQuestion = new HashMap<>();
+            uniqueQuestion.put("id", Integer.toString(this.id));
+            uniqueQuestion.put("type", "radio");
+            uniqueQuestion.put("question", this.question);
+            uniqueQuestion.put("items", new Gson().toJson(list));
+
+            return uniqueQuestion;
         }else {question.setError("Aucune question renseigner");}
-        return false;
+        return null;
     }
 
     public View getView() {

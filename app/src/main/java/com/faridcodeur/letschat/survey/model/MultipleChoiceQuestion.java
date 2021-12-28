@@ -14,7 +14,9 @@ import com.google.gson.Gson;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class MultipleChoiceQuestion implements Serializable {
@@ -59,18 +61,25 @@ public class MultipleChoiceQuestion implements Serializable {
 
     }
 
-    public boolean build(){
+    public Map<String, String> get(){
         TextInputEditText question = view.findViewById(R.id.question);
         if (!InputValidation.isEmptyInput(question, false)){
+
             this.question = Objects.requireNonNull(question.getText()).toString();
             List<String> list = new ArrayList<>();
             for (CheckBox checkBox: checkBoxList) {
                 list.add(checkBox.getText().toString());
             }
-            checkBoxTextList = new Gson().toJson(list);
-            return true;
+
+            Map<String, String> multipleQuestion = new HashMap<>();
+            multipleQuestion.put("id", Integer.toString(this.id));
+            multipleQuestion.put("type", "checkbox");
+            multipleQuestion.put("question", this.question);
+            multipleQuestion.put("items", new Gson().toJson(list));
+
+            return multipleQuestion;
         }else {question.setError("Aucune question renseigner");}
-        return false;
+        return null;
     }
 
     public View getView() {

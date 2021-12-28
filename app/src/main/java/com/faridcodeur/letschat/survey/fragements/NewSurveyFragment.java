@@ -88,7 +88,7 @@ public class NewSurveyFragment extends Fragment {
                 }else if (InputValidation.isEmptyInput(binding.surveyDescription, false)){
                     binding.surveyDescription.setError("Aucune description renseigner");
                 }else {
-                    Surveys surveys = new Surveys(Objects.requireNonNull(binding.surveyTitle.getText()).toString(), Objects.requireNonNull(binding.surveyDescription.getText()).toString(), null);
+                    Surveys surveys = new Surveys(Objects.requireNonNull(binding.surveyTitle.getText()).toString(), Objects.requireNonNull(binding.surveyDescription.getText()).toString());
                     mViewModel.createSurveys(surveys, textQuestionList, uniqueChoiceQuestionList, multipleChoiceQuestionList);
                 }
             }

@@ -55,22 +55,22 @@ public class ContactViewModel extends AndroidViewModel {
     }
 
     public static void Test(){
-        List<Map<String, Object>> questions = new ArrayList<>();
+        List<Map<String, String>> questions = new ArrayList<>();
 
         //Pour les TextQuestion
-        Map<String, Object> textQuestion = new HashMap<>();
+        Map<String, String> textQuestion = new HashMap<>();
         textQuestion.put("type", "TEXT_QUESTION");
         textQuestion.put("question", "La question");
 
-        Map<String, Object> uniqueQuestion = new HashMap<>();
+        Map<String, String> uniqueQuestion = new HashMap<>();
         uniqueQuestion.put("type", "UNIQUE_QUESTION");
         uniqueQuestion.put("question", "La question");
-        uniqueQuestion.put("radiosTextValue", new String[]{"Value1", "Value2","..."});
+        uniqueQuestion.put("radiosTextValue", new Gson().toJson(new String[]{"Value1", "Value2","..."}));
 
-        Map<String, Object> multipleQuestion = new HashMap<>();
-        uniqueQuestion.put("type", "MULTIPLE_QUESTION");
-        uniqueQuestion.put("question", "La question");
-        uniqueQuestion.put("checkboxTextValue", new String[]{"Value1", "Value2","..."});
+        Map<String, String> multipleQuestion = new HashMap<>();
+        multipleQuestion.put("type", "MULTIPLE_QUESTION");
+        multipleQuestion.put("question", "La question");
+        multipleQuestion.put("checkboxTextValue", new Gson().toJson(new String[]{"Value1", "Value2","..."}));
 
         questions.add(textQuestion);
         questions.add(uniqueQuestion);

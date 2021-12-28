@@ -11,7 +11,9 @@ import com.faridcodeur.letschat.utiles.InputValidation;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class TextQuestion implements Serializable {
@@ -42,13 +44,18 @@ public class TextQuestion implements Serializable {
     }
 
     @SuppressLint("CutPasteId")
-    public boolean build(){
+    public Map<String, String> get(){
         TextInputEditText question = view.findViewById(R.id.question);
         if (!InputValidation.isEmptyInput(question, false)){
             this.question = Objects.requireNonNull(question.getText()).toString();
-            return true;
+            Map<String, String> textQuestion = new HashMap<>();
+            textQuestion.put("id", Integer.toString(this.id));
+            textQuestion.put("type", "text");
+            textQuestion.put("response", null);
+            textQuestion.put("question", this.question);
+            return textQuestion;
         }else {question.setError("Aucune question renseigner");}
-        return false;
+        return null;
     }
 
     public View getView() {
