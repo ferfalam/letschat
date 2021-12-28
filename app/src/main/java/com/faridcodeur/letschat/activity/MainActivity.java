@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentAdapter adapter;
     private FirebaseUser firebaseUser;
     private boolean isFabOpen = false;
-    private int PERMISSIONS_REQUEST = 3015;
+    private final int PERMISSIONS_REQUEST = 3015;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
 
         final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 

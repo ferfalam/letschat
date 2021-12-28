@@ -51,7 +51,7 @@ public class SurveyListAdapter extends BaseAdapter {
         TextView created_at = myView.findViewById(R.id.survey_created_at);
         title.setText(surveys.get(i).getTitle());
         description.setText(surveys.get(i).getDescription());
-        created_at.setText(surveys.get(i).getCreated_at());
+        created_at.setText((CharSequence) surveys.get(i).getCreated_at());
         myView.setOnClickListener(view1 -> {
             Intent intent = new Intent(context, SondageBoxActivity.class);
             context.startActivity(intent);
