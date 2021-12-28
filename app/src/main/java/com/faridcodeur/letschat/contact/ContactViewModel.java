@@ -5,15 +5,21 @@ import android.app.Application;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.provider.ContactsContract;
+import android.util.ArrayMap;
 import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.faridcodeur.letschat.entities.Contact;
+import com.faridcodeur.letschat.entities.Surveys;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class ContactViewModel extends AndroidViewModel {
     // TODO: Implement the ViewModel
@@ -47,5 +53,4 @@ public class ContactViewModel extends AndroidViewModel {
             cursor.close();
         }
     }
-
 }

@@ -73,7 +73,7 @@ public class SurveysFragment extends Fragment {
 
     private void generateDiscussions(){
         for (int i=0; i<=20; i++) {
-            surveys.add(new Surveys(1, "Proposer aux prospects des services informatiques pouvant améliorer leurs chiffres d’affaires ou d’améliorer leur quotidien", "Analyser les systèmes informatiques des entreprises et de quelques particuliers", "il y a 3min"));
+            surveys.add(new Surveys("Proposer aux prospects des services informatiques pouvant améliorer leurs chiffres d’affaires ou d’améliorer leur quotidien", "Analyser les systèmes informatiques des entreprises et de quelques particuliers", null));
         }
     }
 }

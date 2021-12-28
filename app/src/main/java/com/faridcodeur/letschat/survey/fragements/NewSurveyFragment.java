@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.databinding.NewSurveyFragmentBinding;
@@ -37,9 +38,8 @@ public class NewSurveyFragment extends Fragment {
     private List<TextQuestion> textQuestionList = new ArrayList<>();
     private List<UniqueChoiceQuestion> uniqueChoiceQuestionList = new ArrayList<>();
     private List<MultipleChoiceQuestion> multipleChoiceQuestionList = new ArrayList<>();
+    public static int ids = 0;
 
-    public NewSurveyFragment() {
-    }
 
     public static NewSurveyFragment newInstance() {
         if (newSurveyFragment==null){
@@ -59,8 +59,6 @@ public class NewSurveyFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        AtomicInteger ids = new AtomicInteger();
-
         LinearLayout layout = binding.surveyContentLayout;
         BottomNavigationView bottomNavigationView = binding.bottomNavigation;
         ScrollView scrollView = binding.surveyContentLayoutScroll;
@@ -68,17 +66,17 @@ public class NewSurveyFragment extends Fragment {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             Log.e("ITEM", item.toString());
             if (item.getItemId() == R.id.textQuestion) {
-                TextQuestion textQuestions = new TextQuestion(this, layout, textQuestionList);
+                TextQuestion textQuestions = new TextQuestion(ids++, this, layout, textQuestionList);
                 layout.addView(textQuestions.getView());
                 textQuestionList.add(textQuestions);
                 scrollView.fullScroll(View.FOCUS_DOWN);
             }else if (item.getItemId() == R.id.uniqueChoice){
-                UniqueChoiceQuestion uniqueChoiceQuestion = new UniqueChoiceQuestion(this, layout, uniqueChoiceQuestionList);
+                UniqueChoiceQuestion uniqueChoiceQuestion = new UniqueChoiceQuestion(ids++, this, layout, uniqueChoiceQuestionList);
                 layout.addView(uniqueChoiceQuestion.getView());
                 uniqueChoiceQuestionList.add(uniqueChoiceQuestion);
                 scrollView.fullScroll(View.FOCUS_DOWN);
             }else if (item.getItemId() == R.id.multipleChoice){
-                MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion(this, layout, multipleChoiceQuestionList);
+                MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion(ids++,this, layout, multipleChoiceQuestionList);
                 layout.addView(multipleChoiceQuestion.getView());
                 multipleChoiceQuestionList.add(multipleChoiceQuestion);
                 scrollView.fullScroll(View.FOCUS_DOWN);
@@ -89,7 +87,9 @@ public class NewSurveyFragment extends Fragment {
                     binding.surveyDescription.setError("Aucune description renseigner");
                 }else {
                     Surveys surveys = new Surveys(Objects.requireNonNull(binding.surveyTitle.getText()).toString(), Objects.requireNonNull(binding.surveyDescription.getText()).toString());
-                    mViewModel.createSurveys(surveys, textQuestionList, uniqueChoiceQuestionList, multipleChoiceQuestionList);
+                    if (mViewModel.createSurveys(surveys, textQuestionList, uniqueChoiceQuestionList, multipleChoiceQuestionList)){
+                        Toast.makeText(getContext(), "Votre sondage a été créer avec succès", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
             return true;

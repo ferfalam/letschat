@@ -4,14 +4,8 @@ import android.annotation.SuppressLint;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 
 import androidx.fragment.app.Fragment;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.Insert;
-import androidx.room.PrimaryKey;
 
 import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.utiles.InputValidation;
@@ -20,32 +14,25 @@ import com.google.gson.Gson;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class MultipleChoiceQuestion implements Serializable {
     private int id;
-    private int surveyId;
     private String question;
-    private String checkBoxTextList;
-
     private View view;
     private LinearLayout checkboxLayout;
 
     protected final List<CheckBox> checkBoxList = new ArrayList<>();
 
     @SuppressLint("InflateParams")
-    public MultipleChoiceQuestion(Fragment fragment, LinearLayout linearLayout, List<MultipleChoiceQuestion> multipleChoiceQuestionList) {
+    public MultipleChoiceQuestion(int id, Fragment fragment, LinearLayout linearLayout, List<MultipleChoiceQuestion> multipleChoiceQuestionList) {
         view = fragment.getLayoutInflater().inflate(R.layout.new_survey_multiple_choice_item, null);
         checkboxLayout = view.findViewById(R.id.checkboxLayout);
-        setListener(fragment, linearLayout, multipleChoiceQuestionList);
-    }
-
-    public MultipleChoiceQuestion(int id, int surveyId, String question, String checkBoxTextList) {
         this.id = id;
-        this.surveyId = surveyId;
-        this.question = question;
-        this.checkBoxTextList = checkBoxTextList;
+        setListener(fragment, linearLayout, multipleChoiceQuestionList);
     }
 
     public void setListener(Fragment fragment, LinearLayout linearLayout, List<MultipleChoiceQuestion> multipleChoiceQuestionList){
@@ -65,18 +52,25 @@ public class MultipleChoiceQuestion implements Serializable {
 
     }
 
-    public boolean build(){
+    public Map<String, String> get(){
         TextInputEditText question = view.findViewById(R.id.question);
         if (!InputValidation.isEmptyInput(question, false)){
+
             this.question = Objects.requireNonNull(question.getText()).toString();
             List<String> list = new ArrayList<>();
             for (CheckBox checkBox: checkBoxList) {
                 list.add(checkBox.getText().toString());
             }
-            checkBoxTextList = new Gson().toJson(list);
-            return true;
+
+            Map<String, String> multipleQuestion = new HashMap<>();
+            multipleQuestion.put("id", Integer.toString(this.id));
+            multipleQuestion.put("type", "checkbox");
+            multipleQuestion.put("question", this.question);
+            multipleQuestion.put("items", new Gson().toJson(list));
+
+            return multipleQuestion;
         }else {question.setError("Aucune question renseigner");}
-        return false;
+        return null;
     }
 
     public View getView() {
@@ -87,6 +81,10 @@ public class MultipleChoiceQuestion implements Serializable {
         return Objects.requireNonNull(((TextInputEditText)view.findViewById(R.id.question)).getText()).toString();
     }
 
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -95,25 +93,9 @@ public class MultipleChoiceQuestion implements Serializable {
         return id;
     }
 
-    public String getCheckBoxTextList() {
-        return checkBoxTextList;
-    }
-
-    public void setCheckBoxTextList(String checkBoxTextList) {
-        this.checkBoxTextList = checkBoxTextList;
-    }
-
-    public int getSurveyId() {
-        return surveyId;
-    }
-
-    public void setSurveyId(int surveyId) {
-        this.surveyId = surveyId;
-    }
 }
 
 class CheckButtonLayout{
-    private int id;
     private final View view;
     private final CheckBox checkBox;
 

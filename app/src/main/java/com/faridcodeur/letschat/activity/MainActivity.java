@@ -4,8 +4,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.ContentResolver;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,13 +16,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.adapters.FragmentAdapter;
 import com.faridcodeur.letschat.databinding.ActivityMainBinding;
-import com.faridcodeur.letschat.survey.fragements.NewSurveyFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
@@ -61,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
         AppPreference appPreference = AppPreference.getInstance(this);
         if(!appPreference.isConnected()) {
             Intent intent = new Intent(this, AuthActivity.class);
+            startActivity(intent);
+            finish();
+        }else if(appPreference.getUserName().equals("")) {
+            Intent intent = new Intent(this, ConfigProfileActivity.class);
             startActivity(intent);
             finish();
         }

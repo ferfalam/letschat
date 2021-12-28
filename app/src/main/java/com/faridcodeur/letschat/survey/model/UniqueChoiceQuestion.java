@@ -6,10 +6,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 
 import androidx.fragment.app.Fragment;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
 
 import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.utiles.InputValidation;
@@ -18,31 +14,25 @@ import com.google.gson.Gson;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class UniqueChoiceQuestion implements Serializable {
     private int id;
-    private int surveyId;
     private String question;
-    private String radioTextList;
 
     private View view;
     private LinearLayout radioLayout;
     protected final List<RadioButton> radioButtonList = new ArrayList<>();
 
     @SuppressLint("InflateParams")
-    public UniqueChoiceQuestion(Fragment fragment, LinearLayout linearLayout, List<UniqueChoiceQuestion> uniqueChoiceQuestionList) {
+    public UniqueChoiceQuestion(int id, Fragment fragment, LinearLayout linearLayout, List<UniqueChoiceQuestion> uniqueChoiceQuestionList) {
         view = fragment.getLayoutInflater().inflate(R.layout.new_survey_unique_choice_item, null);
         radioLayout = view.findViewById(R.id.radioLayout);
-        setListener(fragment, linearLayout, uniqueChoiceQuestionList);
-    }
-
-    public UniqueChoiceQuestion(int id, int surveyId, String question, String radioTextList) {
         this.id = id;
-        this.surveyId = surveyId;
-        this.question = question;
-        this.radioTextList = radioTextList;
+        setListener(fragment, linearLayout, uniqueChoiceQuestionList);
     }
 
     public void setListener(Fragment fragment, LinearLayout linearLayout, List<UniqueChoiceQuestion> uniqueChoiceQuestionList){
@@ -61,18 +51,25 @@ public class UniqueChoiceQuestion implements Serializable {
         });
     }
 
-    public boolean build(){
+    public Map<String, String> get(){
         TextInputEditText question = view.findViewById(R.id.question);
         if (!InputValidation.isEmptyInput(question, false)){
+
             this.question = Objects.requireNonNull(question.getText()).toString();
             List<String> list = new ArrayList<>();
             for (RadioButton radioButton: radioButtonList) {
                 list.add(radioButton.getText().toString());
             }
-            radioTextList = new Gson().toJson(list);
-            return true;
+
+            Map<String, String> uniqueQuestion = new HashMap<>();
+            uniqueQuestion.put("id", Integer.toString(this.id));
+            uniqueQuestion.put("type", "radio");
+            uniqueQuestion.put("question", this.question);
+            uniqueQuestion.put("items", new Gson().toJson(list));
+
+            return uniqueQuestion;
         }else {question.setError("Aucune question renseigner");}
-        return false;
+        return null;
     }
 
     public View getView() {
@@ -93,22 +90,6 @@ public class UniqueChoiceQuestion implements Serializable {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getRadioTextList() {
-        return radioTextList;
-    }
-
-    public void setRadioTextList(String radioTextList) {
-        this.radioTextList = radioTextList;
-    }
-
-    public int getSurveyId() {
-        return surveyId;
-    }
-
-    public void setSurveyId(int surveyId) {
-        this.surveyId = surveyId;
     }
 }
 
