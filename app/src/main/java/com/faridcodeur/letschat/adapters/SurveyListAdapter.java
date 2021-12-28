@@ -2,6 +2,7 @@ package com.faridcodeur.letschat.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.faridcodeur.letschat.R;
+import com.faridcodeur.letschat.activity.SondageBoxActivity;
 import com.faridcodeur.letschat.entities.Surveys;
 import com.google.android.material.card.MaterialCardView;
 
@@ -51,8 +53,8 @@ public class SurveyListAdapter extends BaseAdapter {
         description.setText(surveys.get(i).getDescription());
         created_at.setText(surveys.get(i).getCreated_at());
         myView.setOnClickListener(view1 -> {
-            Log.e("CLIKCED", "LIST ITEM");
-            Toast.makeText(context,"Clicked Suveys " + i, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context, SondageBoxActivity.class);
+            context.startActivity(intent);
         });
         return myView;
     }

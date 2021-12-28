@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">uChat</string>
-    <string name="politique_de_confidentialite">S\'inscrire sur Letschat voudra dire que vous avez lu et accepté les politiques de confidentialité</string>
+    <string name="politique_de_confidentialite">S\'inscrire sur uChat voudra dire que vous avez lu et accepté les politiques de confidentialité</string>
     <string name="verify_code_text">Vérifier le code</string>
     <string name="resend_code_text">Renvoyer le code</string>
     <string name="code_confirm_label_text">Entrez le code de confirmation</string>
@@ -9,7 +9,7 @@
     <string name="phone_number_text"> Entrez le Numéro de téléphone</string>
     <string name="code_input_int">Entrez le code</string>
     <string name="enter_name_input_text">Entrez votre nom</string>
-    <string name="thank_text">Merci d\'utiliser Let\'sChat \n Veuillez configurer votre profil</string>
+    <string name="thank_text">Merci d\'utiliser uChat \n Veuillez configurer votre profil</string>
     <string name="continue_text">continuer</string>
     <string name="phone_number_display">+229 66296199</string>
     <string name="test_text">MainActivity</string>

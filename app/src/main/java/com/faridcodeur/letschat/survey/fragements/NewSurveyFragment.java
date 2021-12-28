@@ -38,8 +38,6 @@ public class NewSurveyFragment extends Fragment {
     private List<UniqueChoiceQuestion> uniqueChoiceQuestionList = new ArrayList<>();
     private List<MultipleChoiceQuestion> multipleChoiceQuestionList = new ArrayList<>();
 
-    public NewSurveyFragment() {
-    }
 
     public static NewSurveyFragment newInstance() {
         if (newSurveyFragment==null){
@@ -58,8 +56,6 @@ public class NewSurveyFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        AtomicInteger ids = new AtomicInteger();
 
         LinearLayout layout = binding.surveyContentLayout;
         BottomNavigationView bottomNavigationView = binding.bottomNavigation;
