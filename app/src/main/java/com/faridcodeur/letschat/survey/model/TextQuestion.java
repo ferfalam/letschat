@@ -18,22 +18,14 @@ import java.util.Objects;
 
 public class TextQuestion implements Serializable {
     private int id;
-    private int surveyId;
     private String question;
-    private String response;
-
     private View view;
 
     @SuppressLint("InflateParams")
-    public TextQuestion(Fragment fragment, LinearLayout linearLayout, List<TextQuestion> textQuestionList) {
-        view = fragment.getLayoutInflater().inflate(R.layout.new_survey_textquestion_item, null);
-        setListener(linearLayout, textQuestionList);
-    }
-
-    public TextQuestion(int id, String question, String response) {
+    public TextQuestion(int id, Fragment fragment, LinearLayout linearLayout, List<TextQuestion> textQuestionList) {
+        this.view = fragment.getLayoutInflater().inflate(R.layout.new_survey_textquestion_item, null);
         this.id = id;
-        this.question = question;
-        this.response = response;
+        setListener(linearLayout, textQuestionList);
     }
 
     public void setListener(LinearLayout linearLayout, List<TextQuestion> textQuestionList){
@@ -66,10 +58,6 @@ public class TextQuestion implements Serializable {
         return Objects.requireNonNull(((TextInputEditText)view.findViewById(R.id.question)).getText()).toString();
     }
 
-    public String getResponse() {
-        return Objects.requireNonNull(((TextInputEditText)view.findViewById(R.id.response)).getText()).toString();
-    }
-
     public int getId() {
         return id;
     }
@@ -80,17 +68,5 @@ public class TextQuestion implements Serializable {
 
     public void setQuestion(String question) {
         this.question = question;
-    }
-
-    public void setResponse(String response) {
-        this.response = response;
-    }
-
-    public int getSurveyId() {
-        return surveyId;
-    }
-
-    public void setSurveyId(int surveyId) {
-        this.surveyId = surveyId;
     }
 }

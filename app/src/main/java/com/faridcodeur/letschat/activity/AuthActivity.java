@@ -52,7 +52,7 @@ public class AuthActivity extends AppCompatActivity implements AuthCallback {
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_auth);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
     }
 
     @Override

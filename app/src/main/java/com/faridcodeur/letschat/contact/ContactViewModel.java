@@ -53,40 +53,4 @@ public class ContactViewModel extends AndroidViewModel {
             cursor.close();
         }
     }
-
-    public static void Test(){
-        List<Map<String, String>> questions = new ArrayList<>();
-
-        //Pour les TextQuestion
-        Map<String, String> textQuestion = new HashMap<>();
-        textQuestion.put("type", "TEXT_QUESTION");
-        textQuestion.put("question", "La question");
-
-        Map<String, String> uniqueQuestion = new HashMap<>();
-        uniqueQuestion.put("type", "UNIQUE_QUESTION");
-        uniqueQuestion.put("question", "La question");
-        uniqueQuestion.put("radiosTextValue", new Gson().toJson(new String[]{"Value1", "Value2","..."}));
-
-        Map<String, String> multipleQuestion = new HashMap<>();
-        multipleQuestion.put("type", "MULTIPLE_QUESTION");
-        multipleQuestion.put("question", "La question");
-        multipleQuestion.put("checkboxTextValue", new Gson().toJson(new String[]{"Value1", "Value2","..."}));
-
-        questions.add(textQuestion);
-        questions.add(uniqueQuestion);
-        questions.add(multipleQuestion);
-
-        String str = new Gson().toJson(questions);
-
-        Surveys surveys = new Surveys("Title", "Question");
-        surveys.setQuestions(str);
-
-        Log.e("TEST", "Test: " + surveys.getQuestions());
-
-        //Pour recuperer sous forme e list
-        List<Map<String, Object>> list = new Gson().fromJson(surveys.getQuestions(), questions.getClass());
-        Log.e("TEST", "Test: " + list);
-
-    }
-
 }

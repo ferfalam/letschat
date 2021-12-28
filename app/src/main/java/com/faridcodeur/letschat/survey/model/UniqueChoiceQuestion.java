@@ -21,26 +21,18 @@ import java.util.Objects;
 
 public class UniqueChoiceQuestion implements Serializable {
     private int id;
-    private int surveyId;
     private String question;
-    private String radioTextList;
 
     private View view;
     private LinearLayout radioLayout;
     protected final List<RadioButton> radioButtonList = new ArrayList<>();
 
     @SuppressLint("InflateParams")
-    public UniqueChoiceQuestion(Fragment fragment, LinearLayout linearLayout, List<UniqueChoiceQuestion> uniqueChoiceQuestionList) {
+    public UniqueChoiceQuestion(int id, Fragment fragment, LinearLayout linearLayout, List<UniqueChoiceQuestion> uniqueChoiceQuestionList) {
         view = fragment.getLayoutInflater().inflate(R.layout.new_survey_unique_choice_item, null);
         radioLayout = view.findViewById(R.id.radioLayout);
-        setListener(fragment, linearLayout, uniqueChoiceQuestionList);
-    }
-
-    public UniqueChoiceQuestion(int id, int surveyId, String question, String radioTextList) {
         this.id = id;
-        this.surveyId = surveyId;
-        this.question = question;
-        this.radioTextList = radioTextList;
+        setListener(fragment, linearLayout, uniqueChoiceQuestionList);
     }
 
     public void setListener(Fragment fragment, LinearLayout linearLayout, List<UniqueChoiceQuestion> uniqueChoiceQuestionList){
@@ -98,22 +90,6 @@ public class UniqueChoiceQuestion implements Serializable {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getRadioTextList() {
-        return radioTextList;
-    }
-
-    public void setRadioTextList(String radioTextList) {
-        this.radioTextList = radioTextList;
-    }
-
-    public int getSurveyId() {
-        return surveyId;
-    }
-
-    public void setSurveyId(int surveyId) {
-        this.surveyId = surveyId;
     }
 }
 
