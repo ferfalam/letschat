@@ -3,36 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/drawable-anydpi/ic_dots-vertical-rounded.xml" value="0.10885416666666667" />
-        <entry key="app/src/main/res/drawable-anydpi/ic_dots_vertical_rounded.xml" value="0.10885416666666667" />
-        <entry key="app/src/main/res/drawable/border_confirm_page.xml" value="0.10572916666666667" />
-        <entry key="app/src/main/res/drawable/phone_number_edit_background.xml" value="0.10572916666666667" />
-        <entry key="app/src/main/res/layout/activity_auth.xml" value="0.18704710144927536" />
-        <entry key="app/src/main/res/layout/activity_config_profile.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/content_auth.xml" value="0.19791666666666666" />
-        <entry key="app/src/main/res/layout/fragment_first2.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_second2.xml" value="0.22" />
-        <entry key="..\:/Users/HP/AndroidStudioProjects/letschat/app/src/main/res/drawable-anydpi/ic_dots-vertical-rounded.xml" value="0.1" />
-        <entry key="..\:/Users/HP/AndroidStudioProjects/letschat/app/src/main/res/drawable/border.xml" value="0.1515625" />
-        <entry key="..\:/Users/HP/AndroidStudioProjects/letschat/app/src/main/res/drawable/border_button.xml" value="0.1515625" />
-        <entry key="..\:/Users/HP/AndroidStudioProjects/letschat/app/src/main/res/layout/activity_contact_details.xml" value="0.13541666666666666" />
-        <entry key="..\:/Users/HP/AndroidStudioProjects/letschat/app/src/main/res/layout/activity_contact_details2.xml" value="0.13671875" />
-        <entry key="..\:/Users/HP/AndroidStudioProjects/letschat/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/HP/AndroidStudioProjects/letschat/app/src/main/res/layout/activity_media_view.xml" value="0.1" />
-        <entry key="..\:/Users/HP/AndroidStudioProjects/letschat/app/src/main/res/layout/chat_screen_activity.xml" value="0.13541666666666666" />
-        <entry key="..\:/Users/HP/AndroidStudioProjects/letschat/app/src/main/res/layout/fragment_contact_details.xml" value="0.133203125" />
-        <entry key="..\:/Users/HP/AndroidStudioProjects/letschat/app/src/main/res/layout/fragment_contact_medias.xml" value="0.13541666666666666" />
-        <entry key="..\:/Users/HP/AndroidStudioProjects/letschat/app/src/main/res/layout/fragment_media.xml" value="0.12421875" />
-        <entry key="..\:/Users/HP/AndroidStudioProjects/letschat/app/src/main/res/layout/gridview_layout.xml" value="0.1" />
-        <entry key="..\:/Users/HP/AndroidStudioProjects/letschat/app/src/main/res/layout/message_out.xml" value="0.13541666666666666" />
-        <entry key="..\:/Users/HP/AndroidStudioProjects/letschat/app/src/main/res/layout/messages_in.xml" value="0.13541666666666666" />
-        <entry key="..\:/Users/HP/AndroidStudioProjects/letschat/app/src/main/res/menu/chat_menu.xml" value="0.13541666666666666" />
-        <entry key="..\:/Users/HP/AndroidStudioProjects/letschat/app/src/main/res/xml/root_preferences.xml" value="0.13671875" />
-      </map>
-    </option>
-  </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/drawable-anydpi/ic_add.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/drawable-anydpi/ic_chart_alt.xml" value="0.23692307692307693" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/drawable-anydpi/ic_check.xml" value="0.22552083333333334" />
@@ -47,16 +17,21 @@
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/drawable/input_shape.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/drawable/rounded_corner.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/drawable/side_nav_bar.xml" value="0.23692307692307693" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/activity_auth.xml" value="0.10989583333333333" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/activity_main.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/activity_main2.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/app_bar_main.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/check_button_layout_content.xml" value="0.209375" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/contact_fragment.xml" value="0.209375" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/contact_items.xml" value="0.209375" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/content_auth.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/content_main.xml" value="0.11041666666666666" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/fragment_blank.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/fragment_discussions.xml" value="0.19722222222222222" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/fragment_first2.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/fragment_second2.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/fragment_surveys.xml" value="0.20185185185185187" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/gridview_layout.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/new_survey_fragment.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/new_survey_multiple_choice_item.xml" value="0.209375" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/new_survey_textquestion_item.xml" value="0.209375" />

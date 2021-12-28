@@ -4,14 +4,8 @@ import android.annotation.SuppressLint;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 
 import androidx.fragment.app.Fragment;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.Insert;
-import androidx.room.PrimaryKey;
 
 import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.utiles.InputValidation;

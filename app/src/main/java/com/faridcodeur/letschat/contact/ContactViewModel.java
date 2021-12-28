@@ -5,15 +5,21 @@ import android.app.Application;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.provider.ContactsContract;
+import android.util.ArrayMap;
 import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.faridcodeur.letschat.entities.Contact;
+import com.faridcodeur.letschat.entities.Surveys;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class ContactViewModel extends AndroidViewModel {
     // TODO: Implement the ViewModel
@@ -46,6 +52,41 @@ public class ContactViewModel extends AndroidViewModel {
         if (!cursor.isClosed()){
             cursor.close();
         }
+    }
+
+    public static void Test(){
+        List<Map<String, Object>> questions = new ArrayList<>();
+
+        //Pour les TextQuestion
+        Map<String, Object> textQuestion = new HashMap<>();
+        textQuestion.put("type", "TEXT_QUESTION");
+        textQuestion.put("question", "La question");
+
+        Map<String, Object> uniqueQuestion = new HashMap<>();
+        uniqueQuestion.put("type", "UNIQUE_QUESTION");
+        uniqueQuestion.put("question", "La question");
+        uniqueQuestion.put("radiosTextValue", new String[]{"Value1", "Value2","..."});
+
+        Map<String, Object> multipleQuestion = new HashMap<>();
+        uniqueQuestion.put("type", "MULTIPLE_QUESTION");
+        uniqueQuestion.put("question", "La question");
+        uniqueQuestion.put("checkboxTextValue", new String[]{"Value1", "Value2","..."});
+
+        questions.add(textQuestion);
+        questions.add(uniqueQuestion);
+        questions.add(multipleQuestion);
+
+        String str = new Gson().toJson(questions);
+
+        Surveys surveys = new Surveys("Title", "Question");
+        surveys.setQuestions(str);
+
+        Log.e("TEST", "Test: " + surveys.getQuestions());
+
+        //Pour recuperer sous forme e list
+        List<Map<String, Object>> list = new Gson().fromJson(surveys.getQuestions(), questions.getClass());
+        Log.e("TEST", "Test: " + list);
+
     }
 
 }

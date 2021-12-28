@@ -15,6 +15,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.adapters.FragmentAdapter;
+import com.faridcodeur.letschat.contact.ContactViewModel;
 import com.faridcodeur.letschat.survey.fragements.NewSurveyFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.expand_button).setOnClickListener(view -> {
             if (!isFabOpen)showFabMenu();
             else closeFabMenu();
+            ContactViewModel.Test();
         });
 
         settings.setOnClickListener(view -> {

@@ -1,28 +1,31 @@
 package com.faridcodeur.letschat.entities;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
-
 import java.io.Serializable;
 
 public class Surveys implements Serializable {
     private int id;
     private String title;
     private String description;
+    private String questions;
     private String created_at;
+
+    public Surveys(String title, String description, String questions) {
+        this.title = title;
+        this.description = description;
+        this.questions = questions;
+    }
+
+    public Surveys(int id, String title, String description, String questions, String created_at) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.created_at = questions;
+        this.created_at = created_at;
+    }
 
     public Surveys(String title, String description) {
         this.title = title;
         this.description = description;
-    }
-
-    public Surveys(int id, String title, String description, String created_at) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.created_at = created_at;
     }
 
     public int getId() {
@@ -55,5 +58,13 @@ public class Surveys implements Serializable {
 
     public void setCreated_at(String created_at) {
         this.created_at = created_at;
+    }
+
+    public String getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(String questions) {
+        this.questions = questions;
     }
 }

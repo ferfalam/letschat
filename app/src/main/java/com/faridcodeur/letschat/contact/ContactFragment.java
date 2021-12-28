@@ -44,7 +44,7 @@ public class ContactFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         binding = ContactFragmentBinding.inflate(inflater, container, false);
 
-        String[] PERMISSIONS_CONTACT = {Manifest.permission.READ_CONTACTS, Manifest.permission.READ_CONTACTS};
+        String[] PERMISSIONS_CONTACT = {Manifest.permission.READ_CONTACTS};
 
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.READ_CONTACTS)) {
