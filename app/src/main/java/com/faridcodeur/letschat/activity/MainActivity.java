@@ -2,6 +2,7 @@ package com.faridcodeur.letschat.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.viewpager2.widget.ViewPager2;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseUser firebaseUser;
     private boolean isFabOpen = false;
     private int PERMISSIONS_REQUEST = 3015;
+    private int PROFILE_ACTIVITY = 3025;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +67,15 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+
+        final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
+        if (firebaseAuth.getCurrentUser() != null) {
+            firebaseUser = firebaseAuth.getCurrentUser();
+        }
+        Uri photoImage = firebaseUser.getPhotoUrl();
+        Glide.with(MainActivity.this).load(photoImage).into(binding.profileImage);
 
         //setting toolbar on main activity interface
         setSupportActionBar(binding.toolbar1);
@@ -93,7 +105,8 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.profile_image).setOnClickListener(view -> {
             //TODO Call Setting activity here
-            Toast.makeText(getBaseContext(), "Go to Settings", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+            startActivityIfNeeded(intent, PROFILE_ACTIVITY);
         });
 
         findViewById(R.id.expand_button).setOnClickListener(view -> {
@@ -105,8 +118,8 @@ public class MainActivity extends AppCompatActivity {
             //TODO Call Settings activity here
             //Toast.makeText(getBaseContext(), "Go to Settings", Toast.LENGTH_SHORT).show();
             Log.e("TAG", "settings");
-            Intent intent = new Intent(MainActivity.this, FabActionActivity.class);
-            startActivity(intent);
+            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+            startActivityIfNeeded(intent, PROFILE_ACTIVITY);
         });
 
         binding.newSurveys.setOnClickListener(view -> {
@@ -155,6 +168,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PROFILE_ACTIVITY){
+            if (resultCode == Activity.RESULT_OK){
+                Uri photoImage = firebaseUser.getPhotoUrl();
+                Glide.with(MainActivity.this).load(photoImage).into(binding.profileImage);
+            }
+        }
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PERMISSIONS_REQUEST) {
@@ -162,14 +186,6 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(binding.getRoot(), "No Permission", Snackbar.LENGTH_LONG).setAction("Ok", container_view -> {
                     Log.e("onRequest", "onRequestPermissionsResult: No permission");
                 }).show();
-            }else{
-                final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-
-                if (firebaseAuth.getCurrentUser() != null) {
-                    firebaseUser = firebaseAuth.getCurrentUser();
-                }
-                Uri uri = firebaseUser.getPhotoUrl();
-                Glide.with(MainActivity.this).load(uri).into(binding.profileImage);
             }
         }
     }
