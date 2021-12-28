@@ -8,11 +8,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.faridcodeur.letschat.Adapter.SondageAdapter;
 import com.faridcodeur.letschat.databinding.ActivityMain2Binding;
 import com.faridcodeur.letschat.entities.SondageMapping;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,14 +33,21 @@ public class Sondagebox extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-
-
-
         getSupportActionBar().setCustomView(R.layout.actionbar_sondage);
 
         generateQuestion();
 
         Toast.makeText(Sondagebox.this, String.valueOf(listSondage.size()) , Toast.LENGTH_LONG).show();
+
+        TextView titre = (TextView) findViewById(R.id.theme);
+        TextView status = (TextView) findViewById(R.id.delay);
+
+        // TODO: to set App Bar information with DATA
+
+        titre.setText("Que Pensez vous de la Prostitution");
+        status.setText("Il y a 1h");
+
+        // TODO: END
 
         adapter = new SondageAdapter(listSondage , Sondagebox.this);
 
@@ -45,9 +55,7 @@ public class Sondagebox extends AppCompatActivity {
 
         listView.setScrollContainer(false);
         listView.setDivider(null);
-
         listView.setAdapter(adapter);
-
     }
 
     void generateQuestion() {
