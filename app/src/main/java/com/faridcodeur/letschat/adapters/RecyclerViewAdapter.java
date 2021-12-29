@@ -52,9 +52,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private static final String TAG_PLAY_AUDIO = "AudioPlay";
     private static final int UPDATE_AUDIO_PROGRESS_BAR = 3;
 
-    private MediaPlayer audioPlayer = null;
-
-    //public boolean audioIsPlaying;
 
     public RecyclerViewAdapter(Context context, ArrayList<Message> list) {
         // you can pass other parameters in constructor
@@ -163,8 +160,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
 
     private class AudioMessageOutViewHolder extends RecyclerView.ViewHolder {
-
         LinearProgressIndicator progressIndicator;
+        boolean audioIsPlaying = false;
         TextView dateTV;
         ImageButton playButtonOut;
         private Handler audioProgressHandler = null;
@@ -179,23 +176,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         void bind(int position) {
             Message messageModel = list.get(position);
-            dateTV.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context.getApplicationContext(), ""+position, Toast.LENGTH_SHORT).show();
-                }
-            });
-
+            MediaPlayer inPlayer = MediaPlayer.create(context, Uri.fromFile(new File(messageModel.path)));
+            progressIndicator.setProgress(0);
             if(audioProgressHandler==null) {
                 audioProgressHandler = new Handler(new Handler.Callback() {
                     @Override
                     public boolean handleMessage(@NonNull android.os.Message msg) {
                         if (msg.what == UPDATE_AUDIO_PROGRESS_BAR) {
-                            if(audioPlayer!=null) {
+                            if(inPlayer!=null) {
                                 // Get current play time.
-                                int currPlayPosition = audioPlayer.getCurrentPosition();
+                                int currPlayPosition = inPlayer.getCurrentPosition();
                                 // Get total play time.
-                                int totalTime = audioPlayer.getDuration();
+                                int totalTime = inPlayer.getDuration();
                                 // Calculate the percentage.
                                 int currProgress = (currPlayPosition * 100) / totalTime;
                                 // Update progressbar.
@@ -206,26 +198,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     }
                 });
             }
+            inPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    audioIsPlaying = false;
+                    playButtonOut.setImageResource(R.drawable.ic_play);
+                    audioProgressHandler = null;
+                }
+            });
 
             playButtonOut.setOnClickListener(new View.OnClickListener() {
-                boolean mStartPlaying = true;
-                boolean audioIsPlaying = false;
-
                 @Override
                 public void onClick(View v) {
-                    File vocal = new File(messageModel.path);
+                    File vocal = new File(list.get(position).path);
                     Uri audioUri = Uri.parse(vocal.toString());
-
                     if (!audioIsPlaying){
                         if(vocal.exists()) {
                             playButtonOut.setImageResource(R.drawable.ic_pause);
-                            stopCurrentPlayAudio();
-                            initAudioPlayer(messageModel.path, audioUri);
-                            audioPlayer.start();
+                            stopCurrentPlayAudio(inPlayer);
+                            initAudioPlayer(messageModel.path, audioUri, inPlayer);
+                            inPlayer.start();
                             audioIsPlaying = !audioIsPlaying;
-                            Toast.makeText(context, ""+audioIsPlaying, Toast.LENGTH_SHORT).show();
                             // Display progressbar.
-                            progressIndicator.setVisibility(LinearProgressIndicator.VISIBLE);
                             if(updateAudioPalyerProgressThread == null) {
                                 // Create the thread.
                                 updateAudioPalyerProgressThread = new Thread() {
@@ -236,20 +230,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                                                 if (audioProgressHandler != null) {
                                                     // Send update audio player progress message to main thread message queue.
                                                     android.os.Message msg = new android.os.Message();
+
                                                     msg.what = UPDATE_AUDIO_PROGRESS_BAR;
                                                     audioProgressHandler.sendMessage(msg);
                                                     Thread.sleep(100);
                                                 }
-
-                                                if (audioPlayer.getCurrentPosition() == audioPlayer.getDuration()){
-                                                    playButtonOut.setImageResource(R.drawable.ic_play);
-                                                    audioProgressHandler.removeCallbacks(this);
-                                                    stopCurrentPlayAudio();
-
-                                                    audioIsPlaying = false;
-                                                    //progressIndicator.setProgress(0);
-                                                }
-
                                             }
                                         } catch (InterruptedException ex) {
                                             Log.e(TAG_PLAY_AUDIO, ex.getMessage(), ex);
@@ -263,23 +248,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         else {
                             Toast.makeText(context, "Please specify an audio file to play.", Toast.LENGTH_LONG).show();
                         }
-                    } else {
-                        playButtonOut.setImageResource(R.drawable.ic_play);
-                        audioPlayer.pause();
-                        audioIsPlaying = !audioIsPlaying;
-                        updateAudioPalyerProgressThread = null;
+                    }
+                    else {
+                            playButtonOut.setImageResource(R.drawable.ic_play);
+                            inPlayer.pause();
+                            audioIsPlaying = false;
                     }
                     //audioIsPlaying = !audioIsPlaying;
                 }
-//                    onPlay(mStartPlaying, messageModel.path);
-//                    if (mStartPlaying) {
-//                        playButtonOut.setImageResource(R.drawable.ic_pause);
-//                        stopPlaying(audioPlayer);
-//                    } else {
-//                        playButtonOut.setImageResource(R.drawable.ic_play);
-//                        startPlaying(messageModel.message);
-//                    }
-//                    mStartPlaying = !mStartPlaying;
             });
 
             dateTV.setText(DateFormat.getTimeInstance(DateFormat.SHORT).format(messageModel.messageTime));
@@ -287,8 +263,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     private class AudioMessageInViewHolder extends RecyclerView.ViewHolder {
-
         LinearProgressIndicator progressIndicator;
+        boolean audioIsPlaying = false;
         TextView dateTV;
         ImageButton playButtonIn;
         private Handler audioProgressHandler = null;
@@ -303,23 +279,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         void bind(int position) {
             Message messageModel = list.get(position);
-            dateTV.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context.getApplicationContext(), ""+position, Toast.LENGTH_SHORT).show();
-                }
-            });
-
+            MediaPlayer inPlayer = MediaPlayer.create(context, Uri.fromFile(new File(messageModel.path)));
+            progressIndicator.setProgress(0);
             if(audioProgressHandler==null) {
                 audioProgressHandler = new Handler(new Handler.Callback() {
                     @Override
                     public boolean handleMessage(@NonNull android.os.Message msg) {
                         if (msg.what == UPDATE_AUDIO_PROGRESS_BAR) {
-                            if(audioPlayer!=null) {
+                            if(inPlayer!=null) {
                                 // Get current play time.
-                                int currPlayPosition = audioPlayer.getCurrentPosition();
+                                int currPlayPosition = inPlayer.getCurrentPosition();
                                 // Get total play time.
-                                int totalTime = audioPlayer.getDuration();
+                                int totalTime = inPlayer.getDuration();
                                 // Calculate the percentage.
                                 int currProgress = (currPlayPosition * 100) / totalTime;
                                 // Update progressbar.
@@ -330,26 +301,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     }
                 });
             }
+            inPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    audioIsPlaying = false;
+                    playButtonIn.setImageResource(R.drawable.ic_play);
+                    audioProgressHandler = null;
+                }
+            });
 
             playButtonIn.setOnClickListener(new View.OnClickListener() {
-                boolean mStartPlaying = true;
-                boolean audioIsPlaying = false;
-
                 @Override
                 public void onClick(View v) {
-                    File vocal = new File(messageModel.path);
+                    File vocal = new File(list.get(position).path);
                     Uri audioUri = Uri.parse(vocal.toString());
-
                     if (!audioIsPlaying){
                         if(vocal.exists()) {
                             playButtonIn.setImageResource(R.drawable.ic_pause);
-                            stopCurrentPlayAudio();
-                            initAudioPlayer(messageModel.path, audioUri);
-                            audioPlayer.start();
+                            stopCurrentPlayAudio(inPlayer);
+                            initAudioPlayer(messageModel.path, audioUri, inPlayer);
+                            inPlayer.start();
                             audioIsPlaying = !audioIsPlaying;
-                            Toast.makeText(context, ""+audioIsPlaying, Toast.LENGTH_SHORT).show();
                             // Display progressbar.
-                            progressIndicator.setVisibility(LinearProgressIndicator.VISIBLE);
                             if(updateAudioPalyerProgressThread == null) {
                                 // Create the thread.
                                 updateAudioPalyerProgressThread = new Thread() {
@@ -360,20 +333,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                                                 if (audioProgressHandler != null) {
                                                     // Send update audio player progress message to main thread message queue.
                                                     android.os.Message msg = new android.os.Message();
+
                                                     msg.what = UPDATE_AUDIO_PROGRESS_BAR;
                                                     audioProgressHandler.sendMessage(msg);
                                                     Thread.sleep(100);
                                                 }
-
-                                                if (audioPlayer.getCurrentPosition() == audioPlayer.getDuration()){
-                                                    playButtonIn.setImageResource(R.drawable.ic_play);
-                                                    audioProgressHandler.removeCallbacks(this);
-                                                    stopCurrentPlayAudio();
-
-                                                    audioIsPlaying = false;
-                                                    //progressIndicator.setProgress(0);
-                                                }
-
                                             }
                                         } catch (InterruptedException ex) {
                                             Log.e(TAG_PLAY_AUDIO, ex.getMessage(), ex);
@@ -387,11 +351,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         else {
                             Toast.makeText(context, "Please specify an audio file to play.", Toast.LENGTH_LONG).show();
                         }
-                    } else {
+                    }
+                    else {
                         playButtonIn.setImageResource(R.drawable.ic_play);
-                        audioPlayer.pause();
-                        audioIsPlaying = !audioIsPlaying;
-                        updateAudioPalyerProgressThread = null;
+                        inPlayer.pause();
+                        audioIsPlaying = false;
                     }
                     //audioIsPlaying = !audioIsPlaying;
                 }
@@ -400,6 +364,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             dateTV.setText(DateFormat.getTimeInstance(DateFormat.SHORT).format(messageModel.messageTime));
         }
     }
+
+
+
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -454,31 +421,31 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
 
-    private void initAudioPlayer(String audioPath, Uri audioFileUri)
+    private void initAudioPlayer(String audioPath, Uri audioFileUri, MediaPlayer player)
     {
 
         try {
-            if(audioPlayer == null)
+            if(player == null)
             {
-                audioPlayer = new MediaPlayer();
+                player = new MediaPlayer();
                 String audioFilePath = audioPath.trim();
                 Log.d(TAG_PLAY_AUDIO, audioFilePath);
                 if(audioFilePath.toLowerCase().startsWith("http://"))
                 {
                     // Web audio from a url is stream music.
-                    audioPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    player.setAudioStreamType(AudioManager.STREAM_MUSIC);
                     // Play audio from a url.
-                    audioPlayer.setDataSource(audioFilePath);
+                    player.setDataSource(audioFilePath);
                 }else
                 {
                     if(audioFileUri != null)
                     {
                         // Play audio from selected local file.
-                        audioPlayer.setDataSource(context, audioFileUri);
+                        player.setDataSource(context, audioFileUri);
 
                     }
                 }
-                audioPlayer.prepare();
+                player.prepare();
             }
         }catch(IOException ex)
         {
@@ -486,13 +453,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         }
     }
-    private void stopCurrentPlayAudio()
+    private void stopCurrentPlayAudio(MediaPlayer mediaPlayer)
     {
-        if(audioPlayer!=null && audioPlayer.isPlaying())
+        if(mediaPlayer!=null && mediaPlayer.isPlaying())
         {
-            audioPlayer.stop();
-            audioPlayer.release();
-            audioPlayer = null;
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
         }
+    }
+
+    private void setFalse(boolean f){
+        f = false;
     }
 }
