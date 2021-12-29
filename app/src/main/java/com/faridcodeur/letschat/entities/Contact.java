@@ -1,11 +1,16 @@
 package com.faridcodeur.letschat.entities;
 
-public class Contact {
+public class Contact implements Comparable<Contact> {
     private Long id;
     private String name;
-    private int phoneNumber;
+    private String phoneNumber;
 
-    public Contact(String name, int phoneNumber, Long id) {
+    public Contact(String name, String phoneNumber) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Contact(String name, String phoneNumber, Long id) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.id = id;
@@ -19,11 +24,11 @@ public class Contact {
         this.name = name;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -33,5 +38,19 @@ public class Contact {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
+    }
+
+    @Override
+    public int compareTo(Contact o) {
+        return getName().compareTo(o.getName());
     }
 }

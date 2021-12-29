@@ -9,10 +9,6 @@ import android.util.Log;
 
 import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.adapters.FabActionFragmentAdapter;
-import com.faridcodeur.letschat.adapters.FragmentAdapter;
-import com.faridcodeur.letschat.contact.ContactFragment;
-import com.faridcodeur.letschat.fragments.SettingsFragment;
-import com.faridcodeur.letschat.survey.fragements.NewSurveyFragment;
 
 import java.util.Objects;
 

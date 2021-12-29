@@ -35,8 +35,6 @@ public class SondageBoxActivity extends AppCompatActivity {
         adapter = new SondageAdapter(listSondage , SondageBoxActivity.this);
 
         ListView listView = (ListView) findViewById(R.id.sondageBox);
-
-        listView.setScrollContainer(false);
         listView.setDivider(null);
 
         listView.setAdapter(adapter);

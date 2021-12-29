@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Letschat">
         <activity
+            android:name=".activity.MyContactActivity"
+            android:exported="true" />
+        <activity
             android:name=".activity.ProfileActivity"
             android:exported="true" />
         <activity

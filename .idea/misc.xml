@@ -21,18 +21,24 @@
         <entry key="app/src/main/res/layout/activity_config_profile.xml" value="0.2321167883211679" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.12228260869565218" />
         <entry key="app/src/main/res/layout/activity_main2.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_my_contact.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/layout/activity_sondage_box.xml" value="0.10277777777777777" />
         <entry key="app/src/main/res/layout/chat_screen_activity.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/contact_fragment.xml" value="0.12" />
+        <entry key="app/src/main/res/layout/contact_items.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_discussions.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_first2.xml" value="0.1" />
         <entry key="app/src/main/res/layout/question_multichoice_type.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/layout/question_text_type.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/layout/question_texte.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/layout/question_unichoice_type.xml" value="0.21666666666666667" />
+        <entry key="app/src/main/res/layout/regular_discussion_items.xml" value="0.22" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

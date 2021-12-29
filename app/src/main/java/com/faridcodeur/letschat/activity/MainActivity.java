@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean isFabOpen = false;
     private int PERMISSIONS_REQUEST = 3015;
     private int PROFILE_ACTIVITY = 3025;
+    private int MY_CONTACT_ACTIVITY = 3035;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
         binding.settings.setOnClickListener(view -> {
             //TODO Call Settings activity here
             //Toast.makeText(getBaseContext(), "Go to Settings", Toast.LENGTH_SHORT).show();
-            Log.e("TAG", "settings");
             Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
             startActivityIfNeeded(intent, PROFILE_ACTIVITY);
         });
@@ -134,10 +134,8 @@ public class MainActivity extends AppCompatActivity {
         binding.newSms.setOnClickListener(view -> {
             //TODO Call contact activity here
             //Toast.makeText(getBaseContext(), "Create new discussion", Toast.LENGTH_SHORT).show();
-            Log.e("TAG", "new discussion");
-            Intent intent = new Intent(MainActivity.this, FabActionActivity.class);
-            intent.putExtra("ACTION", "NEW_DISCUSSION");
-            startActivity(intent);
+            Intent intent = new Intent(MainActivity.this, MyContactActivity.class);
+            startActivityIfNeeded(intent, MY_CONTACT_ACTIVITY);
         });
     }
 
