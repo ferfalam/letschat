@@ -43,17 +43,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String[] PERMISSIONS_EXTERNAL_STORAGE = {Manifest.permission.READ_EXTERNAL_STORAGE};
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                Snackbar.make(binding.getRoot(), "L'application requiert l'accès à la base de donnée distante.", Snackbar.LENGTH_LONG).setAction("Activer", view -> {
-                    ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS_EXTERNAL_STORAGE, PERMISSIONS_REQUEST);
-                }).show();
-            } else {
-                ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS_EXTERNAL_STORAGE, PERMISSIONS_REQUEST);
-            }
-        }
 
         AppPreference appPreference = AppPreference.getInstance(this);
         if(!appPreference.isConnected()) {
@@ -64,6 +53,18 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, ConfigProfileActivity.class);
             startActivity(intent);
             finish();
+        }
+
+        String[] PERMISSIONS_EXTERNAL_STORAGE = {Manifest.permission.READ_EXTERNAL_STORAGE};
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                Snackbar.make(binding.getRoot(), "L'application requiert l'accès à la base de donnée distante.", Snackbar.LENGTH_LONG).setAction("Activer", view -> {
+                    ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS_EXTERNAL_STORAGE, PERMISSIONS_REQUEST);
+                }).show();
+            } else {
+                ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS_EXTERNAL_STORAGE, PERMISSIONS_REQUEST);
+            }
         }
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());

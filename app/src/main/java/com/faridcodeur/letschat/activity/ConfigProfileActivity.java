@@ -37,6 +37,10 @@ public class ConfigProfileActivity extends AppCompatActivity {
         if (firebaseAuth.getCurrentUser() != null) {
             firebaseUser = firebaseAuth.getCurrentUser();
         }
+
+        if (firebaseUser.getPhotoUrl() != null){
+            Glide.with(ConfigProfileActivity.this).load(firebaseUser.getPhotoUrl()).into(binding.profileImage);
+        }
         binding.userPhoneNumber.setText(firebaseUser.getPhoneNumber());
         binding.saveUsername.setOnClickListener(saveUsername());
         binding.profileImage.setOnClickListener(changeProfileImage());
