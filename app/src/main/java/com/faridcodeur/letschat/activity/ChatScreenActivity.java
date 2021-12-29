@@ -112,12 +112,12 @@ public class ChatScreenActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        dirCreator("/Audios/received");
-        dirCreator("/Audios");
-        dirCreator("/Images/received");
-        dirCreator("/Images");
-        dirCreator("/Files/received");
-        dirCreator("/Files");
+        writeFile("/Audios");
+        //writeFile("/Audios/received");
+        writeFile("/Images");
+        //writeFile("/Images/received");
+        writeFile("/Files");
+        //writeFile("/Files/received");
     }
 
     @Override
@@ -393,12 +393,42 @@ public class ChatScreenActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         BufferedWriter bw = new BufferedWriter(fw);
         try {
-            bw.write("ee");
+            bw.write("");
             bw.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void writeFile(String folder){
+        //String fileNamed = getExternalCacheDir().getPath()+folder+"/.nomedia";
+        String directoryName = getExternalCacheDir().getPath()+folder;
+        String directoryChildName = directoryName+"/received";
+        //File file  = new File(String.valueOf(fileNamed));
+
+        File directory = new File(directoryName);
+        if (! directory.exists()){
+            directory.mkdir();
+        }
+
+        File directoryChild = new File(directoryChildName);
+        if (! directoryChild.exists()){
+            directoryChild.mkdir();
+        }
+
+        File file = new File(directoryChildName + "/" + ".nomedia");
+        try{
+            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write("");
+            bw.close();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+            System.exit(-1);
         }
     }
 
