@@ -36,7 +36,6 @@ public class FabActionActivity extends AppCompatActivity {
         viewPager2.setAdapter(adapter);
     }
 
-
     public static ContentResolver getAppContentResolver() {
         return appContentResolver;
     }

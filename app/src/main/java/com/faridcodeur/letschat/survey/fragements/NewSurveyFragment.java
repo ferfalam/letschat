@@ -86,6 +86,7 @@ public class NewSurveyFragment extends Fragment {
                     Surveys surveys = new Surveys(Objects.requireNonNull(binding.surveyTitle.getText()).toString(), Objects.requireNonNull(binding.surveyDescription.getText()).toString());
                     if (mViewModel.createSurveys(surveys, textQuestionList, uniqueChoiceQuestionList, multipleChoiceQuestionList)){
                         Toast.makeText(getContext(), "Votre sondage a été créer avec succès", Toast.LENGTH_SHORT).show();
+                        requireActivity().finish();
                     }
                 }
             }

@@ -1,7 +1,6 @@
 package com.faridcodeur.letschat.activity;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -27,12 +26,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
         tabs.setupWithViewPager(viewPager);
 
         binding.contactDetailsReturnButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onBackPressed();
-                    }
-                }
+                v -> onBackPressed()
         );
     }
 }
