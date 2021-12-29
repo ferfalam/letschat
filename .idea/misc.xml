@@ -20,13 +20,14 @@
         <entry key="app/src/main/res/layout/actionbar_sondage.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/layout/activity_auth.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_config_profile.xml" value="0.2321167883211679" />
+        <entry key="app/src/main/res/layout/activity_contact_details2.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.12228260869565218" />
         <entry key="app/src/main/res/layout/activity_main2.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_my_contact.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/layout/activity_sondage_box.xml" value="0.10277777777777777" />
-        <entry key="app/src/main/res/layout/chat_screen_activity.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/chat_screen_activity.xml" value="0.25" />
         <entry key="app/src/main/res/layout/contact_fragment.xml" value="0.12" />
         <entry key="app/src/main/res/layout/contact_items.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_discussions.xml" value="0.1" />
