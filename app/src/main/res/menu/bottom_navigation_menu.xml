@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/textQuestion"
+        android:enabled="true"
+        android:icon="@drawable/ic_textfiled"
+        android:title="@string/reponse_court"
+        />
+    <item
+        android:id="@+id/uniqueChoice"
+        android:enabled="true"
+        android:icon="@drawable/ic_survey_radio"
+        android:title="@string/choix_unique"/>
+    <item
+        android:id="@+id/multipleChoice"
+        android:enabled="true"
+        android:icon="@drawable/ic_check"
+        android:title="@string/choix_multiple"/>
+
+    <item
+        android:id="@+id/validate"
+        android:enabled="true"
+        android:icon="@drawable/ic_validate"
+        android:title="@string/valider"/>
+</menu>

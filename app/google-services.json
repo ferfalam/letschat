@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "274212537663",
+    "project_id": "letschat-gei",
+    "storage_bucket": "letschat-gei.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:274212537663:android:43d0caf71bbe43d3a7bf8a",
+        "android_client_info": {
+          "package_name": "com.faridcodeur.letschat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "274212537663-42vmqr6p9ths3kr4n3m7plcp8od2m2pe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.faridcodeur.letschat",
+            "certificate_hash": "89bc751efc94b79b5d5013ee60652674289d0766"
+          }
+        },
+        {
+          "client_id": "274212537663-orkob8ni9pua5tn2986s1ff9sd17vc2f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8jWAzz8lnifVBMXtDebVIND4JyPt19Sk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "274212537663-orkob8ni9pua5tn2986s1ff9sd17vc2f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

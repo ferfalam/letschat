@@ -24,8 +24,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="dite quelque chose"
+            android:textColor="@color/_text_color_secondary"
             android:background="@drawable/edit_text_project_style"
             android:padding="8dp"
+            android:textSize="14sp"
             android:layout_marginVertical="14dp"
             android:layout_marginHorizontal="16dp"/>
     </LinearLayout>
