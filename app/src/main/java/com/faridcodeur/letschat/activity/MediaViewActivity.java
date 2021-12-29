@@ -5,15 +5,22 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowInsets;
+import android.widget.ImageView;
 
 import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.databinding.ActivityMediaViewBinding;
+
+import java.io.File;
+
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -49,12 +56,21 @@ private ActivityMediaViewBinding binding;
 
      binding = ActivityMediaViewBinding.inflate(getLayoutInflater());
      setContentView(binding.getRoot());
+     Intent intent = getIntent();
+     String path = intent.getStringExtra("extra1");
+        File imgFile = new File(path);
+        if(imgFile.exists()){
+            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            binding.fullscreenContent.setImageBitmap(myBitmap);
+        }
 
-        Intent intent = getIntent();
-
-
-     binding.fullscreenContent.setImageResource(intent.getIntExtra("extra", R.drawable.deku));
-
+        binding.fullscreenContent.setMinimumHeight(binding.fullscreenContent.getHeight());
+     //.setImageResource(intent.getIntExtra("extra", R.drawable.ic_image));
+        binding.fullscreenContent.setAdjustViewBounds(true);
+        PhotoViewAttacher pAttacher;
+        pAttacher = new PhotoViewAttacher(binding.fullscreenContent);
+        pAttacher.update();
+        pAttacher.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
         mVisible = true;
         mControlsView = binding.fullscreenContentControls;
@@ -64,7 +80,8 @@ private ActivityMediaViewBinding binding;
         mContentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toggle();
+
+                //toggle();
             }
         });
 
@@ -80,7 +97,7 @@ private ActivityMediaViewBinding binding;
         // Trigger the initial hide() shortly after the activity has been
         // created, to briefly hint to the user that UI controls
         // are available.
-        delayedHide(0);
+        //delayedHide(0);
     }
 
     /**
@@ -183,7 +200,7 @@ private ActivityMediaViewBinding binding;
     private final Runnable mHideRunnable = new Runnable() {
         @Override
         public void run() {
-            hide();
+            //hide();
         }
     };
 
