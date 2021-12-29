@@ -76,23 +76,15 @@ public class DiscussionsFragment extends Fragment {
     }
 
     private void generateDiscussions(){
-        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5"));
-    }
+        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "bonjour ", "il y a 5"));
+        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "bonjour ", "il y a 5"));
+        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "bonjour ", "il y a 5"));
+        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "bonjour ", "il y a 5"));
+        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "bonjour ", "il y a 5"));
+        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "bonjour ", "il y a 5"));
+        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "bonjour ", "il y a 5"));
+        discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "bonjour ", "il y a 5"));
+        }
 
     public FragmentDiscussionsBinding getBinding() {
         return binding;

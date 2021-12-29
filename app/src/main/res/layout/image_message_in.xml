@@ -3,33 +3,31 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="end"
+    android:layout_gravity="start"
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="4dp"
-    android:layout_marginEnd="4dp">
+    android:layout_marginStart="4dp">
     <LinearLayout
-        android:paddingRight="40dp"
+        android:paddingRight="5dp"
         android:orientation="vertical"
-        android:background="@drawable/border_message_out"
+        android:background="@drawable/border_message_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
-        <TextView
-            android:id="@+id/text_out"
-            android:maxWidth="250dp"
-            android:text="Coucou"
-            android:paddingVertical="2dp"
-            android:textStyle="bold"
-            android:paddingLeft="16dp"
-            android:textSize="18sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent">
+        <ImageView
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:maxWidth="190dp"
+            android:id="@+id/image_in"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
         <TextView
-            android:id="@+id/send_time"
+            android:id="@+id/image_receive_time"
             android:text="11:45"
             android:textSize="10dp"
             android:paddingLeft="20dp"

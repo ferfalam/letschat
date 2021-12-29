@@ -40,4 +40,5 @@
     <color name="light_blue_A400">#FF00B0FF</color>
     <color name="black_overlay">#66000000</color>
     <color name="_survey_back_color">#F1F1F1</color>
+    <color name="_grey">#333131</color>
 </resources>
