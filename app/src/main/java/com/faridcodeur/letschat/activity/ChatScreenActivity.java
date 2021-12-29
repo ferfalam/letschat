@@ -86,6 +86,7 @@ public class ChatScreenActivity extends AppCompatActivity {
     private Uri fileFileUri = null;
 
     private boolean permissionToRecordAccepted = false;
+    private boolean permissionToFileAccepted = false;
     private String [] permissions = {Manifest.permission.RECORD_AUDIO};
 
     // Used when user require android READ_EXTERNAL_PERMISSION.
@@ -104,14 +105,18 @@ public class ChatScreenActivity extends AppCompatActivity {
             case REQUEST_RECORD_AUDIO_PERMISSION:
                 permissionToRecordAccepted  = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                 break;
+            case REQUEST_CODE_READ_EXTERNAL_PERMISSION:
+                permissionToFileAccepted  = grantResults[0] == PackageManager.PERMISSION_GRANTED;
         }
-        if (!permissionToRecordAccepted ) finish();
+
+        //if (!permissionToRecordAccepted ) finish();
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        //setPermissions();
         writeFile("/Audios");
         //writeFile("/Audios/received");
         writeFile("/Images");
@@ -203,15 +208,23 @@ public class ChatScreenActivity extends AppCompatActivity {
                 if (audioFileName.isEmpty()){
                     audioFileName =getExternalCacheDir().getAbsolutePath() + "/Audios/vocal"+ new SimpleDateFormat("MM-dd-HH-mm-ss-SS").format(new Date())+ ".3gp";
                 }
-                onRecord(mStartRecording);
-                if (mStartRecording) {
-                    binding.buttonAudioSend.setImageResource(R.drawable.ic_red_mic);
-                } else {
-                    binding.buttonAudioSend.setImageResource(R.drawable.ic_vocal);
-                    messagesList.add(new AudioMessage(audioFileName, RecyclerViewAdapter.AUDIO_MESSAGE_TYPE_OUT, audioFileName));
-                    //Toast.makeText(getApplicationContext(), audioFileName, Toast.LENGTH_LONG).show();
+                int audioPermission = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO);
+                if(audioPermission != PackageManager.PERMISSION_GRANTED)
+                {
+                    String requirePermission[] = {Manifest.permission.RECORD_AUDIO};
+                    ActivityCompat.requestPermissions(ChatScreenActivity.this, requirePermission, REQUEST_RECORD_AUDIO_PERMISSION);
+                }else {
+                    onRecord(mStartRecording);
+                    if (mStartRecording) {
+                        binding.buttonAudioSend.setImageResource(R.drawable.ic_red_mic);
+                    } else {
+                        binding.buttonAudioSend.setImageResource(R.drawable.ic_vocal);
+                        messagesList.add(new AudioMessage(audioFileName, RecyclerViewAdapter.AUDIO_MESSAGE_TYPE_OUT, audioFileName));
+                        //Toast.makeText(getApplicationContext(), audioFileName, Toast.LENGTH_LONG).show();
+                    }
+                    mStartRecording = !mStartRecording;
                 }
-                mStartRecording = !mStartRecording;
+
                 recyclerViewAdapter.notifyDataSetChanged();
                 binding.recyclerChat.smoothScrollToPosition(messagesList.size() +1);
             }
@@ -425,6 +438,7 @@ public class ChatScreenActivity extends AppCompatActivity {
             directoryChild.mkdir();
         }
 
+
         File file = new File(directoryChildName + "/" + ".nomedia");
         try{
             FileWriter fw = new FileWriter(file.getAbsoluteFile());
@@ -522,4 +536,18 @@ public class ChatScreenActivity extends AppCompatActivity {
 
     }
 
+    private void setPermissions(){
+        int readExternalStoragePermission = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE);
+        if(readExternalStoragePermission != PackageManager.PERMISSION_GRANTED)
+        {
+            String requirePermission[] = {Manifest.permission.READ_EXTERNAL_STORAGE};
+            ActivityCompat.requestPermissions(ChatScreenActivity.this, requirePermission, REQUEST_CODE_READ_EXTERNAL_PERMISSION);
+        }
+        int audioPermission = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO);
+        if(audioPermission != PackageManager.PERMISSION_GRANTED)
+        {
+            String requirePermission[] = {Manifest.permission.RECORD_AUDIO};
+            ActivityCompat.requestPermissions(ChatScreenActivity.this, requirePermission, REQUEST_RECORD_AUDIO_PERMISSION);
+        }
+    }
 }
