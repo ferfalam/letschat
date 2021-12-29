@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="start"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="4dp"
+    android:layout_marginStart="4dp">
+    <LinearLayout
+        android:paddingRight="40dp"
+        android:orientation="vertical"
+        android:background="@drawable/border_message_in"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent">
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:padding="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_file"/>
+            <TextView
+                android:id="@+id/file_in_name"
+                android:layout_width="150dp"
+                android:textColor="@color/white"
+                android:layout_marginLeft="10dp"
+                android:layout_marginVertical="2dp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/file_receive_time"
+            android:text="11:45"
+            android:textSize="10dp"
+            android:textColor="@color/white"
+            android:paddingLeft="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/text_out"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

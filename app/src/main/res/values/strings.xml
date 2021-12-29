@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Let\'sChat</string>
-    <string name="politique_de_confidentialite">S\'inscrire sur Letschat voudra dire que vous avez lu et accepté les politiques de confidentialité</string>
+    <string name="app_name">uChat</string>
+    <string name="politique_de_confidentialite">S\'inscrire sur uChat voudra dire que vous avez lu et accepté les politiques de confidentialité</string>
     <string name="verify_code_text">Vérifier le code</string>
     <string name="resend_code_text">Renvoyer le code</string>
     <string name="code_confirm_label_text">Entrez le code de confirmation</string>
@@ -9,8 +9,53 @@
     <string name="phone_number_text"> Entrez le Numéro de téléphone</string>
     <string name="code_input_int">Entrez le code</string>
     <string name="enter_name_input_text">Entrez votre nom</string>
-    <string name="thank_text">Merci d\'utiliser Let\'sChat \n Veuillez configurer votre profil</string>
+    <string name="thank_text">Merci d\'utiliser uChat \n Veuillez configurer votre profil</string>
     <string name="continue_text">continuer</string>
     <string name="phone_number_display">+229 66296199</string>
     <string name="test_text">MainActivity</string>
+
+
+    <!-- Ariel Strings-->
+    <string name="block_contact">Bloquer le contact</string>
+    <string name="delete_conversation">Supprimer la conversation</string>
+    <string name="title_activity_contact_details">ContactDetails</string>
+    <string name="tab_text_1">Options</string>
+    <string name="tab_text_2">Médias</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="title_activity_media_view">MediaViewActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="let_s_chat">uChat</string>
+    <string name="_new">New</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="reponse_court">Reponse court</string>
+    <string name="choix_unique">Choix unique</string>
+    <string name="choix_multiple">Choix multiple</string>
+    <string name="valider">Valider</string>
+    <!-- TODO: Remove or change this placeholder text -->
 </resources>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.ContactDetailsActivity">
+
+    <LinearLayout
+        android:id="@+id/contact_details_top"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/contact_details_toolbar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/_primary"
+            android:theme="@style/ThemeOverlay.AppCompat.Light"
+            >
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:gravity="center"
+                android:layout_width="match_parent"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:titleTextColor="@color/_primary"
+                android:layout_height="?attr/actionBarSize">
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_arrow_back_24"
+                    android:background="@color/_transparent_color"
+                    android:id="@+id/contact_details_return_button"
+                    android:contentDescription="Button to return to back" />
+
+            </com.google.android.material.appbar.MaterialToolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/contact_detail_pp"
+            app:civ_border_color="@color/_secondary"
+            app:civ_border_width="5dp"
+            android:src="@drawable/deku"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_margin="8dp"
+            />
+        <TextView
+            android:id="@+id/contact_detail_name"
+            android:text="Ariel"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/contact_detail_phone_number"
+            android:text="+229 95123456"
+            android:layout_margin="8dp"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
+            app:tabSelectedTextColor="@color/_primary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    </LinearLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
