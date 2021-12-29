@@ -1,7 +1,5 @@
 package com.faridcodeur.letschat.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -12,19 +10,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
 import android.util.Log;
-import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.faridcodeur.letschat.adapters.ContactListAdapter;
-import com.faridcodeur.letschat.adapters.DiscussionListAdapter;
 import com.faridcodeur.letschat.databinding.ActivityMyContactBinding;
-
-import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.entities.Contact;
-import com.faridcodeur.letschat.entities.Discussion;
 import com.faridcodeur.letschat.utiles.Global;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -49,14 +43,11 @@ public class MyContactActivity extends AppCompatActivity {
         }
         buildCustomAdapter();
         binding.listContactReturnButton.setOnClickListener(
-            new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                v -> {
                     Intent intent = getIntent();
                     setResult(Activity.RESULT_OK, intent);
                     finish();
                 }
-            }
         );
     }
 
@@ -66,6 +57,7 @@ public class MyContactActivity extends AppCompatActivity {
         binding.listContacts.setAdapter(contactListAdapter);
     }
 
+    @SuppressLint("HandlerLeak")
     private void fetchContacts(){
         dialog = new ProgressDialog(this);
         dialog.setMessage("Chargement des contacts");

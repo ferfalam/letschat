@@ -1,15 +1,12 @@
 package com.faridcodeur.letschat.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Environment;
 import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,22 +16,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.faridcodeur.letschat.R;
+import com.faridcodeur.letschat.entities.Message;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import androidx.annotation.NonNull;
-import androidx.core.content.FileProvider;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.faridcodeur.letschat.R;
-import com.faridcodeur.letschat.activity.ChatScreenActivity;
 //import com.faridcodeur.letschat.entities.Message;
-import com.faridcodeur.letschat.entities.Message;
-import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final Context context;

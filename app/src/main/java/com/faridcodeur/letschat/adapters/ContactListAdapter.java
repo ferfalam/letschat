@@ -2,8 +2,6 @@ package com.faridcodeur.letschat.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.faridcodeur.letschat.R;
-import com.faridcodeur.letschat.activity.ChatScreenActivity;
 import com.faridcodeur.letschat.databinding.ContactItemsBinding;
 import com.faridcodeur.letschat.entities.Contact;
 import com.google.android.material.card.MaterialCardView;

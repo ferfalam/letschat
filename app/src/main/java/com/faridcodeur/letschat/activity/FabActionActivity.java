@@ -1,16 +1,13 @@
 package com.faridcodeur.letschat.activity;
 
+import android.content.ContentResolver;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.content.ContentResolver;
-import android.os.Bundle;
-import android.util.Log;
-
 import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.adapters.FabActionFragmentAdapter;
-
-import java.util.Objects;
 
 public class FabActionActivity extends AppCompatActivity {
 

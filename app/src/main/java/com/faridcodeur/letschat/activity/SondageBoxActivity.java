@@ -1,21 +1,19 @@
 package com.faridcodeur.letschat.activity;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.faridcodeur.letschat.adapters.SondageAdapter;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.faridcodeur.letschat.R;
+import com.faridcodeur.letschat.adapters.SondageAdapter;
 import com.faridcodeur.letschat.databinding.ActivitySondageBoxBinding;
 import com.faridcodeur.letschat.entities.SondageMapping;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class SondageBoxActivity extends AppCompatActivity {
     private List<SondageMapping> listSondage = new ArrayList<SondageMapping>();
