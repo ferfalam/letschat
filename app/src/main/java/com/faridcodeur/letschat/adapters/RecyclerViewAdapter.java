@@ -167,16 +167,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         LinearProgressIndicator progressIndicator;
         TextView dateTV;
         ImageButton playButtonOut;
-        //final int duration = player.getDuration();
-        //final int amountToUpdate = duration / 100;
-        Timer mTimer = new Timer();
         private Handler audioProgressHandler = null;
         private Thread updateAudioPalyerProgressThread = null;
 
         AudioMessageOutViewHolder(final View itemView) {
             super(itemView);
             playButtonOut = itemView.findViewById(R.id.out_play);
-            dateTV = itemView.findViewById(R.id.send_time);
+            dateTV = itemView.findViewById(R.id.audio_send_time);
             progressIndicator = itemView.findViewById(R.id.out_progress);
         }
 
@@ -289,13 +286,130 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
+    private class AudioMessageInViewHolder extends RecyclerView.ViewHolder {
+
+        LinearProgressIndicator progressIndicator;
+        TextView dateTV;
+        ImageButton playButtonIn;
+        private Handler audioProgressHandler = null;
+        private Thread updateAudioPalyerProgressThread = null;
+
+        AudioMessageInViewHolder(final View itemView) {
+            super(itemView);
+            playButtonIn = itemView.findViewById(R.id.in_play);
+            dateTV = itemView.findViewById(R.id.audio_receive_time);
+            progressIndicator = itemView.findViewById(R.id.in_progress);
+        }
+
+        void bind(int position) {
+            Message messageModel = list.get(position);
+            dateTV.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context.getApplicationContext(), ""+position, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            if(audioProgressHandler==null) {
+                audioProgressHandler = new Handler(new Handler.Callback() {
+                    @Override
+                    public boolean handleMessage(@NonNull android.os.Message msg) {
+                        if (msg.what == UPDATE_AUDIO_PROGRESS_BAR) {
+                            if(audioPlayer!=null) {
+                                // Get current play time.
+                                int currPlayPosition = audioPlayer.getCurrentPosition();
+                                // Get total play time.
+                                int totalTime = audioPlayer.getDuration();
+                                // Calculate the percentage.
+                                int currProgress = (currPlayPosition * 100) / totalTime;
+                                // Update progressbar.
+                                progressIndicator.setProgress(currProgress, true);
+                            }
+                        }
+                        return false;
+                    }
+                });
+            }
+
+            playButtonIn.setOnClickListener(new View.OnClickListener() {
+                boolean mStartPlaying = true;
+                boolean audioIsPlaying = false;
+
+                @Override
+                public void onClick(View v) {
+                    File vocal = new File(messageModel.path);
+                    Uri audioUri = Uri.parse(vocal.toString());
+
+                    if (!audioIsPlaying){
+                        if(vocal.exists()) {
+                            playButtonIn.setImageResource(R.drawable.ic_pause);
+                            stopCurrentPlayAudio();
+                            initAudioPlayer(messageModel.path, audioUri);
+                            audioPlayer.start();
+                            audioIsPlaying = !audioIsPlaying;
+                            Toast.makeText(context, ""+audioIsPlaying, Toast.LENGTH_SHORT).show();
+                            // Display progressbar.
+                            progressIndicator.setVisibility(LinearProgressIndicator.VISIBLE);
+                            if(updateAudioPalyerProgressThread == null) {
+                                // Create the thread.
+                                updateAudioPalyerProgressThread = new Thread() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            while (audioIsPlaying) {
+                                                if (audioProgressHandler != null) {
+                                                    // Send update audio player progress message to main thread message queue.
+                                                    android.os.Message msg = new android.os.Message();
+                                                    msg.what = UPDATE_AUDIO_PROGRESS_BAR;
+                                                    audioProgressHandler.sendMessage(msg);
+                                                    Thread.sleep(100);
+                                                }
+
+                                                if (audioPlayer.getCurrentPosition() == audioPlayer.getDuration()){
+                                                    playButtonIn.setImageResource(R.drawable.ic_play);
+                                                    audioProgressHandler.removeCallbacks(this);
+                                                    stopCurrentPlayAudio();
+
+                                                    audioIsPlaying = false;
+                                                    //progressIndicator.setProgress(0);
+                                                }
+
+                                            }
+                                        } catch (InterruptedException ex) {
+                                            Log.e(TAG_PLAY_AUDIO, ex.getMessage(), ex);
+                                        }
+                                    }
+
+                                };
+                                updateAudioPalyerProgressThread.start();
+                            }
+                        }
+                        else {
+                            Toast.makeText(context, "Please specify an audio file to play.", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        playButtonIn.setImageResource(R.drawable.ic_play);
+                        audioPlayer.pause();
+                        audioIsPlaying = !audioIsPlaying;
+                        updateAudioPalyerProgressThread = null;
+                    }
+                    //audioIsPlaying = !audioIsPlaying;
+                }
+            });
+
+            dateTV.setText(DateFormat.getTimeInstance(DateFormat.SHORT).format(messageModel.messageTime));
+        }
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == MESSAGE_TYPE_IN) {
             return new MessageInViewHolder(LayoutInflater.from(context).inflate(R.layout.message_in, parent, false));
         } else if (viewType == AUDIO_MESSAGE_TYPE_OUT){
             return new AudioMessageOutViewHolder(LayoutInflater.from(context).inflate(R.layout.audio_message_out, parent, false));
-        } else if (viewType == FILE_MESSAGE_TYPE_OUT){
+        } else if (viewType == AUDIO_MESSAGE_TYPE_IN){
+            return new FileMessageOutViewHolder(LayoutInflater.from(context).inflate(R.layout.audio_message_in, parent, false));
+        }else if (viewType == FILE_MESSAGE_TYPE_OUT){
             return new FileMessageOutViewHolder(LayoutInflater.from(context).inflate(R.layout.file_message_out, parent, false));
         }else if (viewType == FILE_MESSAGE_TYPE_IN){
             return new FileMessageInViewHolder(LayoutInflater.from(context).inflate(R.layout.file_message_in, parent, false));
@@ -317,6 +431,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ((AudioMessageOutViewHolder) holder).bind(position);
         } else if (list.get(position).messageType == FILE_MESSAGE_TYPE_OUT) {
             ((FileMessageOutViewHolder) holder).bind(position);
+        } else if (list.get(position).messageType == AUDIO_MESSAGE_TYPE_IN) {
+            ((AudioMessageInViewHolder) holder).bind(position);
         } else if (list.get(position).messageType == FILE_MESSAGE_TYPE_IN) {
             ((FileMessageInViewHolder) holder).bind(position);
         } else if (list.get(position).messageType == GALLERY_MESSAGE_TYPE_IN) {
