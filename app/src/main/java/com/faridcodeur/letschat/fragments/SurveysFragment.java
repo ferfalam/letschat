@@ -2,6 +2,7 @@ package com.faridcodeur.letschat.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -11,6 +12,11 @@ import android.view.ViewGroup;
 import com.faridcodeur.letschat.adapters.SurveyListAdapter;
 import com.faridcodeur.letschat.databinding.FragmentSurveysBinding;
 import com.faridcodeur.letschat.entities.Surveys;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +66,7 @@ public class SurveysFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentSurveysBinding.inflate(inflater, container, false);
         // Inflate the layout for this fragment
-        generateDiscussions();
+        getSurveys();
         buidCustomAdapter();
 
         return binding.getRoot();
@@ -71,9 +77,17 @@ public class SurveysFragment extends Fragment {
         binding.listSurveys.setAdapter(surveyListAdapter);
     }
 
-    private void generateDiscussions(){
-        for (int i=0; i<=20; i++) {
-            surveys.add(new Surveys("Proposer aux prospects des services informatiques pouvant améliorer leurs chiffres d’affaires ou d’améliorer leur quotidien", "Analyser les systèmes informatiques des entreprises et de quelques particuliers", null));
-        }
+    private void getSurveys(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(Surveys.collectionPath)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        for (QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                            Surveys survey = documentSnapshot.toObject(Surveys.class);
+                            surveys.add(survey);
+                        }
+                    }
+                });
     }
 }

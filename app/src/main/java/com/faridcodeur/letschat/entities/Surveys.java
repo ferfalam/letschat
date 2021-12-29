@@ -8,6 +8,10 @@ public class Surveys implements Serializable {
     private String description;
     private String questions;
     private String created_at;
+    public static String collectionPath = "surveys";
+
+    public Surveys() {
+    }
 
     public Surveys(String title, String description, String questions) {
         this.title = title;
