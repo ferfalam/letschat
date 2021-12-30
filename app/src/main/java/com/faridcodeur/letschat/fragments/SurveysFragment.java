@@ -79,7 +79,6 @@ public class SurveysFragment extends Fragment {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(Surveys.getCollectionPath())
                 .orderBy("id", Query.Direction.DESCENDING)
-                .whereEqualTo("disabled", false)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()){
