@@ -56,8 +56,6 @@ public class SondageAdapter extends BaseAdapter {
     @Override
     public View getView(int index, View view, ViewGroup viewGroup) {
 
-
-
         if (listSondageMapping.get(index).getQuestionType() == "text") {
             LinearLayout myView = (LinearLayout)  LayoutInflater.from(this.context).inflate(R.layout.question_text_type , viewGroup ,false);
 

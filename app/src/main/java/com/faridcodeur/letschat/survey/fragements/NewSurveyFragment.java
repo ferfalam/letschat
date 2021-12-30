@@ -22,6 +22,7 @@ import com.faridcodeur.letschat.survey.model.TextQuestion;
 import com.faridcodeur.letschat.survey.model.UniqueChoiceQuestion;
 import com.faridcodeur.letschat.utiles.InputValidation;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +84,7 @@ public class NewSurveyFragment extends Fragment {
                 }else if (InputValidation.isEmptyInput(binding.surveyDescription, false)){
                     binding.surveyDescription.setError("Aucune description renseigner");
                 }else {
-                    Surveys surveys = new Surveys(Objects.requireNonNull(binding.surveyTitle.getText()).toString(), Objects.requireNonNull(binding.surveyDescription.getText()).toString());
+                    Surveys surveys = new Surveys(Objects.requireNonNull(binding.surveyTitle.getText()).toString(), Objects.requireNonNull(binding.surveyDescription.getText()).toString(), 1);
                     if (mViewModel.createSurveys(surveys, textQuestionList, uniqueChoiceQuestionList, multipleChoiceQuestionList)){
                         Toast.makeText(getContext(), "Votre sondage a été créer avec succès", Toast.LENGTH_SHORT).show();
                         requireActivity().finish();

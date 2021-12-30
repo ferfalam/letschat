@@ -50,6 +50,7 @@ public class MyContactActivity extends AppCompatActivity {
             } else {
                 ActivityCompat.requestPermissions(this, PERMISSIONS_CONTACT, PERMISSIONS_REQUEST);
             }
+            return;
         }
 
         if (Global.contacts.size() <= 0){
@@ -142,6 +143,20 @@ public class MyContactActivity extends AppCompatActivity {
                 Snackbar.make(binding.getRoot(), "No Permission", Snackbar.LENGTH_LONG).setAction("Ok", container_view -> {
                     Log.e("onRequest", "onRequestPermissionsResult: No permission");
                 }).show();
+            }else {
+                if (Global.contacts.size() <= 0){
+                    fetchContacts();
+                }else{
+                    contacts = Global.contacts;
+                }
+                buildCustomAdapter();
+                binding.listContactReturnButton.setOnClickListener(
+                        v -> {
+                            Intent intent = getIntent();
+                            setResult(Activity.RESULT_OK, intent);
+                            finish();
+                        }
+                );
             }
         }
     }
