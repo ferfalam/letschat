@@ -39,6 +39,7 @@ public class MyContactActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e("ONCREATE", "CONTACT ACTIVITY");
         binding = ActivityMyContactBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 

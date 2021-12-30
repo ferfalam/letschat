@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean isFabOpen = false;
     private final int PROFILE_ACTIVITY = 3025;
     private final int MY_CONTACT_ACTIVITY = 3035;
+    private final int SURVEY_FRAGMENT = 3045;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,10 +107,9 @@ public class MainActivity extends AppCompatActivity {
         binding.newSurveys.setOnClickListener(view -> {
             //TODO Call new Survey activity here
             //Toast.makeText(getBaseContext(), "Create new surveys", Toast.LENGTH_SHORT).show();
-            Log.e("TAG", "new surveys");
+
             Intent intent = new Intent(MainActivity.this, FabActionActivity.class);
-            intent.putExtra("ACTION", "NEW_SURVEY");
-            startActivity(intent);
+            startActivityIfNeeded(intent, SURVEY_FRAGMENT);
         });
 
         binding.newSms.setOnClickListener(view -> {

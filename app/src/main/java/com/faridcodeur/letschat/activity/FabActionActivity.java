@@ -1,6 +1,8 @@
 package com.faridcodeur.letschat.activity;
 
+import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,18 +23,7 @@ public class FabActionActivity extends AppCompatActivity {
         ViewPager2 viewPager2 = findViewById(R.id.fab_action_viewer);
 
         String action = (String) getIntent().getSerializableExtra("ACTION");
-        switch (action) {
-            case "NEW_DISCUSSION":
-                appContentResolver = getApplicationContext().getContentResolver();
-                adapter = new FabActionFragmentAdapter(getSupportFragmentManager(), getLifecycle(), "NEW_DISCUSSION");
-                break;
-            case "NEW_SURVEY":
-                adapter = new FabActionFragmentAdapter(getSupportFragmentManager(), getLifecycle(), "NEW_SURVEY");
-                break;
-            case "SETTINGS":
-                // TODO Start Settings fragment
-                break;
-        }
+        adapter = new FabActionFragmentAdapter(getSupportFragmentManager(), getLifecycle(), "NEW_SURVEY");
         viewPager2.setAdapter(adapter);
     }
 

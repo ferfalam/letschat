@@ -1,5 +1,7 @@
 package com.faridcodeur.letschat.survey.fragements;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -59,6 +61,14 @@ public class NewSurveyFragment extends Fragment {
         LinearLayout layout = binding.surveyContentLayout;
         BottomNavigationView bottomNavigationView = binding.bottomNavigation;
         ScrollView scrollView = binding.surveyContentLayoutScroll;
+
+        binding.newSurveyReturnButton.setOnClickListener(
+                v -> {
+                    Intent intent = getActivity().getIntent();
+                    getActivity().setResult(Activity.RESULT_OK, intent);
+                    getActivity().finish();
+                }
+        );
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             Log.e("ITEM", item.toString());
