@@ -20,6 +20,7 @@
         android:roundIcon="@drawable/chat"
         android:supportsRtl="true"
         android:theme="@style/Theme.Letschat">
+        <activity
             android:name=".activity.MyContactActivity"
             android:exported="true" />
         <activity

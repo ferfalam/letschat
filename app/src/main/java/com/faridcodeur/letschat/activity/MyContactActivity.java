@@ -39,10 +39,8 @@ public class MyContactActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.e("ONCREATE", "CONTACT ACTIVITY");
         binding = ActivityMyContactBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
 
         String[] PERMISSIONS_CONTACT = {Manifest.permission.READ_CONTACTS};
 
@@ -62,11 +60,11 @@ public class MyContactActivity extends AppCompatActivity {
         }
         buildCustomAdapter();
         binding.listContactReturnButton.setOnClickListener(
-            v -> {
-                Intent intent = getIntent();
-                setResult(Activity.RESULT_OK, intent);
-                finish();
-            }
+                v -> {
+                    Intent intent = getIntent();
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();
+                }
         );
     }
 
@@ -109,10 +107,11 @@ public class MyContactActivity extends AppCompatActivity {
         ContentResolver cr = getContentResolver();
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
                 new String[]{ContactsContract.Data.DISPLAY_NAME, ContactsContract.Data.HAS_PHONE_NUMBER, ContactsContract.Data._ID}, null, null, null);
+        List<Contact> temp = new ArrayList<>();
         if ((cur != null ? cur.getCount() : 0) > 0) {
             while (cur.moveToNext()) {
-                 String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
-                 String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
+                String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
 
                 if (cur.getInt(cur.getColumnIndex(
                         ContactsContract.Contacts.HAS_PHONE_NUMBER)) > 0) {
