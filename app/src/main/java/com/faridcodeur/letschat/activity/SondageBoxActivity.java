@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.format.DateUtils;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -16,13 +17,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.databinding.ActivitySondageBoxBinding;
+import com.faridcodeur.letschat.entities.Answer;
 import com.faridcodeur.letschat.entities.Surveys;
 import com.faridcodeur.letschat.utiles.InputValidation;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -30,6 +34,7 @@ import java.util.Objects;
 public class SondageBoxActivity extends AppCompatActivity {
     ActivitySondageBoxBinding binding;
     Surveys survey;
+    List<AnswerModel> answerModelList = new ArrayList<>();
 
     @SuppressLint("UseCompatLoadingForDrawables")
     @Override
@@ -83,6 +88,7 @@ public class SondageBoxActivity extends AppCompatActivity {
 
                     TextView textView = myView.findViewById(R.id.question);
                     textView.setText(++i + ". " + question.get("question"));
+                    answerModelList.add(new AnswerModel(Integer.parseInt(Objects.requireNonNull(question.get("id"))), "text", myView));
                     binding.surveyContentLayout.addView(myView);
                     break;
                 }
@@ -98,6 +104,7 @@ public class SondageBoxActivity extends AppCompatActivity {
                         radioButton.setText(radioText);
                         radioGroup.addView(radioButton);
                     }
+                    answerModelList.add(new AnswerModel(Integer.parseInt(Objects.requireNonNull(question.get("id"))), "radio", myView));
                     binding.surveyContentLayout.addView(myView);
                     break;
                 }
@@ -114,9 +121,27 @@ public class SondageBoxActivity extends AppCompatActivity {
                         checkBox.setText(checkboxText);
                         linearLayout.addView(checkBox);
                     }
+                    answerModelList.add(new AnswerModel(Integer.parseInt(Objects.requireNonNull(question.get("id"))), "checkbox", myView));
+
                     binding.surveyContentLayout.addView(myView);
                     break;
                 }
+            }
+        }
+    }
+
+    public void submitResult(){
+        Answer answer = new Answer();
+        List<Map<String, String>> responseList = new ArrayList<>();
+        for (AnswerModel answerModel : answerModelList){
+            switch (answerModel.getType()){
+                case "text" :
+                    Map<String, String> map = new HashMap<>();
+                    break;
+                case "radio" :
+                    break;
+                case "checkbox" :
+                    break;
             }
         }
     }
@@ -124,4 +149,48 @@ public class SondageBoxActivity extends AppCompatActivity {
 
 class AnswerModel {
     private int questionId;
+    private String type;
+    private View view;
+
+    public AnswerModel(int questionId, String type, View view) {
+        this.questionId = questionId;
+        this.type = type;
+        this.view = view;
+    }
+
+    public Map<String, String> get(){
+        Map<String, String> map = new HashMap<>();
+        switch (this.type) {
+            case "text":
+                TextInputEditText champ = view.findViewById(R.id.champ);
+                if (!InputValidation.isEmptyInput(champ, false)) {
+                    map.put("questionId", String.valueOf(questionId));
+                    map.put("type", type);
+                    map.put("value", Objects.requireNonNull(champ.getText()).toString());
+                    return map;
+                } else {
+                    champ.setError("Aucune reponse renseigner");
+                }
+                break;
+            case "radio":
+
+                break;
+            case "checkbox":
+
+                break;
+        }
+        return null;
+    }
+
+    public int getQuestionId() {
+        return questionId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public View getView() {
+        return view;
+    }
 }
