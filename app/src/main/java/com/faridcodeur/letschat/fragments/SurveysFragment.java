@@ -1,22 +1,18 @@
 package com.faridcodeur.letschat.fragments;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.Fragment;
+
 import com.faridcodeur.letschat.adapters.SurveyListAdapter;
 import com.faridcodeur.letschat.databinding.FragmentSurveysBinding;
 import com.faridcodeur.letschat.entities.Surveys;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,12 +76,15 @@ public class SurveysFragment extends Fragment {
     private void getSurveys(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(Surveys.collectionPath)
+                .orderBy("id", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()){
                         for (QueryDocumentSnapshot documentSnapshot : task.getResult()){
+//                            db.collection(Surveys.collectionPath).document(documentSnapshot.getId()).delete();
                             Surveys survey = documentSnapshot.toObject(Surveys.class);
                             surveys.add(survey);
+                            surveyListAdapter.notifyDataSetChanged();
                         }
                     }
                 });
