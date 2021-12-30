@@ -21,6 +21,13 @@ public class Answer implements Serializable {
         this.created_at = created_at;
     }
 
+    public Answer(int surveyId, int userId, String response, Date created_at) {
+        this.surveyId = surveyId;
+        this.userId = userId;
+        this.response = response;
+        this.created_at = created_at;
+    }
+
     public int getId() {
         return id;
     }

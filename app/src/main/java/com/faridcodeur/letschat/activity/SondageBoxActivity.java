@@ -1,12 +1,12 @@
 package com.faridcodeur.letschat.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ListView;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -21,9 +21,11 @@ import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.databinding.ActivitySondageBoxBinding;
 import com.faridcodeur.letschat.entities.Answer;
 import com.faridcodeur.letschat.entities.Surveys;
+import com.faridcodeur.letschat.utiles.Global;
 import com.faridcodeur.letschat.utiles.InputValidation;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -68,7 +70,12 @@ public class SondageBoxActivity extends AppCompatActivity {
         buildView();
 
         binding.soumetre.setOnClickListener(view -> {
-            Toast.makeText(SondageBoxActivity.this, "Validate" , Toast.LENGTH_SHORT).show();
+            if (submitResult()){
+                Toast.makeText(SondageBoxActivity.this, "Votre reponse à été envoyer. Merci pour la participation" , Toast.LENGTH_SHORT).show();
+                finish();
+            }else {
+                Toast.makeText(SondageBoxActivity.this, "Erreur de soumission. Veuillez verifier si tous les questions sont repondu" , Toast.LENGTH_SHORT).show();
+            }
         });
 
 
@@ -97,7 +104,7 @@ public class SondageBoxActivity extends AppCompatActivity {
 
                     TextView textView = myView.findViewById(R.id.question);
                     textView.setText(++i + ". " + question.get("question"));
-                    answerModelList.add(new AnswerModel(Integer.parseInt(Objects.requireNonNull(question.get("id"))), "text", myView));
+                    answerModelList.add(new AnswerModel(Integer.parseInt(Objects.requireNonNull(question.get("id"))), "text", myView, this));
                     binding.surveyContentLayout.addView(myView);
                     break;
                 }
@@ -113,7 +120,7 @@ public class SondageBoxActivity extends AppCompatActivity {
                         radioButton.setText(radioText);
                         radioGroup.addView(radioButton);
                     }
-                    answerModelList.add(new AnswerModel(Integer.parseInt(Objects.requireNonNull(question.get("id"))), "radio", myView));
+                    answerModelList.add(new AnswerModel(Integer.parseInt(Objects.requireNonNull(question.get("id"))), "radio", myView, this));
                     binding.surveyContentLayout.addView(myView);
                     break;
                 }
@@ -130,7 +137,7 @@ public class SondageBoxActivity extends AppCompatActivity {
                         checkBox.setText(checkboxText);
                         linearLayout.addView(checkBox);
                     }
-                    answerModelList.add(new AnswerModel(Integer.parseInt(Objects.requireNonNull(question.get("id"))), "checkbox", myView));
+                    answerModelList.add(new AnswerModel(Integer.parseInt(Objects.requireNonNull(question.get("id"))), "checkbox", myView, this));
 
                     binding.surveyContentLayout.addView(myView);
                     break;
@@ -139,20 +146,25 @@ public class SondageBoxActivity extends AppCompatActivity {
         }
     }
 
-    public void submitResult(){
-        Answer answer = new Answer();
+    public boolean submitResult(){
         List<Map<String, String>> responseList = new ArrayList<>();
         for (AnswerModel answerModel : answerModelList){
-            switch (answerModel.getType()){
-                case "text" :
-                    Map<String, String> map = new HashMap<>();
-                    break;
-                case "radio" :
-                    break;
-                case "checkbox" :
-                    break;
-            }
+            Map<String , String> map = answerModel.get();
+            if (map != null){
+                responseList.add(map);
+            }else return false;
         }
+        if (responseList.size() != 0) {
+            //TODO replace 2 by : user.getId()
+            Answer answer = new Answer(survey.getId(), 2, new Gson().toJson(responseList), new Date());
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection(Global.getAnswerCollectionPath())
+                    .add(answer)
+                    .addOnSuccessListener(documentReference -> Log.d("submitResult", "Nouveau answer crée avec l'id: " + documentReference.getId()))
+                    .addOnFailureListener(e -> Log.d("submitResult", "Erreur lors de l'ajout du document: " + e));
+            return true;
+        }
+        return false;
     }
 }
 
@@ -160,11 +172,13 @@ class AnswerModel {
     private int questionId;
     private String type;
     private View view;
+    private Context context;
 
-    public AnswerModel(int questionId, String type, View view) {
+    public AnswerModel(int questionId, String type, View view, Context context) {
         this.questionId = questionId;
         this.type = type;
         this.view = view;
+        this.context = context;
     }
 
     public Map<String, String> get(){
@@ -182,10 +196,32 @@ class AnswerModel {
                 }
                 break;
             case "radio":
-
+                RadioGroup radioGroup = view.findViewById(R.id.radioOption);
+                if (radioGroup.getCheckedRadioButtonId() != -1){
+                    map.put("questionId", String.valueOf(questionId));
+                    map.put("type", type);
+                    map.put("value", ((RadioButton)view.findViewById(radioGroup.getCheckedRadioButtonId())).getText().toString());
+                    return map;
+                }else {
+                    Toast.makeText(context, "Veuillez remplir tous les infos" , Toast.LENGTH_SHORT).show();
+                }
                 break;
             case "checkbox":
+                LinearLayout linearLayout = view.findViewById(R.id.enter);
+                List<String> selectedCheckboxText = new ArrayList<>();
+                for (int i=0; i < linearLayout.getChildCount(); i++){
+                    CheckBox checkBox = (CheckBox) linearLayout.getChildAt(i);
+                    if (checkBox.isChecked()){
+                        selectedCheckboxText.add(checkBox.getText().toString());
+                    }
+                }
 
+                if (selectedCheckboxText.size() != 0){
+                    map.put("questionId", String.valueOf(questionId));
+                    map.put("type", type);
+                    map.put("values", new Gson().toJson(selectedCheckboxText));
+                    return map;
+                }
                 break;
         }
         return null;
