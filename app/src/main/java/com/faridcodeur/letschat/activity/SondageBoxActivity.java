@@ -70,6 +70,9 @@ public class SondageBoxActivity extends AppCompatActivity {
         buildView();
 
         binding.soumetre.setOnClickListener(view -> {
+            if (FirebaseAuth.getInstance().getUid().equals("")){
+
+            }
             if (submitResult()){
                 Toast.makeText(SondageBoxActivity.this, "Votre reponse à été envoyer. Merci pour la participation" , Toast.LENGTH_SHORT).show();
                 finish();
@@ -169,10 +172,10 @@ public class SondageBoxActivity extends AppCompatActivity {
 }
 
 class AnswerModel {
-    private int questionId;
-    private String type;
-    private View view;
-    private Context context;
+    private final int questionId;
+    private final String type;
+    private final View view;
+    private final Context context;
 
     public AnswerModel(int questionId, String type, View view, Context context) {
         this.questionId = questionId;
