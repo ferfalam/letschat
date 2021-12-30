@@ -9,6 +9,7 @@ import com.faridcodeur.letschat.entities.Surveys;
 import com.faridcodeur.letschat.survey.model.MultipleChoiceQuestion;
 import com.faridcodeur.letschat.survey.model.TextQuestion;
 import com.faridcodeur.letschat.survey.model.UniqueChoiceQuestion;
+import com.faridcodeur.letschat.utiles.Global;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
@@ -60,7 +61,7 @@ public class NewSurveyViewModel extends AndroidViewModel {
         surveys.setQuestions(new Gson().toJson(questionsList));
         Log.i("TEST", "Test: " + surveys.getQuestions());
 
-        db.collection(Surveys.getCollectionPath())
+        db.collection(Global.getSurveysCollectionPath())
                 .add(surveys)
                 .addOnSuccessListener(documentReference -> Log.d("createSurveys", "Nouveau sondage crée avec l'id: " + documentReference.getId()))
                 .addOnFailureListener(e -> Log.d("createSurveys", "Erreur lors de l'ajout du document: " + e));

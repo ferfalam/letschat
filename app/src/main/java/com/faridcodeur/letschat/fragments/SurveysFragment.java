@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import com.faridcodeur.letschat.adapters.SurveyListAdapter;
 import com.faridcodeur.letschat.databinding.FragmentSurveysBinding;
 import com.faridcodeur.letschat.entities.Surveys;
+import com.faridcodeur.letschat.utiles.Global;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -77,7 +78,7 @@ public class SurveysFragment extends Fragment {
         //db.collection(Surveys.getCollectionPath()).document(documentSnapshot.getId()).delete();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(Surveys.getCollectionPath())
+        db.collection(Global.getSurveysCollectionPath())
                 .orderBy("id", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(task -> {

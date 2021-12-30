@@ -89,7 +89,4 @@ public class Surveys implements Serializable {
         this.userId = userId;
     }
 
-    public static String getCollectionPath() {
-        return "surveys";
-    }
 }
