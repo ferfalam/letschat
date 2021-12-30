@@ -1,7 +1,6 @@
 package com.faridcodeur.letschat.survey.fragements;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +21,11 @@ import com.faridcodeur.letschat.survey.model.TextQuestion;
 import com.faridcodeur.letschat.survey.model.UniqueChoiceQuestion;
 import com.faridcodeur.letschat.utiles.InputValidation;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class NewSurveyFragment extends Fragment {
 
@@ -36,8 +35,6 @@ public class NewSurveyFragment extends Fragment {
     private List<TextQuestion> textQuestionList = new ArrayList<>();
     private List<UniqueChoiceQuestion> uniqueChoiceQuestionList = new ArrayList<>();
     private List<MultipleChoiceQuestion> multipleChoiceQuestionList = new ArrayList<>();
-    public static int ids = 0;
-
 
     public static NewSurveyFragment newInstance() {
         if (newSurveyFragment==null){
@@ -61,20 +58,21 @@ public class NewSurveyFragment extends Fragment {
         BottomNavigationView bottomNavigationView = binding.bottomNavigation;
         ScrollView scrollView = binding.surveyContentLayoutScroll;
 
+        AtomicInteger ids = new AtomicInteger();
         bottomNavigationView.setOnItemSelectedListener(item -> {
-            Log.e("ITEM", item.toString());
+
             if (item.getItemId() == R.id.textQuestion) {
-                TextQuestion textQuestions = new TextQuestion(ids++, this, layout, textQuestionList);
+                TextQuestion textQuestions = new TextQuestion(ids.getAndIncrement(), this, layout, textQuestionList);
                 layout.addView(textQuestions.getView());
                 textQuestionList.add(textQuestions);
                 scrollView.fullScroll(View.FOCUS_DOWN);
             }else if (item.getItemId() == R.id.uniqueChoice){
-                UniqueChoiceQuestion uniqueChoiceQuestion = new UniqueChoiceQuestion(ids++, this, layout, uniqueChoiceQuestionList);
+                UniqueChoiceQuestion uniqueChoiceQuestion = new UniqueChoiceQuestion(ids.getAndIncrement(), this, layout, uniqueChoiceQuestionList);
                 layout.addView(uniqueChoiceQuestion.getView());
                 uniqueChoiceQuestionList.add(uniqueChoiceQuestion);
                 scrollView.fullScroll(View.FOCUS_DOWN);
             }else if (item.getItemId() == R.id.multipleChoice){
-                MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion(ids++,this, layout, multipleChoiceQuestionList);
+                MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion(ids.getAndIncrement(),this, layout, multipleChoiceQuestionList);
                 layout.addView(multipleChoiceQuestion.getView());
                 multipleChoiceQuestionList.add(multipleChoiceQuestion);
                 scrollView.fullScroll(View.FOCUS_DOWN);

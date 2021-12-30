@@ -1,10 +1,10 @@
 package com.faridcodeur.letschat.activity;
 
 import android.annotation.SuppressLint;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.databinding.ActivitySondageBoxBinding;
 import com.faridcodeur.letschat.entities.Surveys;
+import com.faridcodeur.letschat.utiles.InputValidation;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 
@@ -29,6 +30,7 @@ import java.util.Objects;
 public class SondageBoxActivity extends AppCompatActivity {
     ActivitySondageBoxBinding binding;
     Surveys survey;
+
     @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +49,16 @@ public class SondageBoxActivity extends AppCompatActivity {
 
         //TODO replace if condition by condition :: user.getId() == survey.getUserId()
         if (!Objects.equals(FirebaseAuth.getInstance().getUid(), String.valueOf(survey.getUserId()))){
-            if (!survey.isDisabled()) {
+            if (survey.isDisabled()) {
                 binding.soumetre.setImageDrawable(getResources().getDrawable(R.drawable.ic_delete));
+                binding.soumetre.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF8B83")));
             }else {
                 binding.soumetre.setImageDrawable(getResources().getDrawable(R.drawable.ic_validate));
+                binding.soumetre.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#86ED8B")));
             }
         }
         //TODO Fin
+
         buildView();
 
         binding.soumetre.setOnClickListener(view -> {
@@ -67,6 +72,9 @@ public class SondageBoxActivity extends AppCompatActivity {
         List<Map<String, String>> questionsList = new ArrayList<>();
 
         questionsList = new Gson().fromJson(survey.getQuestions(), questionsList.getClass());
+        questionsList = InputValidation.sortMapById(questionsList);
+
+
         int i = 0;
         for (Map<String, String> question : questionsList){
             switch (Objects.requireNonNull(question.get("type"))) {
@@ -94,7 +102,7 @@ public class SondageBoxActivity extends AppCompatActivity {
                     break;
                 }
                 case "checkbox": {
-                    LinearLayout myView = (LinearLayout) getLayoutInflater().inflate(R.layout.question_multichoice_type, null);
+                    @SuppressLint("InflateParams") LinearLayout myView = (LinearLayout) getLayoutInflater().inflate(R.layout.question_multichoice_type, null);
 
                     TextView textView = myView.findViewById(R.id.questionmultiple);
                     textView.setText(++i + ". " + question.get("question"));

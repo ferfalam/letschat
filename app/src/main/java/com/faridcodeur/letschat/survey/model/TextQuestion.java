@@ -43,7 +43,6 @@ public class TextQuestion implements Serializable {
             Map<String, String> textQuestion = new HashMap<>();
             textQuestion.put("id", Integer.toString(this.id));
             textQuestion.put("type", "text");
-            textQuestion.put("response", null);
             textQuestion.put("question", this.question);
             return textQuestion;
         }else {question.setError("Aucune question renseigner");}
