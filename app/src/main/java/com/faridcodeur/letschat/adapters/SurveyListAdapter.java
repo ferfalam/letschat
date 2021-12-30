@@ -53,11 +53,12 @@ public class SurveyListAdapter extends BaseAdapter {
         TextView created_at = myView.findViewById(R.id.survey_created_at);
         title.setText(surveys.get(i).getTitle());
         description.setText(surveys.get(i).getDescription());
-        created_at.setText(DateUtils.getRelativeTimeSpanString(surveys.get(i).getCreated_at().toDate().getTime(), new Date().getTime(), 0));
+        created_at.setText(DateUtils.getRelativeTimeSpanString(surveys.get(i).getCreated_at().getTime(), new Date().getTime(), 0));
         myView.setOnClickListener(view1 -> {
             Intent intent = new Intent(context, SondageBoxActivity.class);
-            context.startActivity(intent);
             Toast.makeText(context, String.valueOf(surveys.get(i).getId()) , Toast.LENGTH_LONG).show();
+            intent.putExtra("survey", surveys.get(i));
+            context.startActivity(intent);
         });
         return myView;
     }

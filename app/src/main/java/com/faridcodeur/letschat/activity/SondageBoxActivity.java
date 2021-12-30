@@ -1,41 +1,54 @@
 package com.faridcodeur.letschat.activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+import android.text.format.DateUtils;
+import android.util.Log;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.faridcodeur.letschat.R;
-import com.faridcodeur.letschat.adapters.SondageAdapter;
 import com.faridcodeur.letschat.databinding.ActivitySondageBoxBinding;
-import com.faridcodeur.letschat.entities.SondageMapping;
+import com.faridcodeur.letschat.entities.Surveys;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class SondageBoxActivity extends AppCompatActivity {
-    private List<SondageMapping> listSondage = new ArrayList<SondageMapping>();
     ActivitySondageBoxBinding binding;
-    SondageAdapter adapter;
+    Surveys survey;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySondageBoxBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        generateQuestion();
+        survey = (Surveys)getIntent().getSerializableExtra("survey");
+        if (survey == null) {
+            finish();
+            return;
+        }
+        binding.theme.setText(survey.getTitle());
+        binding.surveyState.setText(DateUtils.getRelativeTimeSpanString(survey.getCreated_at().getTime(), new Date().getTime(), 0));
 
-        Toast.makeText(SondageBoxActivity.this, String.valueOf(listSondage.size()) , Toast.LENGTH_LONG).show();
+        buildView();
 
-        adapter = new SondageAdapter(listSondage , SondageBoxActivity.this);
+        binding.soumetre.setOnClickListener(view -> {
+            Toast.makeText(SondageBoxActivity.this, "Validate" , Toast.LENGTH_SHORT).show();
+        });
 
-        ListView listView = (ListView) findViewById(R.id.sondageBox);
-        listView.setDivider(null);
-
-        listView.setAdapter(adapter);
 
         binding.sondageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,15 +57,57 @@ public class SondageBoxActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
-    void generateQuestion() {
+    @SuppressLint("SetTextI18n")
+    void buildView() {
+        List<Map<String, String>> questionsList = new ArrayList<>();
+        questionsList = new Gson().fromJson(survey.getQuestions(), questionsList.getClass());
+        Log.e("TAG", String.valueOf(questionsList));
+        int i = 0;
+        for (Map<String, String> question : questionsList){
+            switch (Objects.requireNonNull(question.get("type"))) {
+                case "text": {
+                    @SuppressLint("InflateParams") LinearLayout myView = (LinearLayout) getLayoutInflater().inflate(R.layout.question_text_type, null);
 
-        List<String> strList = Arrays.asList("oui" , "non");
-        List<String> strList1 = Arrays.asList("je suis content" , "je suis là", "Nous sommes tous là");
-        listSondage.add(new SondageMapping("1 . que pensz vous" , "text"));
-        listSondage.add(new SondageMapping("2 . que voulez vous" , "uniChoice",strList.size(),strList));
-        listSondage.add(new SondageMapping("2 . Vous aimez le sucre" , "uniChoice",strList.size(),strList));
-        listSondage.add(new SondageMapping("3 . Liste de question multiChoice" , "multiChoice",strList1.size(),strList1));
+                    TextView textView = myView.findViewById(R.id.question);
+                    textView.setText(++i + ". " + question.get("question"));
+                    binding.surveyContentLayout.addView(myView);
+                    break;
+                }
+                case "radio": {
+                    @SuppressLint("InflateParams") LinearLayout myView = (LinearLayout) getLayoutInflater().inflate(R.layout.question_unichoice_type, null);
+                    TextView textView = myView.findViewById(R.id.question);
+                    textView.setText(++i + ". " + question.get("question"));
+
+                    RadioGroup radioGroup = myView.findViewById(R.id.radioOption);
+
+                    for (String radioText : new Gson().fromJson(question.get("items"), String[].class)) {
+                        RadioButton radioButton = new RadioButton(this);
+                        radioButton.setText(radioText);
+                        radioGroup.addView(radioButton);
+                    }
+                    binding.surveyContentLayout.addView(myView);
+                    break;
+                }
+                case "checkbox": {
+                    LinearLayout myView = (LinearLayout) getLayoutInflater().inflate(R.layout.question_multichoice_type, null);
+
+                    TextView textView = myView.findViewById(R.id.questionmultiple);
+                    textView.setText(++i + ". " + question.get("question"));
+
+                    LinearLayout linearLayout = myView.findViewById(R.id.enter);
+
+                    for (String checkboxText : new Gson().fromJson(question.get("items"), String[].class)) {
+                        CheckBox checkBox = new CheckBox(this);
+                        checkBox.setText(checkboxText);
+                        linearLayout.addView(checkBox);
+                    }
+                    binding.surveyContentLayout.addView(myView);
+                    break;
+                }
+            }
+        }
     }
 }

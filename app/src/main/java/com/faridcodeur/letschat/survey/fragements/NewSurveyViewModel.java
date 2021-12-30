@@ -59,7 +59,8 @@ public class NewSurveyViewModel extends AndroidViewModel {
 
         surveys.setQuestions(new Gson().toJson(questionsList));
         Log.i("TEST", "Test: " + surveys.getQuestions());
-        db.collection(Surveys.collectionPath)
+
+        db.collection(Surveys.getCollectionPath())
                 .add(surveys)
                 .addOnSuccessListener(documentReference -> Log.d("createSurveys", "Nouveau sondage crée avec l'id: " + documentReference.getId()))
                 .addOnFailureListener(e -> Log.d("createSurveys", "Erreur lors de l'ajout du document: " + e));

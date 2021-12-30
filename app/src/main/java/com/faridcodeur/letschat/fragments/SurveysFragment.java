@@ -74,14 +74,15 @@ public class SurveysFragment extends Fragment {
     }
 
     private void getSurveys(){
+        //db.collection(Surveys.getCollectionPath()).document(documentSnapshot.getId()).delete();
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(Surveys.collectionPath)
+        db.collection(Surveys.getCollectionPath())
                 .orderBy("id", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()){
                         for (QueryDocumentSnapshot documentSnapshot : task.getResult()){
-//                            db.collection(Surveys.collectionPath).document(documentSnapshot.getId()).delete();
                             Surveys survey = documentSnapshot.toObject(Surveys.class);
                             surveys.add(survey);
                             surveyListAdapter.notifyDataSetChanged();

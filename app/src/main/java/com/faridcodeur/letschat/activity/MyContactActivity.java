@@ -52,6 +52,7 @@ public class MyContactActivity extends AppCompatActivity {
             } else {
                 ActivityCompat.requestPermissions(this, PERMISSIONS_CONTACT, PERMISSIONS_REQUEST);
             }
+            return;
         }
 
         if (Global.contacts.size() <= 0){
@@ -108,7 +109,6 @@ public class MyContactActivity extends AppCompatActivity {
         ContentResolver cr = getContentResolver();
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
                 new String[]{ContactsContract.Data.DISPLAY_NAME, ContactsContract.Data.HAS_PHONE_NUMBER, ContactsContract.Data._ID}, null, null, null);
-        List<Contact> temp = new ArrayList<>();
         if ((cur != null ? cur.getCount() : 0) > 0) {
             while (cur.moveToNext()) {
                  String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
@@ -144,6 +144,20 @@ public class MyContactActivity extends AppCompatActivity {
                 Snackbar.make(binding.getRoot(), "No Permission", Snackbar.LENGTH_LONG).setAction("Ok", container_view -> {
                     Log.e("onRequest", "onRequestPermissionsResult: No permission");
                 }).show();
+            }else {
+                if (Global.contacts.size() <= 0){
+                    fetchContacts();
+                }else{
+                    contacts = Global.contacts;
+                }
+                buildCustomAdapter();
+                binding.listContactReturnButton.setOnClickListener(
+                        v -> {
+                            Intent intent = getIntent();
+                            setResult(Activity.RESULT_OK, intent);
+                            finish();
+                        }
+                );
             }
         }
     }

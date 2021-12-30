@@ -55,14 +55,14 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/contact_name"
+                        android:id="@+id/theme"
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="La législation de l'avortement  ?"/>
                     <TextView
-                        android:id="@+id/online_status"
+                        android:id="@+id/survey_state"
                         android:text="Actif"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -72,15 +72,33 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ListView
-        android:id="@+id/sondageBox"
-        android:background="@drawable/sondage_message_style"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-        android:paddingHorizontal="8dp">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
 
-    </ListView>
+    <LinearLayout
+        android:id="@+id/survey_content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/sondage_message_style"
+        android:paddingHorizontal="8dp"/>
+
+
+    </ScrollView>
+
+<!--    <ListView-->
+<!--        android:id="@+id/sondageBox"-->
+<!--        android:background="@drawable/sondage_message_style"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"-->
+<!--        android:paddingHorizontal="8dp">-->
+
+<!--    </ListView>-->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/soumetre"

@@ -1,7 +1,5 @@
 package com.faridcodeur.letschat.entities;
 
-import com.google.firebase.Timestamp;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -10,32 +8,29 @@ public class Surveys implements Serializable {
     private String title;
     private String description;
     private String questions;
-    private Timestamp created_at;
-    public static String collectionPath = "surveys";
+    private Date created_at;
+    private Boolean disabled;
+    private int userId;
 
     public Surveys() {
-        this.created_at = new Timestamp(new Date());
     }
 
-    public Surveys(String title, String description, String questions) {
-        this.title = title;
-        this.description = description;
-        this.questions = questions;
-        this.created_at = new Timestamp(new Date());
-    }
-
-    public Surveys(int id, String title, String description, String questions, Timestamp created_at) {
+    public Surveys(int id, String title, String description, String questions, Date created_at, int userId) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.questions = questions;
         this.created_at = created_at;
+        this.userId = userId;
+        this.disabled = false;
     }
 
-    public Surveys(String title, String description) {
+    public Surveys(String title, String description, int userId) {
         this.title = title;
         this.description = description;
-        this.created_at = new Timestamp(new Date());
+        this.created_at = new Date();
+        this.userId = userId;
+        this.disabled = false;
     }
 
     public int getId() {
@@ -62,11 +57,11 @@ public class Surveys implements Serializable {
         this.description = description;
     }
 
-    public Timestamp getCreated_at() {
+    public Date getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(Timestamp created_at) {
+    public void setCreated_at(Date created_at) {
         this.created_at = created_at;
     }
 
@@ -76,5 +71,25 @@ public class Surveys implements Serializable {
 
     public void setQuestions(String questions) {
         this.questions = questions;
+    }
+
+    public Boolean isDisabled() {
+        return disabled;
+    }
+
+    public void isDisabled(Boolean disabled) {
+        this.disabled = disabled;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public static String getCollectionPath() {
+        return "surveys";
     }
 }

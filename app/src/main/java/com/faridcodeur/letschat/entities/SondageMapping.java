@@ -1,11 +1,9 @@
 package com.faridcodeur.letschat.entities;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SondageMapping {
-
 
     private int id;
     private String question;
