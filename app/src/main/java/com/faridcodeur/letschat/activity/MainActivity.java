@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,9 +35,9 @@ public class MainActivity extends AppCompatActivity {
     private FragmentAdapter adapter;
     private FirebaseUser firebaseUser;
     private boolean isFabOpen = false;
-    private int PERMISSIONS_REQUEST = 3015;
-    private int PROFILE_ACTIVITY = 3025;
-    private int MY_CONTACT_ACTIVITY = 3035;
+    private final int PERMISSIONS_REQUEST = 3015;
+    private final int PROFILE_ACTIVITY = 3025;
+    private final int MY_CONTACT_ACTIVITY = 3035;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

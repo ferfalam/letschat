@@ -1,9 +1,6 @@
 package com.faridcodeur.letschat.activity;
 
 import android.annotation.SuppressLint;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,7 +12,9 @@ import android.view.View;
 import android.view.WindowInsets;
 import android.widget.ImageView;
 
-import com.faridcodeur.letschat.R;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.faridcodeur.letschat.databinding.ActivityMediaViewBinding;
 
 import java.io.File;

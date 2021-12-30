@@ -3,6 +3,7 @@ package com.faridcodeur.letschat.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.faridcodeur.letschat.activity.SondageBoxActivity;
 import com.faridcodeur.letschat.entities.Surveys;
 import com.google.android.material.card.MaterialCardView;
 
+import java.util.Date;
 import java.util.List;
 
 public class SurveyListAdapter extends BaseAdapter {
@@ -43,6 +45,7 @@ public class SurveyListAdapter extends BaseAdapter {
         return 0;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         @SuppressLint("ViewHolder") MaterialCardView myView = (MaterialCardView) LayoutInflater.from(context).inflate(R.layout.survey_items, viewGroup, false);
@@ -51,10 +54,11 @@ public class SurveyListAdapter extends BaseAdapter {
         TextView created_at = myView.findViewById(R.id.survey_created_at);
         title.setText(surveys.get(i).getTitle());
         description.setText(surveys.get(i).getDescription());
-        created_at.setText(surveys.get(i).getCreated_at());
+        created_at.setText(DateUtils.getRelativeTimeSpanString(surveys.get(i).getCreated_at().toDate().getTime(), new Date().getTime(), 0));
         myView.setOnClickListener(view1 -> {
             Intent intent = new Intent(context, SondageBoxActivity.class);
             context.startActivity(intent);
+            Toast.makeText(context, String.valueOf(surveys.get(i).getId()) , Toast.LENGTH_LONG).show();
         });
         return myView;
     }

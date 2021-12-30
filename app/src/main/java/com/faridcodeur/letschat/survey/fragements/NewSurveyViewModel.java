@@ -1,10 +1,7 @@
 package com.faridcodeur.letschat.survey.fragements;
 
-import android.annotation.SuppressLint;
 import android.app.Application;
-import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.lifecycle.AndroidViewModel;
 
@@ -12,24 +9,24 @@ import com.faridcodeur.letschat.entities.Surveys;
 import com.faridcodeur.letschat.survey.model.MultipleChoiceQuestion;
 import com.faridcodeur.letschat.survey.model.TextQuestion;
 import com.faridcodeur.letschat.survey.model.UniqueChoiceQuestion;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class NewSurveyViewModel extends AndroidViewModel {
+    private final FirebaseFirestore db;
 
     public NewSurveyViewModel(Application application) {
         super(application);
+        db = FirebaseFirestore.getInstance();
     }
 
-    public boolean createSurveys(Surveys surveys, @Nullable List<TextQuestion> textQuestionList,
-                              @Nullable List<UniqueChoiceQuestion> uniqueChoiceQuestionList,
-                              @Nullable List<MultipleChoiceQuestion> multipleChoiceQuestionList){
+    public boolean createSurveys(Surveys surveys, @Nullable List<TextQuestion> textQuestionList, @Nullable List<UniqueChoiceQuestion> uniqueChoiceQuestionList, @Nullable List<MultipleChoiceQuestion> multipleChoiceQuestionList){
 
         List<Map<String, String>> questionsList = new ArrayList<>();
 
@@ -62,7 +59,10 @@ public class NewSurveyViewModel extends AndroidViewModel {
 
         surveys.setQuestions(new Gson().toJson(questionsList));
         Log.i("TEST", "Test: " + surveys.getQuestions());
-
+        db.collection(Surveys.collectionPath)
+                .add(surveys)
+                .addOnSuccessListener(documentReference -> Log.d("createSurveys", "Nouveau sondage crée avec l'id: " + documentReference.getId()))
+                .addOnFailureListener(e -> Log.d("createSurveys", "Erreur lors de l'ajout du document: " + e));
         return true;
     }
 }
