@@ -48,8 +48,6 @@
         <item name="tabBackground">?attr/selectableItemBackground</item>
         <item name="tabTextColor">@color/black</item>
         <item name="tabSelectedTextColor">@color/_primary</item>
-
->>>>>>> cce18959d24473d67cc2c5fa439efcd4224ac174
     </style>
 
     <style name="Theme.Letschat.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

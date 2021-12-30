@@ -1,7 +1,9 @@
 package com.faridcodeur.letschat.entities;
 
+import com.google.firebase.Timestamp;
+
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Date;
 
 public class Surveys implements Serializable {
     private int id;
@@ -9,16 +11,17 @@ public class Surveys implements Serializable {
     private String description;
     private String questions;
     private Timestamp created_at;
+    public static String collectionPath = "surveys";
 
     public Surveys() {
-        this.created_at = new Timestamp(System.currentTimeMillis());
+        this.created_at = new Timestamp(new Date());
     }
 
     public Surveys(String title, String description, String questions) {
         this.title = title;
         this.description = description;
         this.questions = questions;
-        this.created_at = new Timestamp(System.currentTimeMillis());
+        this.created_at = new Timestamp(new Date());
     }
 
     public Surveys(int id, String title, String description, String questions, Timestamp created_at) {
@@ -32,7 +35,7 @@ public class Surveys implements Serializable {
     public Surveys(String title, String description) {
         this.title = title;
         this.description = description;
-        this.created_at = new Timestamp(System.currentTimeMillis());
+        this.created_at = new Timestamp(new Date());
     }
 
     public int getId() {

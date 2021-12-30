@@ -21,25 +21,38 @@
             app:popupTheme="@style/Theme.AppCompat.Light"
             >
             <RelativeLayout
-                android:id="@+id/contact_view"
                 android:padding="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 >
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/contact_profile_pic"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:padding="0dp"
-                    android:src="@drawable/deku" />
+                <LinearLayout
+                    android:id="@+id/contact_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <ImageButton
+                        android:id="@+id/chat_screen_return_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@color/_transparent_color"
+                        android:contentDescription="Button to return to back"
+                        android:src="@drawable/ic_baseline_arrow_back_24" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/contact_profile_pic"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="0dp"
+                        android:src="@drawable/deku" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/toolbar_view"
                     android:layout_marginStart="16dp"
-                    android:layout_toEndOf="@id/contact_profile_pic"
+                    android:layout_toEndOf="@id/contact_view"
                     android:orientation="vertical"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                     <TextView
@@ -105,8 +118,11 @@
         app:layout_constrainedHeight="true"
         app:layout_constraintBottom_toTopOf="@+id/view"
         app:layout_constraintTop_toBottomOf="@id/chat_appbar"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="-16dp" />
+        tools:listitem="@layout/message_in"
+        app:stackFromEnd="true"
+        android:paddingBottom="10dp"
+
+        />
 
 
 
@@ -114,6 +130,7 @@
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:paddingTop="10dp"
         android:background="#e0e0e0"
         app:layout_constraintBottom_toTopOf="@+id/layout_chat_chatbox" />
 
@@ -187,7 +204,7 @@
                 android:layout_width="@dimen/_main_padding_horizontal"
                 android:layout_height="@dimen/_main_padding_horizontal"
                 android:background="@drawable/border_button"
-                android:src="@drawable/ic_vocal"
+                android:src="@drawable/ic_file"
                 />
 
         </LinearLayout>

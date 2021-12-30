@@ -2,6 +2,7 @@ package com.faridcodeur.letschat.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -9,9 +10,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -35,21 +36,12 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseUser firebaseUser;
     private boolean isFabOpen = false;
     private final int PERMISSIONS_REQUEST = 3015;
+    private final int PROFILE_ACTIVITY = 3025;
+    private final int MY_CONTACT_ACTIVITY = 3035;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String[] PERMISSIONS_EXTERNAL_STORAGE = {Manifest.permission.READ_EXTERNAL_STORAGE};
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                Snackbar.make(binding.getRoot(), "L'application requiert l'accès à la base de donnée distante.", Snackbar.LENGTH_LONG).setAction("Activer", view -> {
-                    ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS_EXTERNAL_STORAGE, PERMISSIONS_REQUEST);
-                }).show();
-            } else {
-                ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS_EXTERNAL_STORAGE, PERMISSIONS_REQUEST);
-            }
-        }
 
         AppPreference appPreference = AppPreference.getInstance(this);
         if(!appPreference.isConnected()) {
@@ -62,16 +54,29 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
 
+        String[] PERMISSIONS_EXTERNAL_STORAGE = {Manifest.permission.READ_EXTERNAL_STORAGE};
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                Snackbar.make(binding.getRoot(), "L'application requiert l'accès à la base de donnée distante.", Snackbar.LENGTH_LONG).setAction("Activer", view -> {
+                    ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS_EXTERNAL_STORAGE, PERMISSIONS_REQUEST);
+                }).show();
+            } else {
+                ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS_EXTERNAL_STORAGE, PERMISSIONS_REQUEST);
+            }
+        }
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
 
         final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
         if (firebaseAuth.getCurrentUser() != null) {
             firebaseUser = firebaseAuth.getCurrentUser();
+            Uri photoImage = firebaseUser.getPhotoUrl();
+            Glide.with(MainActivity.this).load(photoImage).into(binding.profileImage);
         }
-        Uri uri = firebaseUser.getPhotoUrl();
-        Glide.with(MainActivity.this).load(uri).into(binding.profileImage);
 
         //setting toolbar on main activity interface
         setSupportActionBar(binding.toolbar1);
@@ -101,7 +106,8 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.profile_image).setOnClickListener(view -> {
             //TODO Call Setting activity here
-            Toast.makeText(getBaseContext(), "Go to Settings", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+            startActivityIfNeeded(intent, PROFILE_ACTIVITY);
         });
 
         findViewById(R.id.expand_button).setOnClickListener(view -> {
@@ -112,10 +118,8 @@ public class MainActivity extends AppCompatActivity {
         binding.settings.setOnClickListener(view -> {
             //TODO Call Settings activity here
             //Toast.makeText(getBaseContext(), "Go to Settings", Toast.LENGTH_SHORT).show();
-            Log.e("TAG", "settings");
-            Intent intent = new Intent(MainActivity.this, FabActionActivity.class);
-            intent.putExtra("ACTION", "SETTINGS");
-            startActivity(intent);
+            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+            startActivityIfNeeded(intent, PROFILE_ACTIVITY);
         });
 
         binding.newSurveys.setOnClickListener(view -> {
@@ -130,10 +134,8 @@ public class MainActivity extends AppCompatActivity {
         binding.newSms.setOnClickListener(view -> {
             //TODO Call contact activity here
             //Toast.makeText(getBaseContext(), "Create new discussion", Toast.LENGTH_SHORT).show();
-            Log.e("TAG", "new discussion");
-            Intent intent = new Intent(MainActivity.this, FabActionActivity.class);
-            intent.putExtra("ACTION", "NEW_DISCUSSION");
-            startActivity(intent);
+            Intent intent = new Intent(MainActivity.this, MyContactActivity.class);
+            startActivityIfNeeded(intent, MY_CONTACT_ACTIVITY);
         });
     }
 
@@ -161,6 +163,17 @@ public class MainActivity extends AppCompatActivity {
         binding.newSurveys.setVisibility(View.INVISIBLE);
         binding.newSms.setVisibility(View.INVISIBLE);
         ((FloatingActionButton)findViewById(R.id.expand_button)).setImageDrawable(getResources().getDrawable(R.drawable.ic_navigation));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PROFILE_ACTIVITY){
+            if (resultCode == Activity.RESULT_OK){
+                Uri photoImage = firebaseUser.getPhotoUrl();
+                Glide.with(MainActivity.this).load(photoImage).into(binding.profileImage);
+            }
+        }
     }
 
     @Override
