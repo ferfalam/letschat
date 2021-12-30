@@ -19,7 +19,7 @@ import java.util.Objects;
 public class TextQuestion implements Serializable {
     private int id;
     private String question;
-    private View view;
+    private final View view;
 
     @SuppressLint("InflateParams")
     public TextQuestion(int id, Fragment fragment, LinearLayout linearLayout, List<TextQuestion> textQuestionList) {

@@ -121,3 +121,7 @@ public class SondageBoxActivity extends AppCompatActivity {
         }
     }
 }
+
+class AnswerModel {
+    private int questionId;
+}
