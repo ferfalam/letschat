@@ -116,13 +116,9 @@ public class ChatScreenActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        //setPermissions();
         writeFile("/Audios");
-        //writeFile("/Audios/received");
         writeFile("/Images");
-        //writeFile("/Images/received");
         writeFile("/Files");
-        //writeFile("/Files/received");
     }
 
     @Override
@@ -205,9 +201,11 @@ public class ChatScreenActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-                if (audioFileName.isEmpty()){
+                if (mStartRecording){
                     audioFileName =getExternalCacheDir().getAbsolutePath() + "/Audios/vocal"+ new SimpleDateFormat("MM-dd-HH-mm-ss-SS").format(new Date())+ ".3gp";
                 }
+
+
                 int audioPermission = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO);
                 if(audioPermission != PackageManager.PERMISSION_GRANTED)
                 {
@@ -386,39 +384,6 @@ public class ChatScreenActivity extends AppCompatActivity {
                 recyclerViewAdapter.notifyDataSetChanged();
                 binding.recyclerChat.smoothScrollToPosition(messagesList.size());
             }
-        }
-    }
-
-    private void dirCreator(String folder){
-        String fileNamed = getExternalCacheDir().getPath()+folder+"/.nomedia";
-        String directoryName = getExternalCacheDir().getPath()+folder;
-        File file  = new File(String.valueOf(fileNamed));
-        File directory = new File(String.valueOf(directoryName));
-
-        if (!directory.exists()) {
-            directory.mkdir();
-            if (!file.exists()) {
-                file.getParentFile().mkdir();
-                try {
-                    file.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        FileWriter fw = null;
-        try {
-            fw = new FileWriter(file.getAbsoluteFile());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        BufferedWriter bw = new BufferedWriter(fw);
-        try {
-            bw.write("");
-            bw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
