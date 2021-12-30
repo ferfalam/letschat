@@ -40,7 +40,6 @@
     </style>
 
     <style name="MyStyle" parent="Widget.Design.TabLayout">
-
         <item name="tabIndicatorColor">@color/_text_color_primary</item>
         <item name="tabIndicatorHeight">5dp</item>
         <item name="tabPaddingStart">8dp</item>
