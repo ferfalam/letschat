@@ -57,5 +57,6 @@
     <string name="choix_unique">Choix unique</string>
     <string name="choix_multiple">Choix multiple</string>
     <string name="valider">Valider</string>
+    <string name="welcome">Bienvenue sur uChat...</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

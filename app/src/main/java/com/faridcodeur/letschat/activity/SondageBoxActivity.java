@@ -1,6 +1,7 @@
 package com.faridcodeur.letschat.activity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -24,7 +25,6 @@ public class SondageBoxActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitySondageBoxBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        setSupportActionBar(binding.sondageBoxToolbar);
 
         generateQuestion();
 
@@ -36,6 +36,13 @@ public class SondageBoxActivity extends AppCompatActivity {
         listView.setDivider(null);
 
         listView.setAdapter(adapter);
+
+        binding.sondageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
     }
 

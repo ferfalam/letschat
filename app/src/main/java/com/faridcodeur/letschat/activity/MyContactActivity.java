@@ -42,6 +42,7 @@ public class MyContactActivity extends AppCompatActivity {
         binding = ActivityMyContactBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
         String[] PERMISSIONS_CONTACT = {Manifest.permission.READ_CONTACTS};
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
@@ -59,11 +60,11 @@ public class MyContactActivity extends AppCompatActivity {
         }
         buildCustomAdapter();
         binding.listContactReturnButton.setOnClickListener(
-                v -> {
-                    Intent intent = getIntent();
-                    setResult(Activity.RESULT_OK, intent);
-                    finish();
-                }
+            v -> {
+                Intent intent = getIntent();
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
         );
     }
 

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
     private FragmentAdapter adapter;
     private FirebaseUser firebaseUser;
     private boolean isFabOpen = false;
-    private final int PERMISSIONS_REQUEST = 3015;
     private final int PROFILE_ACTIVITY = 3025;
     private final int MY_CONTACT_ACTIVITY = 3035;
 
@@ -43,28 +43,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        AppPreference appPreference = AppPreference.getInstance(this);
-        if(!appPreference.isConnected()) {
-            Intent intent = new Intent(this, AuthActivity.class);
-            startActivity(intent);
-            finish();
-        }else if(appPreference.getUserName().equals("")) {
-            Intent intent = new Intent(this, ConfigProfileActivity.class);
-            startActivity(intent);
-            finish();
-        }
 
-        String[] PERMISSIONS_EXTERNAL_STORAGE = {Manifest.permission.READ_EXTERNAL_STORAGE};
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                Snackbar.make(binding.getRoot(), "L'application requiert l'accès à la base de donnée distante.", Snackbar.LENGTH_LONG).setAction("Activer", view -> {
-                    ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS_EXTERNAL_STORAGE, PERMISSIONS_REQUEST);
-                }).show();
-            } else {
-                ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS_EXTERNAL_STORAGE, PERMISSIONS_REQUEST);
-            }
-        }
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -135,8 +114,9 @@ public class MainActivity extends AppCompatActivity {
 
         binding.newSms.setOnClickListener(view -> {
             //TODO Call contact activity here
-            //Toast.makeText(getBaseContext(), "Create new discussion", Toast.LENGTH_SHORT).show();
+
             Intent intent = new Intent(MainActivity.this, MyContactActivity.class);
+            //Toast.makeText(getBaseContext(), "Create new discussion", Toast.LENGTH_SHORT).show();
             startActivityIfNeeded(intent, MY_CONTACT_ACTIVITY);
         });
     }
@@ -174,18 +154,6 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK){
                 Uri photoImage = firebaseUser.getPhotoUrl();
                 Glide.with(MainActivity.this).load(photoImage).into(binding.profileImage);
-            }
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISSIONS_REQUEST) {
-            if (grantResults.length <= 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Snackbar.make(binding.getRoot(), "No Permission", Snackbar.LENGTH_LONG).setAction("Ok", container_view -> {
-                    Log.e("onRequest", "onRequestPermissionsResult: No permission");
-                }).show();
             }
         }
     }
