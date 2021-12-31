@@ -56,7 +56,7 @@ public class SurveyListAdapter extends BaseAdapter {
         description.setText(surveys.get(i).getDescription());
         created_at.setText(DateUtils.getRelativeTimeSpanString(surveys.get(i).getCreated_at().getTime(), new Date().getTime(), 0));
         myView.setOnClickListener(view1 -> {
-            Intent intent = new Intent(context, AnswerSondage.class);
+            Intent intent = new Intent(context, SondageBoxActivity.class);
             intent.putExtra("survey", surveys.get(i));
             context.startActivity(intent);
         });
