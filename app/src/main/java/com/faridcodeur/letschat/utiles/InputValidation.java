@@ -28,16 +28,16 @@ public class InputValidation {
 
         }
 
-        public static List<Map<String, String>> sortMapById(@NonNull List<Map<String, String>> mapList){
+        public static List<Map<String, String>> sortMapById(@NonNull List<Map<String, String>> mapList, String uid){
             List<Map<String, String>> list = new ArrayList<>();
             List<Integer> ids = new ArrayList<>();
             for (Map<String, String> question : mapList){
-                ids.add(Integer.valueOf(Objects.requireNonNull(question.get("id"))));
+                ids.add(Integer.valueOf(Objects.requireNonNull(question.get(uid))));
             }
             Collections.sort(ids);
             for (int id : ids){
                 for (Map<String, String> question : mapList){
-                    if (Objects.equals(question.get("id"), String.valueOf(id))){
+                    if (Objects.equals(question.get(uid), String.valueOf(id))){
                         list.add(question);
                         break;
                     }

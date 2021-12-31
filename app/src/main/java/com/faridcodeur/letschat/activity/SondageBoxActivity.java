@@ -68,9 +68,21 @@ public class SondageBoxActivity extends AppCompatActivity {
         if (FirebaseAuth.getInstance().getCurrentUser().getUid().equals(String.valueOf(survey.getUserId()))){
             binding.soumetre.setImageDrawable(getResources().getDrawable(R.drawable.ic_delete));
             binding.soumetre.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF8B83")));
+            binding.answer.setVisibility(View.VISIBLE);
         }
 
         buildView();
+
+        binding.answer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (FirebaseAuth.getInstance().getCurrentUser().getUid().equals(String.valueOf(survey.getUserId()))) {
+                    Intent intent = new Intent(SondageBoxActivity.this, AnswerSondageActivity.class);
+                    intent.putExtra("survey", survey);
+                    startActivity(intent);
+                }
+            }
+        });
 
         binding.soumetre.setOnClickListener(view -> {
             if (FirebaseAuth.getInstance().getCurrentUser().getUid().equals(String.valueOf(survey.getUserId()))){
@@ -104,7 +116,7 @@ public class SondageBoxActivity extends AppCompatActivity {
     void buildView() {
         List<Map<String, String>> questionsList = new ArrayList<>();
         questionsList = new Gson().fromJson(survey.getQuestions(), questionsList.getClass());
-        questionsList = InputValidation.sortMapById(questionsList);
+        questionsList = InputValidation.sortMapById(questionsList, "id");
 
 
         int i = 0;
