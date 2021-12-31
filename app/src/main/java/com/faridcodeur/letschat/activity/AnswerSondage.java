@@ -46,10 +46,13 @@ public class AnswerSondage extends AppCompatActivity {
             return;
         }
 
+        binding.theme.setText(survey.getTitle());
+        binding.surveyState.setText(DateUtils.getRelativeTimeSpanString(survey.getCreated_at().getTime(), new Date().getTime(), 0));
+        binding.sondageView.setOnClickListener(v -> onBackPressed());
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(Global.getAnswerCollectionPath())
                 .whereEqualTo("surveyId", survey.getId())
-                .whereEqualTo("userId", survey.getUserId())
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -61,9 +64,6 @@ public class AnswerSondage extends AppCompatActivity {
                         buildView();
                     }
                 });
-        binding.theme.setText(survey.getTitle());
-        binding.surveyState.setText(DateUtils.getRelativeTimeSpanString(survey.getCreated_at().getTime(), new Date().getTime(), 0));
-        binding.sondageView.setOnClickListener(v -> onBackPressed());
     }
 
     @SuppressLint("SetTextI18n")
