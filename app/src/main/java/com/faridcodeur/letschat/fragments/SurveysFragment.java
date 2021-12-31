@@ -84,9 +84,11 @@ public class SurveysFragment extends Fragment {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()){
                         for (QueryDocumentSnapshot documentSnapshot : task.getResult()){
+
                             Surveys survey = documentSnapshot.toObject(Surveys.class);
                             surveys.add(survey);
                             surveyListAdapter.notifyDataSetChanged();
+
                         }
                     }
                 });
