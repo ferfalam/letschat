@@ -26,22 +26,20 @@
         <entry key="app/src/main/res/layout/activity_my_contact.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.19791666666666666" />
-        <entry key="app/src/main/res/layout/activity_sondage_box.xml" value="0.18" />
-        <entry key="app/src/main/res/layout/activity_splash.xml" value="0.184375" />
+        <entry key="app/src/main/res/layout/activity_sondage_box.xml" value="0.10277777777777777" />
         <entry key="app/src/main/res/layout/chat_screen_activity.xml" value="0.25" />
         <entry key="app/src/main/res/layout/contact_fragment.xml" value="0.12" />
         <entry key="app/src/main/res/layout/contact_items.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_discussions.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_first2.xml" value="0.25" />
         <entry key="app/src/main/res/layout/message_in.xml" value="0.1" />
         <entry key="app/src/main/res/layout/new_survey_fragment.xml" value="0.18" />
         <entry key="app/src/main/res/layout/no_media.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_first2.xml" value="0.1" />
         <entry key="app/src/main/res/layout/question_multichoice_type.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/layout/question_text_type.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/layout/question_texte.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/layout/question_unichoice_type.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/layout/regular_discussion_items.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/splash_screen.xml" value="0.15" />
       </map>
     </option>
   </component>

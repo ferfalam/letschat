@@ -1,6 +1,7 @@
 package com.faridcodeur.letschat.utiles;
 
 import com.faridcodeur.letschat.entities.Contact;
+import com.faridcodeur.letschat.entities.Surveys;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,6 @@ public class Global {
 
     public static String getSurveysCollectionPath() { return "surveys";}
 
-    public static String getAnswerCollectionPath() { return "surveys";}
-
+    public static String getAnswerCollectionPath() { return "answers";}
 
 }

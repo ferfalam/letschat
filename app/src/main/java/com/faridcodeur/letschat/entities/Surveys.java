@@ -2,42 +2,53 @@ package com.faridcodeur.letschat.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 public class Surveys implements Serializable {
-    private int id;
+    private String id;
     private String title;
     private String description;
     private String questions;
     private Date created_at;
-    private Boolean disabled;
-    private int userId;
+    private String userId;
 
     public Surveys() {
     }
 
-    public Surveys(int id, String title, String description, String questions, Date created_at, int userId) {
+    public Surveys(String id, String title, String description, String questions, Date created_at, String userId) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.questions = questions;
         this.created_at = created_at;
         this.userId = userId;
-        this.disabled = false;
     }
 
-    public Surveys(String title, String description, int userId) {
+    public Surveys(String title, String description, String  userId) {
         this.title = title;
         this.description = description;
         this.created_at = new Date();
         this.userId = userId;
-        this.disabled = false;
     }
 
-    public int getId() {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Surveys surveys = (Surveys) o;
+        return id.equals(surveys.id) && title.equals(surveys.title) && description.equals(surveys.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, description);
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -73,20 +84,14 @@ public class Surveys implements Serializable {
         this.questions = questions;
     }
 
-    public Boolean isDisabled() {
-        return disabled;
-    }
-
-    public void isDisabled(Boolean disabled) {
-        this.disabled = disabled;
-    }
-
-    public int getUserId() {
+    public String  getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String  userId) {
         this.userId = userId;
     }
+
+
 
 }

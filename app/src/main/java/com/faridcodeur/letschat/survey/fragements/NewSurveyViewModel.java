@@ -58,13 +58,17 @@ public class NewSurveyViewModel extends AndroidViewModel {
             }
         }
 
-        surveys.setQuestions(new Gson().toJson(questionsList));
-        Log.i("TEST", "Test: " + surveys.getQuestions());
+        if (questionsList.size() != 0) {
 
-        db.collection(Global.getSurveysCollectionPath())
-                .add(surveys)
-                .addOnSuccessListener(documentReference -> Log.d("createSurveys", "Nouveau sondage crée avec l'id: " + documentReference.getId()))
-                .addOnFailureListener(e -> Log.d("createSurveys", "Erreur lors de l'ajout du document: " + e));
-        return true;
+            surveys.setQuestions(new Gson().toJson(questionsList));
+            Log.i("TEST", "Test: " + surveys.getQuestions());
+
+            db.collection(Global.getSurveysCollectionPath())
+                    .add(surveys)
+                    .addOnSuccessListener(documentReference -> Log.d("createSurveys", "Nouveau sondage crée avec l'id: " + documentReference.getId()))
+                    .addOnFailureListener(e -> Log.d("createSurveys", "Erreur lors de l'ajout du document: " + e));
+            return true;
+        }
+        return false;
     }
 }

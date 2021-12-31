@@ -62,13 +62,16 @@ public class MultipleChoiceQuestion implements Serializable {
                 list.add(checkBox.getText().toString());
             }
 
-            Map<String, String> multipleQuestion = new HashMap<>();
-            multipleQuestion.put("id", Integer.toString(this.id));
-            multipleQuestion.put("type", "checkbox");
-            multipleQuestion.put("question", this.question);
-            multipleQuestion.put("items", new Gson().toJson(list));
+            if (list.size() != 0) {
 
-            return multipleQuestion;
+                Map<String, String> multipleQuestion = new HashMap<>();
+                multipleQuestion.put("id", Integer.toString(this.id));
+                multipleQuestion.put("type", "checkbox");
+                multipleQuestion.put("question", this.question);
+                multipleQuestion.put("items", new Gson().toJson(list));
+
+                return multipleQuestion;
+            }
         }else {question.setError("Aucune question renseigner");}
         return null;
     }
