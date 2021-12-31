@@ -41,6 +41,7 @@ import com.faridcodeur.letschat.entities.FileMessage;
 import com.faridcodeur.letschat.entities.ImageMessage;
 import com.faridcodeur.letschat.entities.Message;
 import com.faridcodeur.letschat.entities.Discussion;
+import com.faridcodeur.letschat.entities.UserLocal;
 import com.faridcodeur.letschat.utiles.FileOpen;
 import com.faridcodeur.letschat.utiles.ItemClickSupport;
 import com.google.android.gms.tasks.Continuation;
@@ -97,7 +98,6 @@ public class ChatScreenActivity extends AppCompatActivity {
     private String audioFilePath = "";
     private String imagePath = "";
     private String filePath = "";
-    private int size;
 
     private MediaRecorder recorder = null;
 
@@ -126,6 +126,7 @@ public class ChatScreenActivity extends AppCompatActivity {
     private String targetId;
     private String targetName;
     private boolean firstORNot;
+    private UserLocal userTarget;
 
     //FIREBASE
     private FirebaseFirestore database;
@@ -160,16 +161,10 @@ public class ChatScreenActivity extends AppCompatActivity {
         userID = user.getUid();
         userName = user.getDisplayName();
         Intent intent = getIntent();
-
+        userTarget = (UserLocal) intent.getSerializableExtra("user");
         discussionID = "";
-        discussionID = intent.getStringExtra("discussionID");
-        if (discussionID.isEmpty()){
-            targetId = discussionID;
-        } else {
-            targetId = intent.getStringExtra("id");
-        }
-
-        targetName = intent.getStringExtra("nom");
+        targetId = userTarget.getId();
+        targetName = userTarget.getUsername();
     }
 
     @Override
@@ -218,6 +213,7 @@ public class ChatScreenActivity extends AppCompatActivity {
                 if (!binding.editChatMessage.getText().toString().isEmpty()){
                     if (firstORNot){
                         createDiscussion(new Message(userID, binding.editChatMessage.getText().toString(), RecyclerViewAdapter.MESSAGE_TYPE_OUT, ""));
+
                     } else {
                         sendTextMessage(userID, discussionID, binding.editChatMessage.getText().toString(), RecyclerViewAdapter.MESSAGE_TYPE_OUT, "");
                     }
