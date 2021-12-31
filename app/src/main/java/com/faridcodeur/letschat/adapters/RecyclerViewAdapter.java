@@ -182,7 +182,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         void bind(int position) {
             Message messageModel = list.get(position);
-            MediaPlayer inPlayer = MediaPlayer.create(context, Uri.fromFile(new File(messageModel.path)));
+            File file = new File(messageModel.path);
+            MediaPlayer inPlayer = MediaPlayer.create(context, Uri.fromFile(file));
             progressIndicator.setProgress(0);
             if(audioProgressHandler==null) {
                 audioProgressHandler = new Handler(new Handler.Callback() {

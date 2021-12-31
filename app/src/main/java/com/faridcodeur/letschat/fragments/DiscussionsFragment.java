@@ -83,22 +83,24 @@ public class DiscussionsFragment extends Fragment {
     }
 
     private void generateDiscussions(){
-//        database.collection(Message.collectionPath)
-//                .orderBy("lastTime", Query.Direction.ASCENDING)
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful()){
-//                            for (QueryDocumentSnapshot snap: task.getResult()
-//                            ) {
-//                                Discussion discussion = snap.toObject(Discussion.class);
-//                                discussions.add(discussion);
-//                            }
-//                        }
-//
-//                    }
-//                });
+        database.collection(Discussion.collectionPath)
+                .whereEqualTo("senderId", userId)
+                .orderBy("lastTime", Query.Direction.DESCENDING)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            for (QueryDocumentSnapshot snap: task.getResult()
+                            ) {
+                                Discussion discussion = snap.toObject(Discussion.class);
+                                discussions.add(discussion);
+                                discussionListAdapter.notifyDataSetChanged();
+                            }
+                        }
+
+                    }
+                });
         for (int i=0; i<=13; i++) {
             discussions.add(new Discussion(userId, "Ariel", new Message(userId, "Hi", 2, ""), "ID", "ff", "hier"));
         }

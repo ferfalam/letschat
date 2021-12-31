@@ -53,7 +53,7 @@ public class DiscussionListAdapter extends BaseAdapter {
         time.setText(discussions.get(i).getLastTime());
         myView.setOnClickListener(view1 -> {
             Intent intent = new Intent(context, ChatScreenActivity.class);
-            intent.putExtra("discussionID", discussions.get(i).getReceiverID());
+            intent.putExtra("discussion", discussions.get(i).getReceiverID());
             context.startActivity(intent);
         });
         return myView;

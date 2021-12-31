@@ -1,6 +1,7 @@
 package com.faridcodeur.letschat.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Discussion implements Serializable {
 
@@ -10,7 +11,16 @@ public class Discussion implements Serializable {
     private String receiverID;
     private String profileImg;
     private String lastTime;
+    private ArrayList<Message> messages;
     public static String collectionPath = "discussions";
+
+    public ArrayList<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(ArrayList<Message> messages) {
+        this.messages = messages;
+    }
 
     public String getSenderId() {
         return senderId;

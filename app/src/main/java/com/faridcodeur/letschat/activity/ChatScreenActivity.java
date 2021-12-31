@@ -51,9 +51,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.annotations.Nullable;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -94,6 +97,7 @@ public class ChatScreenActivity extends AppCompatActivity {
     private String audioFilePath = "";
     private String imagePath = "";
     private String filePath = "";
+    private int size;
 
     private MediaRecorder recorder = null;
 
@@ -152,7 +156,6 @@ public class ChatScreenActivity extends AppCompatActivity {
         userID = user.getUid();
         Intent intent = getIntent();
         discussionID = intent.getStringExtra("discussionID");
-        banner();
     }
 
     @Override
@@ -174,7 +177,6 @@ public class ChatScreenActivity extends AppCompatActivity {
         recyclerViewAdapter = new RecyclerViewAdapter(this, messagesList);
 
         lManager = new LinearLayoutManager(this);
-        //lManager.setReverseLayout(true);
         lManager.setStackFromEnd(true);
 
         binding.recyclerChat.setLayoutManager(lManager);
@@ -203,7 +205,7 @@ public class ChatScreenActivity extends AppCompatActivity {
                     binding.editChatMessage.setText("");
                     recyclerViewAdapter.notifyDataSetChanged();
                     messageTyper();
-                    binding.recyclerChat.smoothScrollToPosition(messagesList.size()+1);
+                    getSize();
                 }
             }
         });
@@ -251,10 +253,9 @@ public class ChatScreenActivity extends AppCompatActivity {
                                     }
                     mStartRecording = !mStartRecording;
                 }
-
                 recyclerViewAdapter.notifyDataSetChanged();
                 messageTyper();
-                binding.recyclerChat.smoothScrollToPosition(messagesList.size() +1);
+                getSize();
             }
         });
 
@@ -271,6 +272,25 @@ public class ChatScreenActivity extends AppCompatActivity {
                     selectImage();
                 }
                             }
+        });
+
+        final DocumentReference docRef = database.collection("discussion").document("farid");
+        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+                if (snapshot != null && snapshot.exists()) {
+                    Log.d(TAG, "Current data: " + snapshot.getData());
+                    recyclerViewAdapter.notifyDataSetChanged();
+                    getSize();
+                } else {
+                    Log.d(TAG, "Current data: null");
+                }
+            }
         });
     }
 
@@ -298,9 +318,7 @@ public class ChatScreenActivity extends AppCompatActivity {
                         }).setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        messagesList.clear();
-                        binding.recyclerChat.getAdapter().notifyDataSetChanged();
-                        messageTyper();
+
                     }
                 }).setCancelable(false);
                 AlertDialog dialog = builder.create();
@@ -325,27 +343,11 @@ public class ChatScreenActivity extends AppCompatActivity {
         }
     }
 
-    private void startPlaying() {
-        player = new MediaPlayer();
-        try {
-            player.setDataSource(audioFileName);
-            player.prepare();
-            player.start();
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "prepare() failed");
-        }
-    }
-
-    private void stopPlaying() {
-        player.release();
-        player = null;
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void startRecording() {
         recorder = new MediaRecorder();
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        recorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
+        recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         recorder.setOutputFile(audioFilePath);
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
@@ -358,7 +360,7 @@ public class ChatScreenActivity extends AppCompatActivity {
     }
 
     private void stopRecording() {
-        recorder.stop();
+        //recorder.stop();
         recorder.release();
         recorder = null;
     }
@@ -386,9 +388,10 @@ public class ChatScreenActivity extends AppCompatActivity {
                 copyFileFromUri(getApplicationContext(), imageFileUri,imageName, "Images");
                 imagePath = getExternalCacheDir().getAbsolutePath()+File.separatorChar+"Images"+File.separatorChar+imageName;
                 sendImageMessage(userID, discussionID, imageName, RecyclerViewAdapter.GALLERY_MESSAGE_TYPE_OUT,imagePath);
+                binding.recyclerChat.getRecycledViewPool().clear();
                 recyclerViewAdapter.notifyDataSetChanged();
                 messageTyper();
-                binding.recyclerChat.smoothScrollToPosition(messagesList.size()+1);
+               getSize();
             }
         } else if (requestCode == REQUEST_CODE_SELECT_NEUTRAL_FILE) {
             if (resultCode == RESULT_OK) {
@@ -397,9 +400,10 @@ public class ChatScreenActivity extends AppCompatActivity {
                 copyFileFromUri(getApplicationContext(), fileFileUri,fileName, "Files");
                 filePath = getExternalCacheDir().getAbsolutePath()+File.separatorChar+"Files"+File.separatorChar+fileName;
                 sendFileMessage(userID, discussionID, fileName, RecyclerViewAdapter.FILE_MESSAGE_TYPE_OUT, filePath);
+                binding.recyclerChat.getRecycledViewPool().clear();
                 recyclerViewAdapter.notifyDataSetChanged();
                 messageTyper();
-                binding.recyclerChat.smoothScrollToPosition(messagesList.size()+1);
+                getSize();
             }
         }
     }
@@ -505,7 +509,7 @@ public class ChatScreenActivity extends AppCompatActivity {
                 }
             }
         }
-        recyclerViewAdapter.notifyDataSetChanged();
+        getSize();
     }
 
     private void configureOnClickRecyclerView(){
@@ -527,10 +531,8 @@ public class ChatScreenActivity extends AppCompatActivity {
 
                         } else {
                             if (message.messageType == RecyclerViewAdapter.GALLERY_MESSAGE_TYPE_IN){
-
                                     intent.putExtra("extra1",message.path);
                                     startActivity(intent);
-
                             } else if (message.messageType == RecyclerViewAdapter.FILE_MESSAGE_TYPE_IN){
                                 FileOpen.openFile(getApplicationContext(), new File(message.getMessagePath()));
 
@@ -571,6 +573,8 @@ public class ChatScreenActivity extends AppCompatActivity {
     private void sendTextMessage(String userId, String discussionID, String message, int messageType, String path){
         Message newMessage = new Message(userId,message, messageType, path);
         addToDatabase(newMessage);
+        recyclerViewAdapter.notifyDataSetChanged();
+        getSize();
     }
 
     private void sendAudioMessage(String userId, String discussionID, String message, int messageType, String path){
@@ -592,7 +596,7 @@ public class ChatScreenActivity extends AppCompatActivity {
     }
 
     private void addToDatabase(Message message){
-        database.collection(Message.collectionPath)
+        database.collection(Discussion.collectionPath)
                 .add(message)
                 .addOnSuccessListener(documentReference -> Log.d("sendMessage", "Nouveau message envoyé: " + //documentReference.getId()
                           " " + message + " de " + userID))
@@ -600,10 +604,12 @@ public class ChatScreenActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
+                        messagesList.add(message);
                         recyclerViewAdapter.notifyDataSetChanged();
-                        binding.recyclerChat.smoothScrollToPosition(messagesList.size());
+                        getSize();
                     }
                 });
+
     }
 
     private void upload(StorageReference storageRef, Message newMessage, String path, String folder){
@@ -623,8 +629,6 @@ public class ChatScreenActivity extends AppCompatActivity {
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
                 // ...
-                messagesList.add(newMessage);
-                messageTyper();
             }
         });
         Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
@@ -642,6 +646,9 @@ public class ChatScreenActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     newMessage.downloadUri = Objects.requireNonNull(task.getResult()).toString();
                     addToDatabase(newMessage);
+                    messageTyper();
+                    recyclerViewAdapter.notifyDataSetChanged();
+                    getSize();
                 } else {
                     // Handle failures
                     // ...
@@ -673,10 +680,11 @@ public class ChatScreenActivity extends AppCompatActivity {
                 } else if (mes.path.contains("/Images/")){
                     mes.setMessageType(RecyclerViewAdapter.GALLERY_MESSAGE_TYPE_IN);
                 }
-                messageTyper();
+                //messageTyper();
             }
         });
     }
+
     private void uploadWatch(UploadTask uploadTask){
         uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -752,7 +760,6 @@ public class ChatScreenActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
         // If there's a download in progress, save the reference so you can query it later
         if (mStorageRef != null) {
             outState.putString("reference", mStorageRef.toString());
@@ -817,7 +824,7 @@ public class ChatScreenActivity extends AppCompatActivity {
     }
 
     private void initDiscussion(){
-        database.collection(Message.collectionPath)
+        database.collection(Discussion.collectionPath)
                 .orderBy("messageTime", Query.Direction.ASCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -827,24 +834,19 @@ public class ChatScreenActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot snap: task.getResult()
                                  ) {
                                 Message message = snap.toObject(Message.class);
-                                if(message.getSenderID() != null){
-                                    messagesList.add(message);
-                                    messageTyper();
-                                }
+                                messagesList.add(message);
+                                //messageTyper();
                                 recyclerViewAdapter.notifyDataSetChanged();
-                                binding.recyclerChat.smoothScrollToPosition(messagesList.size());
+                                getSize();
                             }
                         }
-                        banner();
-
                     }
                 });
     }
-    private void banner(){
+
+    private void getSize(){
         if (!messagesList.isEmpty()){
-            binding.newChat.setVisibility(View.GONE);
-        } else {
-            binding.newChat.setVisibility(View.VISIBLE);
+            binding.recyclerChat.smoothScrollToPosition(messagesList.size()-1);
         }
     }
 }
