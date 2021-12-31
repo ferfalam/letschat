@@ -11,7 +11,7 @@ public class UserLocal implements Serializable {
     private String phone_number;
     private String username;
     private Date last_connect;
-    private Uri image_url;
+    private String image_url;
     private Boolean online;
     private Boolean admin;
 
@@ -19,7 +19,7 @@ public class UserLocal implements Serializable {
 
     }
 
-    public UserLocal(String id, String phone_number, String username, Uri image_url, Boolean admin) {
+    public UserLocal(String id, String phone_number, String username, String image_url, Boolean admin) {
         this.id = id;
         this.phone_number = phone_number;
         this.username = username;
@@ -29,7 +29,7 @@ public class UserLocal implements Serializable {
         this.admin = admin;
     }
 
-    public UserLocal(String id, String phone_number, String username, Uri image_url) {
+    public UserLocal(String id, String phone_number, String username, String image_url) {
         this.id = id;
         this.phone_number = phone_number;
         this.username = username;
@@ -86,16 +86,11 @@ public class UserLocal implements Serializable {
         this.online = online;
     }
 
-    public void addToDB(Map<String, Object> user){
-
-    }
-
-
-    public Uri getImage_url() {
+    public String getImage_url() {
         return image_url;
     }
 
-    public void setImage_url(Uri image_url) {
+    public void setImage_url(String image_url) {
         this.image_url = image_url;
     }
 }

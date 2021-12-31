@@ -127,9 +127,9 @@ public class ConfigProfileActivity extends AppCompatActivity {
                                 boolean present = Arrays.asList(adminPhoneNumber).contains(firebaseUser.getPhoneNumber());
                                 UserLocal userLocal;
                                 if (present){
-                                    userLocal = new UserLocal(firebaseUser.getUid(), firebaseUser.getPhoneNumber(), firebaseUser.getDisplayName(), firebaseUser.getPhotoUrl(), true);
+                                    userLocal = new UserLocal(firebaseUser.getUid(), firebaseUser.getPhoneNumber(), firebaseUser.getDisplayName(), firebaseUser.getPhotoUrl().toString(), true);
                                 }else{
-                                    userLocal = new UserLocal(firebaseUser.getUid(), firebaseUser.getPhoneNumber(), firebaseUser.getDisplayName(), firebaseUser.getPhotoUrl());
+                                    userLocal = new UserLocal(firebaseUser.getUid(), firebaseUser.getPhoneNumber(), firebaseUser.getDisplayName(), firebaseUser.getPhotoUrl().toString());
                                 }
 
                                 FirebaseFirestore db = FirebaseFirestore.getInstance();
