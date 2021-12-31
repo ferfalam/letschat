@@ -1,7 +1,7 @@
 package com.faridcodeur.letschat.entities;
 
 public class Contact implements Comparable<Contact> {
-    private Long id;
+    private String id;
     private String name;
     private String phoneNumber;
 
@@ -10,7 +10,7 @@ public class Contact implements Comparable<Contact> {
         this.phoneNumber = phoneNumber;
     }
 
-    public Contact(String name, String phoneNumber, Long id) {
+    public Contact(String name, String phoneNumber, String id) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.id = id;
@@ -32,11 +32,11 @@ public class Contact implements Comparable<Contact> {
         this.phoneNumber = phoneNumber;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

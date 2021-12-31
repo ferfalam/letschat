@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.databinding.ActivityAuthBinding;
+import com.faridcodeur.letschat.entities.UserLocal;
 import com.faridcodeur.letschat.ui.AuthCallback;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,6 +29,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 

@@ -20,8 +20,14 @@ import androidx.core.app.ActivityCompat;
 import com.faridcodeur.letschat.adapters.ContactListAdapter;
 import com.faridcodeur.letschat.databinding.ActivityMyContactBinding;
 import com.faridcodeur.letschat.entities.Contact;
+import com.faridcodeur.letschat.entities.UserLocal;
 import com.faridcodeur.letschat.utiles.Global;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -85,6 +91,8 @@ public class MyContactActivity extends AppCompatActivity {
         new Thread() {
             public void run() {
                 getContactList();
+
+                Log.e("CONTACTS", String.valueOf(contacts.size()));
                 handler.sendEmptyMessage(0);
             }
         }.start();
@@ -124,7 +132,7 @@ public class MyContactActivity extends AppCompatActivity {
                         String phoneNo = pCur.getString(pCur.getColumnIndex(
                                 ContactsContract.CommonDataKinds.Phone.NUMBER));
                         phoneNo = phoneNo.replaceAll("\\s+","");
-                        contacts.add(new Contact(name, phoneNo));
+                        getFromDB(name, phoneNo);
                     }
                     pCur.close();
                 }
@@ -159,5 +167,33 @@ public class MyContactActivity extends AppCompatActivity {
                 );
             }
         }
+    }
+
+    public void getFromDB(String name, String number){
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("users")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    try {
+
+                                    UserLocal userLocal = document.toObject(UserLocal.class);
+                                    Log.e("S", userLocal.getPhone_number() + " => " + number);
+                                    if (userLocal.getPhone_number().equals(number)){
+                                        contacts.add(new Contact(name, number, userLocal.getId()));
+                                        break;
+                                    }
+                                    }catch (Throwable th){
+                                        th.printStackTrace();
+                                    }
+                                }
+                            } else {
+                                Log.e("E", "Error getting documents.", task.getException());
+                            }
+                        }
+                    });
     }
 }

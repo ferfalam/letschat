@@ -11,4 +11,6 @@ public class Global {
     public static String getSurveysCollectionPath() { return "surveys";}
 
     public static String getAnswerCollectionPath() { return "surveys";}
+
+
 }
