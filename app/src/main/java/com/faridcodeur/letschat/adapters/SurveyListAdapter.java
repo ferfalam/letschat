@@ -9,10 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.faridcodeur.letschat.R;
-import com.faridcodeur.letschat.activity.AnswerSondage;
 import com.faridcodeur.letschat.activity.SondageBoxActivity;
 import com.faridcodeur.letschat.entities.Surveys;
 import com.google.android.material.card.MaterialCardView;

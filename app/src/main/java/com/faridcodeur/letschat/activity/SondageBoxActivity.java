@@ -73,7 +73,7 @@ public class SondageBoxActivity extends AppCompatActivity {
         buildView();
 
         binding.soumetre.setOnClickListener(view -> {
-            if (!FirebaseAuth.getInstance().getCurrentUser().getUid().equals(String.valueOf(survey.getUserId()))){
+            if (FirebaseAuth.getInstance().getCurrentUser().getUid().equals(String.valueOf(survey.getUserId()))){
                 Snackbar.make(binding.getRoot(), "Voulez-vous vraiment suppimer ce sondage ?", Snackbar.LENGTH_LONG)
                         .setAction("Oui", view1 -> {
                             FirebaseFirestore db = FirebaseFirestore.getInstance();
