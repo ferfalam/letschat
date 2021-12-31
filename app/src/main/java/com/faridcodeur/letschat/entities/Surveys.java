@@ -2,27 +2,26 @@ package com.faridcodeur.letschat.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 public class Surveys implements Serializable {
-    private int id;
+    private String id;
     private String title;
     private String description;
     private String questions;
     private Date created_at;
-    private Boolean disabled;
     private String userId;
 
     public Surveys() {
     }
 
-    public Surveys(int id, String title, String description, String questions, Date created_at, String userId) {
+    public Surveys(String id, String title, String description, String questions, Date created_at, String userId) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.questions = questions;
         this.created_at = created_at;
         this.userId = userId;
-        this.disabled = false;
     }
 
     public Surveys(String title, String description, String  userId) {
@@ -30,14 +29,16 @@ public class Surveys implements Serializable {
         this.description = description;
         this.created_at = new Date();
         this.userId = userId;
-        this.disabled = false;
     }
 
-    public int getId() {
+
+
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -73,14 +74,6 @@ public class Surveys implements Serializable {
         this.questions = questions;
     }
 
-    public Boolean isDisabled() {
-        return disabled;
-    }
-
-    public void isDisabled(Boolean disabled) {
-        this.disabled = disabled;
-    }
-
     public String  getUserId() {
         return userId;
     }
@@ -88,5 +81,7 @@ public class Surveys implements Serializable {
     public void setUserId(String  userId) {
         this.userId = userId;
     }
+
+
 
 }

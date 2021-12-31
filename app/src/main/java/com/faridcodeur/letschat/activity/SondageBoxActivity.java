@@ -15,7 +15,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.databinding.ActivitySondageBoxBinding;
@@ -23,6 +25,9 @@ import com.faridcodeur.letschat.entities.Answer;
 import com.faridcodeur.letschat.entities.Surveys;
 import com.faridcodeur.letschat.utiles.Global;
 import com.faridcodeur.letschat.utiles.InputValidation;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -56,20 +61,22 @@ public class SondageBoxActivity extends AppCompatActivity {
         binding.surveyState.setText(DateUtils.getRelativeTimeSpanString(survey.getCreated_at().getTime(), new Date().getTime(), 0));
 
         if (FirebaseAuth.getInstance().getCurrentUser().getUid().equals(String.valueOf(survey.getUserId()))){
-            if (survey.isDisabled()) {
-                binding.soumetre.setImageDrawable(getResources().getDrawable(R.drawable.ic_delete));
-                binding.soumetre.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF8B83")));
-            }else {
-                binding.soumetre.setImageDrawable(getResources().getDrawable(R.drawable.ic_validate));
-                binding.soumetre.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#86ED8B")));
-            }
+            binding.soumetre.setImageDrawable(getResources().getDrawable(R.drawable.ic_delete));
+            binding.soumetre.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF8B83")));
         }
 
         buildView();
 
         binding.soumetre.setOnClickListener(view -> {
             if (FirebaseAuth.getInstance().getCurrentUser().getUid().equals(String.valueOf(survey.getUserId()))){
-
+                Snackbar.make(binding.getRoot(), "Voulez-vous vraiment suppimer ce sondage ?", Snackbar.LENGTH_LONG)
+                        .setAction("Oui", view1 -> {
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            db.collection(Global.getSurveysCollectionPath()).document(survey.getId())
+                                    .delete()
+                                    .addOnSuccessListener(unused -> Toast.makeText(SondageBoxActivity.this, "Le sondage à bien été supprimé" , Toast.LENGTH_SHORT).show())
+                                    .addOnFailureListener(e -> Toast.makeText(SondageBoxActivity.this, "Une erreur est survenue lors de la suppression" , Toast.LENGTH_SHORT).show());
+                        }).show();
             }else {
                 if (submitResult()){
                     Toast.makeText(SondageBoxActivity.this, "Votre reponse à été envoyer. Merci pour la participation" , Toast.LENGTH_SHORT).show();

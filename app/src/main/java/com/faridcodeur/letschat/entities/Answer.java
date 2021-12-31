@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Answer implements Serializable {
-    private int id;
-    private int surveyId;
+    private String id;
+    private String surveyId;
     private String userId;
     private String response;
     private Date created_at;
@@ -13,7 +13,7 @@ public class Answer implements Serializable {
     public Answer() {
     }
 
-    public Answer(int id, int surveyId, String userId, String response, Date created_at) {
+    public Answer(String id, String surveyId, String userId, String response, Date created_at) {
         this.id = id;
         this.surveyId = surveyId;
         this.userId = userId;
@@ -21,26 +21,26 @@ public class Answer implements Serializable {
         this.created_at = created_at;
     }
 
-    public Answer(int surveyId, String userId, String response, Date created_at) {
+    public Answer(String surveyId, String userId, String response, Date created_at) {
         this.surveyId = surveyId;
         this.userId = userId;
         this.response = response;
         this.created_at = created_at;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getSurveyId() {
+    public String getSurveyId() {
         return surveyId;
     }
 
-    public void setSurveyId(int surveyId) {
+    public void setSurveyId(String surveyId) {
         this.surveyId = surveyId;
     }
 
