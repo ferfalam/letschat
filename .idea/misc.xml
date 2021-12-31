@@ -35,6 +35,7 @@
         <entry key="app/src/main/res/layout/fragment_first2.xml" value="0.25" />
         <entry key="app/src/main/res/layout/message_in.xml" value="0.1" />
         <entry key="app/src/main/res/layout/new_survey_fragment.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/no_media.xml" value="0.1" />
         <entry key="app/src/main/res/layout/question_multichoice_type.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/layout/question_text_type.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/layout/question_texte.xml" value="0.21666666666666667" />
