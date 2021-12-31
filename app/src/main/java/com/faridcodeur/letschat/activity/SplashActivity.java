@@ -1,5 +1,6 @@
 package com.faridcodeur.letschat.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,6 +9,14 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.faridcodeur.letschat.R;
+import com.faridcodeur.letschat.entities.Contact;
+import com.faridcodeur.letschat.entities.UserLocal;
+import com.faridcodeur.letschat.utiles.Global;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class SplashActivity extends AppCompatActivity {
 

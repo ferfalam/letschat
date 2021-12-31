@@ -181,6 +181,7 @@ public class MyContactActivity extends AppCompatActivity {
                                     try {
 
                                     UserLocal userLocal = document.toObject(UserLocal.class);
+                                    Global.userLocals.add(userLocal);
                                     Log.e("S", userLocal.getPhone_number() + " => " + number);
                                     if (userLocal.getPhone_number().equals(number)){
                                         contacts.add(new Contact(name, number, userLocal.getId()));

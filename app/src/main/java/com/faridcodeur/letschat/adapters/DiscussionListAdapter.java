@@ -13,6 +13,7 @@ import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.activity.ChatScreenActivity;
 import com.faridcodeur.letschat.entities.Discussion;
 import com.google.android.material.card.MaterialCardView;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
@@ -47,11 +48,12 @@ public class DiscussionListAdapter extends BaseAdapter {
         TextView nameContact = myView.findViewById(R.id.contactName);
         TextView message = myView.findViewById(R.id.extraitChat);
         TextView time = myView.findViewById(R.id.timeSend);
-        nameContact.setText(discussions.get(i).getName());
-        message.setText(discussions.get(i).getMessage());
-        time.setText(discussions.get(i).getTime());
+        nameContact.setText(discussions.get(i).getTargetName());
+        message.setText(discussions.get(i).getLastMessage().getMessageText());
+        time.setText(discussions.get(i).getLastTime());
         myView.setOnClickListener(view1 -> {
             Intent intent = new Intent(context, ChatScreenActivity.class);
+            intent.putExtra("discussion", discussions.get(i).getReceiverID());
             context.startActivity(intent);
         });
         return myView;

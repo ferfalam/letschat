@@ -74,6 +74,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:padding="20dp"
         android:orientation="vertical"
         android:id="@+id/new_chat"
@@ -124,8 +125,20 @@
 
         />
 
-
-
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/uploadBar"
+        android:visibility="gone"
+        app:indicatorColor="@color/_primary"
+        app:layout_constraintBottom_toTopOf="@+id/downloadBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/downloadBar"
+        android:visibility="gone"
+        app:indicatorColor="@color/_status_red"
+        app:layout_constraintBottom_toTopOf="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"

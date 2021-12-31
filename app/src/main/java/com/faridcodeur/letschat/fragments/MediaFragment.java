@@ -11,14 +11,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.activity.MediaViewActivity;
 import com.faridcodeur.letschat.adapters.GridViewCustomAdapter;
 import com.faridcodeur.letschat.databinding.FragmentMediaBinding;
 
+import java.util.ArrayList;
+
 public class MediaFragment extends Fragment {
-    int[] images = {R.drawable.deku,R.drawable.deku,R.drawable.deku,R.drawable.ic_image,R.drawable.deku,R.drawable.ic_block,R.drawable.deku,R.drawable.deku,R.drawable.deku,R.drawable.deku,R.drawable.deku,R.drawable.deku,R.drawable.deku,R.drawable.deku,R.drawable.deku,R.drawable.deku};
+    ArrayList<String> images;
     FragmentMediaBinding fragmentMediaBinding;
 
     @Override
@@ -29,6 +32,7 @@ public class MediaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        images = getArguments().getStringArrayList("messages");
         fragmentMediaBinding = FragmentMediaBinding.inflate(inflater, container, false);
         GridViewCustomAdapter gridViewCustomAdapter = new GridViewCustomAdapter(getActivity().getApplicationContext(), images);
         fragmentMediaBinding.mediaGrid.setAdapter(gridViewCustomAdapter);
@@ -36,7 +40,7 @@ public class MediaFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent =  new Intent(getActivity().getApplicationContext(), MediaViewActivity.class);
-                intent.putExtra("extra", images[position]);
+                intent.putExtra("extra1", images.get(position));
                 startActivity(intent);
             }
         });

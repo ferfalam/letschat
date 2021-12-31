@@ -28,7 +28,6 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.io.File;
 import java.util.Arrays;
 
 public class ConfigProfileActivity extends AppCompatActivity {
@@ -128,9 +127,9 @@ public class ConfigProfileActivity extends AppCompatActivity {
                                 boolean present = Arrays.asList(adminPhoneNumber).contains(firebaseUser.getPhoneNumber());
                                 UserLocal userLocal;
                                 if (present){
-                                    userLocal = new UserLocal(firebaseUser.getUid(), firebaseUser.getPhoneNumber(), firebaseUser.getDisplayName(), true);
+                                    userLocal = new UserLocal(firebaseUser.getUid(), firebaseUser.getPhoneNumber(), firebaseUser.getDisplayName(), firebaseUser.getPhotoUrl(), true);
                                 }else{
-                                    userLocal = new UserLocal(firebaseUser.getUid(), firebaseUser.getPhoneNumber(), firebaseUser.getDisplayName());
+                                    userLocal = new UserLocal(firebaseUser.getUid(), firebaseUser.getPhoneNumber(), firebaseUser.getDisplayName(), firebaseUser.getPhotoUrl());
                                 }
 
                                 FirebaseFirestore db = FirebaseFirestore.getInstance();

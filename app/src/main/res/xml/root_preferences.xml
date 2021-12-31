@@ -1,17 +1,17 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <SwitchPreferenceCompat
+<!--    <SwitchPreferenceCompat-->
 
-        app:key="attachment"
-        app:title="Notifications en mode silencieux"
-        />
+<!--        app:key="attachment"-->
+<!--        app:title="Notifications en mode silencieux"-->
+<!--        />-->
 
-    <Preference
-        app:title="Bloquer"
-        app:icon="@drawable/ic_block"/>
-    <Preference
-        app:title="Signaler"
-        app:icon="@drawable/ic_down_thumb"/>
+<!--    <Preference-->
+<!--        app:title="Bloquer"-->
+<!--        app:icon="@drawable/ic_block"/>-->
+<!--    <Preference-->
+<!--        app:title="Signaler"-->
+<!--        app:icon="@drawable/ic_down_thumb"/>-->
     <Preference
         app:title="Supprimer la discussion"
         app:icon="@drawable/ic_delete"/>

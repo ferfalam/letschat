@@ -2,6 +2,8 @@ package com.faridcodeur.letschat.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.faridcodeur.letschat.R;
+import com.faridcodeur.letschat.activity.ChatScreenActivity;
 import com.faridcodeur.letschat.databinding.ContactItemsBinding;
 import com.faridcodeur.letschat.entities.Contact;
+import com.faridcodeur.letschat.entities.UserLocal;
+import com.faridcodeur.letschat.utiles.Global;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
@@ -51,9 +56,14 @@ public class ContactListAdapter extends BaseAdapter {
         phone.setText(contacts.get(i).getPhoneNumber());
 
         myView.setOnClickListener(view1 -> {
-            Toast.makeText(context, "CLICK ON " + i, Toast.LENGTH_LONG).show();
-            /*Intent intent = new Intent(context, ChatScreenActivity.class);
-            context.startActivity(intent);*/
+            //Toast.makeText(context, "CLICK ON " + i, Toast.LENGTH_LONG).show();
+            for (UserLocal user : Global.userLocals) {
+                if (user.getId().equals(contacts.get(i).getId())){
+                    Intent intent = new Intent(context, ChatScreenActivity.class);
+                    intent.putExtra("user", user);
+                    context.startActivity(intent);
+                }
+            }
         });
         return myView;
     }

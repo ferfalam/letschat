@@ -1,51 +1,84 @@
 package com.faridcodeur.letschat.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Discussion implements Serializable {
 
-    private String name;
+    private String senderId;
+    private String targetName;
+    private Message lastMessage;
+    private String receiverID;
     private String profileImg;
-    private String message;
-    private String time;
+    private String lastTime;
+    private ArrayList<Message> messages;
+    public static String collectionPath = "discussions";
 
-
-    public Discussion(String name, String profileImg, String messsage, String time) {
-        this.name = name;
-        this.profileImg = profileImg;
-        this.message=messsage;
-        this.time=time;
+    public ArrayList<Message> getMessages() {
+        return messages;
     }
 
-    public String getMessage() {
-        return message;
+    public void setMessages(ArrayList<Message> messages) {
+        this.messages = messages;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public String getSenderId() {
+        return senderId;
     }
 
-    public String getName() {
-        return name;
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
+    }
+
+    public String getTargetName() {
+        return targetName;
+    }
+
+    public void setTargetName(String targetName) {
+        this.targetName = targetName;
+    }
+
+    public Message getLastMessage() {
+        return lastMessage;
+    }
+
+    public void setLastMessage(Message lastMessage) {
+        this.lastMessage = lastMessage;
+    }
+
+    public String getReceiverID() {
+        return receiverID;
+    }
+
+    public void setReceiverID(String receiverID) {
+        this.receiverID = receiverID;
     }
 
     public String getProfileImg() {
         return profileImg;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public void setProfileImg(String profileImg) {
         this.profileImg = profileImg;
     }
 
-    public String getTime() {
-        return time;
+    public String getLastTime() {
+        return lastTime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setLastTime(String lastTime) {
+        this.lastTime = lastTime;
+    }
+
+    public Discussion(){
+
+    }
+    public Discussion(String senderId, String targetName, Message lastMessage, String receiver, String profileImg, String lastTime) {
+        this.senderId = senderId;
+        this.targetName = targetName;
+        this.lastMessage = lastMessage;
+        this.receiverID = receiver;
+        this.profileImg = profileImg;
+        this.lastTime = lastTime;
     }
 }

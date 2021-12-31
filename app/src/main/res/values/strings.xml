@@ -58,5 +58,7 @@
     <string name="choix_multiple">Choix multiple</string>
     <string name="valider">Valider</string>
     <string name="welcome">Bienvenue sur uChat...</string>
+    <string name="click_to_download_the_media_file">Click to download the media file</string>
+    <string name="t_l_charger_le_fichier">Télécharger le fichier</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>
