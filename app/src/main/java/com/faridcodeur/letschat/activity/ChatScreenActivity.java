@@ -51,6 +51,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
@@ -119,7 +120,6 @@ public class ChatScreenActivity extends AppCompatActivity {
 
 
     //FIREBASE
-
     private FirebaseFirestore database;
     private final String bucket = "gs://letschat-gei.appspot.com";
     private final FirebaseApp app = FirebaseApp.initializeApp(this);
@@ -243,6 +243,7 @@ public class ChatScreenActivity extends AppCompatActivity {
                 }else {
                     onRecord(mStartRecording);
                     if (mStartRecording) {
+                        Toast.makeText(getApplicationContext(), audioFilePath, Toast.LENGTH_SHORT).show();
                         binding.buttonAudioSend.setImageResource(R.drawable.ic_red_mic);
                     } else {
                         binding.buttonAudioSend.setImageResource(R.drawable.ic_vocal);
@@ -324,14 +325,6 @@ public class ChatScreenActivity extends AppCompatActivity {
         }
     }
 
-    private void onPlay(boolean start) {
-        if (start) {
-            startPlaying();
-        } else {
-            stopPlaying();
-        }
-    }
-
     private void startPlaying() {
         player = new MediaPlayer();
         try {
@@ -392,7 +385,7 @@ public class ChatScreenActivity extends AppCompatActivity {
                 String imageName = imageFileUri.getPath().split("/")[imageFileUri.getPath().split("/").length-1]+".jpg";
                 copyFileFromUri(getApplicationContext(), imageFileUri,imageName, "Images");
                 imagePath = getExternalCacheDir().getAbsolutePath()+File.separatorChar+"Images"+File.separatorChar+imageName;
-                sendImageMessage(discussionID, discussionID, imageName, RecyclerViewAdapter.GALLERY_MESSAGE_TYPE_OUT,imagePath);
+                sendImageMessage(userID, discussionID, imageName, RecyclerViewAdapter.GALLERY_MESSAGE_TYPE_OUT,imagePath);
                 recyclerViewAdapter.notifyDataSetChanged();
                 messageTyper();
                 binding.recyclerChat.smoothScrollToPosition(messagesList.size()+1);
@@ -403,7 +396,7 @@ public class ChatScreenActivity extends AppCompatActivity {
                 String fileName = fileFileUri.getPath().split("/")[fileFileUri.getPath().split("/").length-1];
                 copyFileFromUri(getApplicationContext(), fileFileUri,fileName, "Files");
                 filePath = getExternalCacheDir().getAbsolutePath()+File.separatorChar+"Files"+File.separatorChar+fileName;
-                sendFileMessage(discussionID, discussionID, fileName, RecyclerViewAdapter.FILE_MESSAGE_TYPE_OUT, filePath);
+                sendFileMessage(userID, discussionID, fileName, RecyclerViewAdapter.FILE_MESSAGE_TYPE_OUT, filePath);
                 recyclerViewAdapter.notifyDataSetChanged();
                 messageTyper();
                 binding.recyclerChat.smoothScrollToPosition(messagesList.size()+1);
@@ -577,30 +570,23 @@ public class ChatScreenActivity extends AppCompatActivity {
 
     private void sendTextMessage(String userId, String discussionID, String message, int messageType, String path){
         Message newMessage = new Message(userId,message, messageType, path);
-        Log.i("TEST", "Test: " + message + " de " + userID);
-        database.collection(Message.collectionPath)
-                .add(message)
-                .addOnSuccessListener(documentReference -> messagesList.add(newMessage))
-                .addOnFailureListener(e -> Log.d("sendMessage", "Erreur lors de l'ajout du document: " + e));
+        addToDatabase(newMessage);
     }
 
     private void sendAudioMessage(String userId, String discussionID, String message, int messageType, String path){
         Message newMessage = new AudioMessage(userId,message, messageType, path);
-        Log.i("TEST", "Test: " + message + " de " + userID);
         StorageReference storageRef = storage.getReference();
         upload(storageRef, newMessage, path, "audios/");
     }
 
     private void sendImageMessage(String userId, String discussionID, String message, int messageType, String path){
         Message newMessage = new ImageMessage(userId,message, messageType, path);
-        Log.i("TEST", "Test: " + message + " de " + userID);
         StorageReference storageRef = storage.getReference();
         upload(storageRef, newMessage, path, "images/");
     }
 
     private void sendFileMessage(String userId, String discussionID, String message, int messageType, String path){
         Message newMessage = new FileMessage(userId, message, messageType, path);
-        Log.i("TEST", "Test: " + message + " de " + userID);
         StorageReference storageRef = storage.getReference();
         upload(storageRef, newMessage, path, "files/");
     }
@@ -610,7 +596,14 @@ public class ChatScreenActivity extends AppCompatActivity {
                 .add(message)
                 .addOnSuccessListener(documentReference -> Log.d("sendMessage", "Nouveau message envoyé: " + //documentReference.getId()
                           " " + message + " de " + userID))
-                .addOnFailureListener(e -> Log.d("sendMessage", "Erreur lors de l'ajout du document: " + e));
+                .addOnFailureListener(e -> Log.d("sendMessage", "Erreur lors de l'ajout du document: " + e))
+                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                        recyclerViewAdapter.notifyDataSetChanged();
+                        binding.recyclerChat.smoothScrollToPosition(messagesList.size());
+                    }
+                });
     }
 
     private void upload(StorageReference storageRef, Message newMessage, String path, String folder){

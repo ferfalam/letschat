@@ -12,8 +12,14 @@ import com.faridcodeur.letschat.adapters.DiscussionListAdapter;
 import com.faridcodeur.letschat.databinding.FragmentDiscussionsBinding;
 import com.faridcodeur.letschat.entities.Discussion;
 import com.faridcodeur.letschat.entities.Message;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +39,7 @@ public class DiscussionsFragment extends Fragment {
     private DiscussionListAdapter discussionListAdapter;
     private FragmentDiscussionsBinding binding;
     private static DiscussionsFragment discussionsFragment;
+    private FirebaseFirestore database;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private String userId = user.getUid();
 
@@ -61,6 +68,7 @@ public class DiscussionsFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        database = FirebaseFirestore.getInstance();
         binding = FragmentDiscussionsBinding.inflate(inflater, container, false);
         // Inflate the layout for this fragment
         generateDiscussions();
@@ -75,6 +83,22 @@ public class DiscussionsFragment extends Fragment {
     }
 
     private void generateDiscussions(){
+//        database.collection(Message.collectionPath)
+//                .orderBy("lastTime", Query.Direction.ASCENDING)
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful()){
+//                            for (QueryDocumentSnapshot snap: task.getResult()
+//                            ) {
+//                                Discussion discussion = snap.toObject(Discussion.class);
+//                                discussions.add(discussion);
+//                            }
+//                        }
+//
+//                    }
+//                });
         for (int i=0; i<=13; i++) {
             discussions.add(new Discussion(userId, "Ariel", new Message(userId, "Hi", 2, ""), "ID", "ff", "hier"));
         }

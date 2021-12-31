@@ -60,6 +60,9 @@ public class Discussion implements Serializable {
         this.lastTime = lastTime;
     }
 
+    public Discussion(){
+
+    }
     public Discussion(String senderId, String targetName, Message lastMessage, String receiver, String profileImg, String lastTime) {
         this.senderId = senderId;
         this.targetName = targetName;
