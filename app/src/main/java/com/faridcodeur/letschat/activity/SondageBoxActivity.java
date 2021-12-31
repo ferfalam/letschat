@@ -56,7 +56,7 @@ public class SondageBoxActivity extends AppCompatActivity {
         binding.surveyState.setText(DateUtils.getRelativeTimeSpanString(survey.getCreated_at().getTime(), new Date().getTime(), 0));
 
         //TODO replace if condition by condition :: user.getId() == survey.getUserId()
-        if (!Objects.equals(FirebaseAuth.getInstance().getUid(), String.valueOf(survey.getUserId()))){
+        if (Objects.equals(FirebaseAuth.getInstance().getUid(), String.valueOf(survey.getUserId()))){
             if (survey.isDisabled()) {
                 binding.soumetre.setImageDrawable(getResources().getDrawable(R.drawable.ic_delete));
                 binding.soumetre.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF8B83")));
@@ -70,9 +70,6 @@ public class SondageBoxActivity extends AppCompatActivity {
         buildView();
 
         binding.soumetre.setOnClickListener(view -> {
-            if (FirebaseAuth.getInstance().getUid().equals("")){
-
-            }
             if (submitResult()){
                 Toast.makeText(SondageBoxActivity.this, "Votre reponse à été envoyer. Merci pour la participation" , Toast.LENGTH_SHORT).show();
                 finish();
