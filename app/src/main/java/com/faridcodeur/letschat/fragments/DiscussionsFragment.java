@@ -102,7 +102,7 @@ public class DiscussionsFragment extends Fragment {
                     }
                 });
         for (int i=0; i<=13; i++) {
-            discussions.add(new Discussion(userId, "Ariel", new Message(userId, "Hi", 2, ""), "ID", "ff", "hier"));
+            //discussions.add(new Discussion(userId, "Ariel", new Message(userId, "Hi", 2, ""), "ID", "ff", "hier"));
         }
     }
 

@@ -118,10 +118,14 @@ public class ChatScreenActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_SELECT_NEUTRAL_FILE = 10;
 
     private String userID;
+    private String userName;
     private String discussionID;
     private RecyclerViewAdapter recyclerViewAdapter;
     private ArrayList<String> mediaList;
 
+    private String targetId;
+    private String targetName;
+    private boolean firstORNot;
 
     //FIREBASE
     private FirebaseFirestore database;
@@ -154,8 +158,18 @@ public class ChatScreenActivity extends AppCompatActivity {
                 .build();
         database.setFirestoreSettings(settings);
         userID = user.getUid();
+        userName = user.getDisplayName();
         Intent intent = getIntent();
+
+        discussionID = "";
         discussionID = intent.getStringExtra("discussionID");
+        if (discussionID.isEmpty()){
+            targetId = discussionID;
+        } else {
+            targetId = intent.getStringExtra("id");
+        }
+
+        targetName = intent.getStringExtra("nom");
     }
 
     @Override
@@ -168,6 +182,7 @@ public class ChatScreenActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
         this.configureOnClickRecyclerView();
 
+        firstORNot = atDiscussionCreation();
 
         mediaList = new ArrayList<>();
         messagesList = new ArrayList<>();
@@ -201,7 +216,11 @@ public class ChatScreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!binding.editChatMessage.getText().toString().isEmpty()){
-                    sendTextMessage(userID, discussionID, binding.editChatMessage.getText().toString(), RecyclerViewAdapter.MESSAGE_TYPE_OUT, "");
+                    if (firstORNot){
+                        createDiscussion(new Message(userID, binding.editChatMessage.getText().toString(), RecyclerViewAdapter.MESSAGE_TYPE_OUT, ""));
+                    } else {
+                        sendTextMessage(userID, discussionID, binding.editChatMessage.getText().toString(), RecyclerViewAdapter.MESSAGE_TYPE_OUT, "");
+                    }
                     binding.editChatMessage.setText("");
                     recyclerViewAdapter.notifyDataSetChanged();
                     messageTyper();
@@ -596,19 +615,36 @@ public class ChatScreenActivity extends AppCompatActivity {
     }
 
     private void addToDatabase(Message message){
+        ArrayList<Message> messages = new ArrayList<>();
+        final Message[] lastMessage = {null};
         database.collection(Discussion.collectionPath)
-                .add(message)
-                .addOnSuccessListener(documentReference -> Log.d("sendMessage", "Nouveau message envoyé: " + //documentReference.getId()
-                          " " + message + " de " + userID))
-                .addOnFailureListener(e -> Log.d("sendMessage", "Erreur lors de l'ajout du document: " + e))
-                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                .whereEqualTo("senderId", userID)
+                .whereEqualTo("receiverId", targetId)
+                .limit(1)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<DocumentReference> task) {
-                        messagesList.add(message);
-                        recyclerViewAdapter.notifyDataSetChanged();
-                        getSize();
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            for (QueryDocumentSnapshot snap: task.getResult()
+                            ) {
+                                Discussion discussion = snap.toObject(Discussion.class);
+                                for (Message mes : discussion.getMessages()
+                                ) {
+                                    messages.add(mes);
+                                }
+                                lastMessage[0] = discussion.getLastMessage();
+                            }
+                        }
                     }
                 });
+        Discussion dis = new Discussion(userID, targetName, lastMessage[0], targetId,null, lastMessage[0].getMessageTime().toString(), messages);
+
+        database.collection(Discussion.collectionPath).document("from: "+userName + " to: "+targetName)
+                .set(dis)
+                .addOnSuccessListener(documentReference -> Log.d("sendMessage", "Nouveau message envoyé: " + //documentReference.getId()
+                          " " + message + " de " + userID))
+                .addOnFailureListener(e -> Log.d("sendMessage", "Erreur lors de l'ajout du document: " + e));
 
     }
 
@@ -825,23 +861,56 @@ public class ChatScreenActivity extends AppCompatActivity {
 
     private void initDiscussion(){
         database.collection(Discussion.collectionPath)
-                .orderBy("messageTime", Query.Direction.ASCENDING)
+                .whereEqualTo("senderId", userID)
+                .whereEqualTo("receiverId", targetId)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()){
                             for (QueryDocumentSnapshot snap: task.getResult()
-                                 ) {
-                                Message message = snap.toObject(Message.class);
-                                messagesList.add(message);
-                                //messageTyper();
-                                recyclerViewAdapter.notifyDataSetChanged();
-                                getSize();
+                            ) {
+                                Discussion discussion = snap.toObject(Discussion.class);
+                                messagesList.addAll(discussion.getMessages());
                             }
                         }
                     }
                 });
+    }
+
+    private void createDiscussion(Message message){
+        ArrayList<Message> messages = new ArrayList<>();
+        messages.add(message);
+        Discussion neo = new Discussion(userID, targetName, message, targetId, null, message.getMessageTime().toString(), messages);
+        database.collection(Discussion.collectionPath).document("from: "+userName + " to: "+targetName)
+                .set(neo)
+                .addOnSuccessListener(documentReference -> Log.d("sendMessage", "Nouveau message envoyé: " + //documentReference.getId()
+                        " "+ userID))
+                .addOnFailureListener(e -> Log.d("sendMessage", "Erreur lors de l'ajout du document: " + e));
+    }
+
+    private boolean atDiscussionCreation(){
+        ArrayList<Message> messages = new ArrayList<>();
+        database.collection(Discussion.collectionPath)
+                .whereEqualTo("senderId", userID)
+                .whereEqualTo("receiverId", targetId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            for (QueryDocumentSnapshot snap: task.getResult()
+                            ) {
+                                Discussion discussion = snap.toObject(Discussion.class);
+                                for (Message mes : discussion.getMessages()
+                                     ) {
+                                    messages.add(mes);
+                                }
+                            }
+                        }
+                    }
+                });
+        return messages.isEmpty();
     }
 
     private void getSize(){

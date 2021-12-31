@@ -109,7 +109,6 @@ public class MyContactActivity extends AppCompatActivity {
 
     }
 
-
     @SuppressLint("Range")
     private void getContactList() {
         ContentResolver cr = getContentResolver();
