@@ -61,13 +61,15 @@ public class UniqueChoiceQuestion implements Serializable {
                 list.add(radioButton.getText().toString());
             }
 
-            Map<String, String> uniqueQuestion = new HashMap<>();
-            uniqueQuestion.put("id", Integer.toString(this.id));
-            uniqueQuestion.put("type", "radio");
-            uniqueQuestion.put("question", this.question);
-            uniqueQuestion.put("items", new Gson().toJson(list));
+            if (list.size() != 0) {
+                Map<String, String> uniqueQuestion = new HashMap<>();
+                uniqueQuestion.put("id", Integer.toString(this.id));
+                uniqueQuestion.put("type", "radio");
+                uniqueQuestion.put("question", this.question);
+                uniqueQuestion.put("items", new Gson().toJson(list));
 
-            return uniqueQuestion;
+                return uniqueQuestion;
+            }
         }else {question.setError("Aucune question renseigner");}
         return null;
     }

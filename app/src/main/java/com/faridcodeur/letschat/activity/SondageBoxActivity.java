@@ -2,8 +2,10 @@ package com.faridcodeur.letschat.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -23,6 +26,7 @@ import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.databinding.ActivitySondageBoxBinding;
 import com.faridcodeur.letschat.entities.Answer;
 import com.faridcodeur.letschat.entities.Surveys;
+import com.faridcodeur.letschat.fragments.SurveysFragment;
 import com.faridcodeur.letschat.utiles.Global;
 import com.faridcodeur.letschat.utiles.InputValidation;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -45,6 +49,7 @@ public class SondageBoxActivity extends AppCompatActivity {
     Surveys survey;
     List<AnswerModel> answerModelList = new ArrayList<>();
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +81,8 @@ public class SondageBoxActivity extends AppCompatActivity {
                                     .delete()
                                     .addOnSuccessListener(unused -> Toast.makeText(SondageBoxActivity.this, "Le sondage à bien été supprimé" , Toast.LENGTH_SHORT).show())
                                     .addOnFailureListener(e -> Toast.makeText(SondageBoxActivity.this, "Une erreur est survenue lors de la suppression" , Toast.LENGTH_SHORT).show());
+                            SurveysFragment.surveys.removeIf(survey1 -> survey1.equals(survey));
+                            finish();
                         }).show();
             }else {
                 if (submitResult()){

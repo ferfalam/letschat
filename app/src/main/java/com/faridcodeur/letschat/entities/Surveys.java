@@ -31,8 +31,18 @@ public class Surveys implements Serializable {
         this.userId = userId;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Surveys surveys = (Surveys) o;
+        return id.equals(surveys.id) && title.equals(surveys.title) && description.equals(surveys.description);
+    }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, description);
+    }
 
     public String getId() {
         return id;

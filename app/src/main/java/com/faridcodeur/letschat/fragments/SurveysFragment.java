@@ -1,10 +1,16 @@
 package com.faridcodeur.letschat.fragments;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.faridcodeur.letschat.adapters.SurveyListAdapter;
@@ -33,7 +39,7 @@ public class SurveysFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private List<Surveys> surveys = new ArrayList<>();
+    public static List<Surveys> surveys = new ArrayList<>();
     private SurveyListAdapter surveyListAdapter;
     private FragmentSurveysBinding binding;
     private static SurveysFragment surveysFragment;
@@ -69,6 +75,13 @@ public class SurveysFragment extends Fragment {
         return binding.getRoot();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getSurveys();
+        surveyListAdapter.notifyDataSetChanged();
+    }
+
     private void buidCustomAdapter() {
         surveyListAdapter = new SurveyListAdapter(getContext(), surveys);
         binding.listSurveys.setAdapter(surveyListAdapter);
@@ -76,7 +89,6 @@ public class SurveysFragment extends Fragment {
 
     private void getSurveys(){
 //        db.collection(Global.getSurveysCollectionPath()).document(documentSnapshot.getId()).delete();
-
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(Global.getSurveysCollectionPath())
                 .orderBy("id", Query.Direction.DESCENDING)
@@ -91,7 +103,6 @@ public class SurveysFragment extends Fragment {
                                 surveys.add(survey);
                                 surveyListAdapter.notifyDataSetChanged();
                             }
-
                         }
                     }
                 });
