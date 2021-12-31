@@ -47,11 +47,12 @@ public class DiscussionListAdapter extends BaseAdapter {
         TextView nameContact = myView.findViewById(R.id.contactName);
         TextView message = myView.findViewById(R.id.extraitChat);
         TextView time = myView.findViewById(R.id.timeSend);
-        nameContact.setText(discussions.get(i).getName());
-        message.setText(discussions.get(i).getMessage());
-        time.setText(discussions.get(i).getTime());
+        nameContact.setText(discussions.get(i).getTargetName());
+        message.setText(discussions.get(i).getLastTime());
+        time.setText(discussions.get(i).getLastTime());
         myView.setOnClickListener(view1 -> {
             Intent intent = new Intent(context, ChatScreenActivity.class);
+            intent.putExtra("discussionID", discussions.get(i).getReceiverID());
             context.startActivity(intent);
         });
         return myView;

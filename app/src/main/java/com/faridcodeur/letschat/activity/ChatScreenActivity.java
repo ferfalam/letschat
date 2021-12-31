@@ -40,8 +40,29 @@ import com.faridcodeur.letschat.entities.AudioMessage;
 import com.faridcodeur.letschat.entities.FileMessage;
 import com.faridcodeur.letschat.entities.ImageMessage;
 import com.faridcodeur.letschat.entities.Message;
+import com.faridcodeur.letschat.entities.Discussion;
 import com.faridcodeur.letschat.utiles.FileOpen;
 import com.faridcodeur.letschat.utiles.ItemClickSupport;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnPausedListener;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -53,9 +74,13 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
+//TODO Arranger les autres types de messages pour le telechargement et envisager des vues pour les fichiers non telechargés
+//TODO et gere une activité pour les textes des images
+//TODO Arranger le code en general
 public class ChatScreenActivity extends AppCompatActivity {
-
     private ChatScreenActivityBinding binding;
     private LinearLayoutManager lManager;
     private ArrayList<Message> messagesList;
@@ -65,6 +90,7 @@ public class ChatScreenActivity extends AppCompatActivity {
     private static final String LOG_TAG = "AudioRecordTest";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private String audioFileName = "";
+    private String audioFilePath = "";
     private String imagePath = "";
     private String filePath = "";
 
@@ -86,7 +112,20 @@ public class ChatScreenActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_SELECT_IMAGE_FILE = 1;
     private static final int REQUEST_CODE_SELECT_NEUTRAL_FILE = 10;
 
+    private String userID;
+    private String discussionID;
     private RecyclerViewAdapter recyclerViewAdapter;
+    private ArrayList<String> mediaList;
+
+
+    //FIREBASE
+
+    private FirebaseFirestore database;
+    private final String bucket = "gs://letschat-gei.appspot.com";
+    private final FirebaseApp app = FirebaseApp.initializeApp(this);
+    FirebaseStorage storage = FirebaseStorage.getInstance(app, bucket);
+    private StorageReference mStorageRef= storage.getReference();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -98,9 +137,6 @@ public class ChatScreenActivity extends AppCompatActivity {
             case REQUEST_CODE_READ_EXTERNAL_PERMISSION:
                 permissionToFileAccepted  = grantResults[0] == PackageManager.PERMISSION_GRANTED;
         }
-
-        //if (!permissionToRecordAccepted ) finish();
-
     }
 
     @Override
@@ -109,11 +145,20 @@ public class ChatScreenActivity extends AppCompatActivity {
         writeFile("/Audios");
         writeFile("/Images");
         writeFile("/Files");
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(true)
+                .build();
+        database.setFirestoreSettings(settings);
+        userID = user.getUid();
+        Intent intent = getIntent();
+        discussionID = intent.getStringExtra("discussionID");
+        banner();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        database = FirebaseFirestore.getInstance();
         setContentView(R.layout.chat_screen_activity);
         binding = ChatScreenActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -121,26 +166,26 @@ public class ChatScreenActivity extends AppCompatActivity {
         this.configureOnClickRecyclerView();
 
 
+        mediaList = new ArrayList<>();
         messagesList = new ArrayList<>();
-        for (int i=0;i<10;i++) {
-            messagesList.add(new Message("Hi", i % 2 == 0 ? RecyclerViewAdapter.MESSAGE_TYPE_IN : RecyclerViewAdapter.MESSAGE_TYPE_OUT, ""));
-        }
+        initDiscussion();
 
-        if (!messagesList.isEmpty()){
-            binding.newChat.setVisibility(View.GONE);
-        }
 
         recyclerViewAdapter = new RecyclerViewAdapter(this, messagesList);
 
         lManager = new LinearLayoutManager(this);
         //lManager.setReverseLayout(true);
         lManager.setStackFromEnd(true);
+
         binding.recyclerChat.setLayoutManager(lManager);
         binding.recyclerChat.setAdapter(recyclerViewAdapter);
         binding.toolbarView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), ContactDetailsActivity.class));
+                Intent intent = new Intent(getApplicationContext(), ContactDetailsActivity.class);
+                addItemsToMediaView();
+                intent.putStringArrayListExtra("medias", mediaList);
+                startActivity(intent);
             }
         });
         binding.contactView.setOnClickListener(new View.OnClickListener() {
@@ -150,21 +195,15 @@ public class ChatScreenActivity extends AppCompatActivity {
             }
         });
 
-
         binding.buttonMessageSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!binding.editChatMessage.getText().toString().isEmpty()){
-                    if (binding.editChatMessage.getText().toString().equals("kkkkk")){
-                        messagesList.add(new ImageMessage(getExternalCacheDir().getAbsolutePath()+File.separatorChar+"/Images"+File.separatorChar+"/kk.jpg", RecyclerViewAdapter.GALLERY_MESSAGE_TYPE_IN, getExternalCacheDir().getAbsolutePath()+File.separatorChar+"Images"+File.separatorChar+"/kk.jpg"));
-                    } else if (binding.editChatMessage.getText().toString().equals("iiiii")){
-                        messagesList.add(new FileMessage("kk.jpg", RecyclerViewAdapter.FILE_MESSAGE_TYPE_IN, getExternalCacheDir().getAbsolutePath()+File.separatorChar+"Images"+File.separatorChar+"kk.jpg"));
-                    } else {
-                        messagesList.add(new Message(binding.editChatMessage.getText().toString(), RecyclerViewAdapter.MESSAGE_TYPE_OUT, ""));
-                    }
+                    sendTextMessage(userID, discussionID, binding.editChatMessage.getText().toString(), RecyclerViewAdapter.MESSAGE_TYPE_OUT, "");
                     binding.editChatMessage.setText("");
                     recyclerViewAdapter.notifyDataSetChanged();
-                    binding.recyclerChat.smoothScrollToPosition(messagesList.size());
+                    messageTyper();
+                    binding.recyclerChat.smoothScrollToPosition(messagesList.size()+1);
                 }
             }
         });
@@ -191,11 +230,11 @@ public class ChatScreenActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
+
                 if (mStartRecording){
-                    audioFileName =getExternalCacheDir().getAbsolutePath() + "/Audios/vocal"+ new SimpleDateFormat("MM-dd-HH-mm-ss-SS").format(new Date())+ ".3gp";
+                    audioFileName ="vocal"+ new SimpleDateFormat("MM-dd-HH-mm-ss-SS").format(new Date())+ ".3gp";
                 }
-
-
+                audioFilePath = getExternalCacheDir().getAbsolutePath() + "/Audios/"+audioFileName;
                 int audioPermission = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO);
                 if(audioPermission != PackageManager.PERMISSION_GRANTED)
                 {
@@ -207,13 +246,13 @@ public class ChatScreenActivity extends AppCompatActivity {
                         binding.buttonAudioSend.setImageResource(R.drawable.ic_red_mic);
                     } else {
                         binding.buttonAudioSend.setImageResource(R.drawable.ic_vocal);
-                        messagesList.add(new AudioMessage(audioFileName, RecyclerViewAdapter.AUDIO_MESSAGE_TYPE_OUT, audioFileName));
-                        //Toast.makeText(getApplicationContext(), audioFileName, Toast.LENGTH_LONG).show();
-                    }
+                        sendAudioMessage(userID, discussionID, audioFileName, RecyclerViewAdapter.AUDIO_MESSAGE_TYPE_OUT, audioFilePath);
+                                    }
                     mStartRecording = !mStartRecording;
                 }
 
                 recyclerViewAdapter.notifyDataSetChanged();
+                messageTyper();
                 binding.recyclerChat.smoothScrollToPosition(messagesList.size() +1);
             }
         });
@@ -230,14 +269,9 @@ public class ChatScreenActivity extends AppCompatActivity {
                 }else {
                     selectImage();
                 }
-                //TODO
-
-            }
+                            }
         });
-
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -252,6 +286,7 @@ public class ChatScreenActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.delete_discussion:
+                //TODO
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage("Voulez-vous supprimer cette conversation?")
                         .setNegativeButton("Non", new DialogInterface.OnClickListener() {
@@ -264,6 +299,7 @@ public class ChatScreenActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         messagesList.clear();
                         binding.recyclerChat.getAdapter().notifyDataSetChanged();
+                        messageTyper();
                     }
                 }).setCancelable(false);
                 AlertDialog dialog = builder.create();
@@ -316,8 +352,8 @@ public class ChatScreenActivity extends AppCompatActivity {
     private void startRecording() {
         recorder = new MediaRecorder();
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        recorder.setOutputFile(audioFileName);
+        recorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
+        recorder.setOutputFile(audioFilePath);
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
         try {
@@ -356,23 +392,21 @@ public class ChatScreenActivity extends AppCompatActivity {
                 String imageName = imageFileUri.getPath().split("/")[imageFileUri.getPath().split("/").length-1]+".jpg";
                 copyFileFromUri(getApplicationContext(), imageFileUri,imageName, "Images");
                 imagePath = getExternalCacheDir().getAbsolutePath()+File.separatorChar+"Images"+File.separatorChar+imageName;
-                Toast.makeText(getApplicationContext(),imageName, Toast.LENGTH_LONG).show();
-                ImageMessage im = new ImageMessage(imagePath, RecyclerViewAdapter.GALLERY_MESSAGE_TYPE_OUT, imagePath);
-                messagesList.add(im);
+                sendImageMessage(discussionID, discussionID, imageName, RecyclerViewAdapter.GALLERY_MESSAGE_TYPE_OUT,imagePath);
                 recyclerViewAdapter.notifyDataSetChanged();
-                binding.recyclerChat.smoothScrollToPosition(messagesList.size());
-                            }
+                messageTyper();
+                binding.recyclerChat.smoothScrollToPosition(messagesList.size()+1);
+            }
         } else if (requestCode == REQUEST_CODE_SELECT_NEUTRAL_FILE) {
             if (resultCode == RESULT_OK) {
                 fileFileUri = data.getData();
                 String fileName = fileFileUri.getPath().split("/")[fileFileUri.getPath().split("/").length-1];
                 copyFileFromUri(getApplicationContext(), fileFileUri,fileName, "Files");
                 filePath = getExternalCacheDir().getAbsolutePath()+File.separatorChar+"Files"+File.separatorChar+fileName;
-                Toast.makeText(getApplicationContext(),fileFileUri.toString(), Toast.LENGTH_LONG).show();
-                FileMessage fileMessage = new FileMessage(fileName, RecyclerViewAdapter.FILE_MESSAGE_TYPE_OUT, filePath);
-                messagesList.add(fileMessage);
+                sendFileMessage(discussionID, discussionID, fileName, RecyclerViewAdapter.FILE_MESSAGE_TYPE_OUT, filePath);
                 recyclerViewAdapter.notifyDataSetChanged();
-                binding.recyclerChat.smoothScrollToPosition(messagesList.size());
+                messageTyper();
+                binding.recyclerChat.smoothScrollToPosition(messagesList.size()+1);
             }
         }
     }
@@ -446,23 +480,79 @@ public class ChatScreenActivity extends AppCompatActivity {
         }
         return true;
     }
+    private void messageTyper(){
+        for (Message mes: messagesList
+        ) {
+            if (!mes.senderID.equals(userID)){
+                if( mes.getMessageType() == RecyclerViewAdapter.MESSAGE_TYPE_OUT){
+                    mes.setMessageType(RecyclerViewAdapter.MESSAGE_TYPE_IN);
+                } else {
+                    if (mes.getMessageType() == RecyclerViewAdapter.GALLERY_MESSAGE_TYPE_OUT){
+                        File file2 = new File(getExternalCacheDir().getAbsolutePath()+"/Images/received/"+mes.message);
+                        if (!file2.exists()){
+                            mes.setMessageType(10);
+                            mes.setMessagePath(file2.getAbsolutePath());
+                        } else {mes.setMessageType(RecyclerViewAdapter.GALLERY_MESSAGE_TYPE_IN);}
+                    } else if (mes.getMessageType() == RecyclerViewAdapter.FILE_MESSAGE_TYPE_OUT){
+                        File file2 = new File(getExternalCacheDir().getAbsolutePath()+"/Files/received/"+mes.message);
+                        if (!file2.exists()){
+                            mes.setMessageType(10);
+                            mes.setMessagePath(file2.getAbsolutePath());
+                        } else {mes.setMessageType(RecyclerViewAdapter.FILE_MESSAGE_TYPE_IN);}
+                    } else if (mes.getMessageType() == RecyclerViewAdapter.AUDIO_MESSAGE_TYPE_OUT){
+                        File file2 = new File(getExternalCacheDir().getAbsolutePath()+"/Audios/received/"+mes.message);
+                        if (!file2.exists()){
+                            mes.setMessageType(10);
+                            mes.setMessagePath(file2.getAbsolutePath());
+                        } else {mes.setMessageType(RecyclerViewAdapter.AUDIO_MESSAGE_TYPE_IN);}
+
+                    } else {
+
+                    }
+                }
+            }
+        }
+        recyclerViewAdapter.notifyDataSetChanged();
+    }
 
     private void configureOnClickRecyclerView(){
         ItemClickSupport.addTo(binding.recyclerChat, R.layout.chat_screen_activity)
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
-                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) throws IOException {
                         Message message = messagesList.get(position);
                         Intent intent = new Intent(getApplicationContext(), MediaViewActivity.class);
                         Log.e("TAG", "Position : "+position);
-                        if (message.messageType == RecyclerViewAdapter.GALLERY_MESSAGE_TYPE_OUT){
-                            intent.putExtra("extra1",message.path);
-                            startActivity(intent);
-                        } else if (message.messageType == RecyclerViewAdapter.GALLERY_MESSAGE_TYPE_IN){
-                            intent.putExtra("extra1",message.path);
-                            startActivity(intent);
-                        }
 
+                        if (message.senderID.equals(userID)){
+                            if (message.messageType == RecyclerViewAdapter.GALLERY_MESSAGE_TYPE_OUT){
+                                intent.putExtra("extra1",message.path);
+                                startActivity(intent);
+                            } else if (message.messageType == RecyclerViewAdapter.FILE_MESSAGE_TYPE_OUT){
+                                FileOpen.openFile(getApplicationContext(), new File(message.getMessagePath()));
+                            }
+
+                        } else {
+                            if (message.messageType == RecyclerViewAdapter.GALLERY_MESSAGE_TYPE_IN){
+
+                                    intent.putExtra("extra1",message.path);
+                                    startActivity(intent);
+
+                            } else if (message.messageType == RecyclerViewAdapter.FILE_MESSAGE_TYPE_IN){
+                                FileOpen.openFile(getApplicationContext(), new File(message.getMessagePath()));
+
+                            } else if (message.messageType == 10){
+                                if (message.path.contains("/Audios/")){
+                                    download(message, "Audios");
+
+                                } else if (message.path.contains("/Files/")){
+                                    download(message, "Files" );
+
+                                } else if (message.path.contains("/Images/")){
+                                    download(message, "Images");
+                                }
+                            }
+                        }
                     }
                 });
         ItemClickSupport.addTo(binding.recyclerChat, R.layout.chat_screen_activity)
@@ -471,11 +561,6 @@ public class ChatScreenActivity extends AppCompatActivity {
                     public boolean onItemLongClicked(RecyclerView recyclerView, int position, View v) throws IOException {
                         Message message = messagesList.get(position);
                         Intent intent = new Intent(getApplicationContext(), MediaViewActivity.class);
-                        if (message.messageType == RecyclerViewAdapter.MESSAGE_TYPE_IN){
-                            Toast.makeText(getApplicationContext(), "Message Normal", Toast.LENGTH_SHORT).show();
-                        } else if (message.messageType == RecyclerViewAdapter.FILE_MESSAGE_TYPE_OUT){
-                            FileOpen.openFile(getApplicationContext(), new File(message.path));
-                        }
                         return true;
                     }
                 });
@@ -488,21 +573,285 @@ public class ChatScreenActivity extends AppCompatActivity {
         AdapterView.AdapterContextMenuInfo info =
                 (AdapterView.AdapterContextMenuInfo) menuInfo;
 
+    }
+
+    private void sendTextMessage(String userId, String discussionID, String message, int messageType, String path){
+        Message newMessage = new Message(userId,message, messageType, path);
+        Log.i("TEST", "Test: " + message + " de " + userID);
+        database.collection(Message.collectionPath)
+                .add(message)
+                .addOnSuccessListener(documentReference -> messagesList.add(newMessage))
+                .addOnFailureListener(e -> Log.d("sendMessage", "Erreur lors de l'ajout du document: " + e));
+    }
+
+    private void sendAudioMessage(String userId, String discussionID, String message, int messageType, String path){
+        Message newMessage = new AudioMessage(userId,message, messageType, path);
+        Log.i("TEST", "Test: " + message + " de " + userID);
+        StorageReference storageRef = storage.getReference();
+        upload(storageRef, newMessage, path, "audios/");
+    }
+
+    private void sendImageMessage(String userId, String discussionID, String message, int messageType, String path){
+        Message newMessage = new ImageMessage(userId,message, messageType, path);
+        Log.i("TEST", "Test: " + message + " de " + userID);
+        StorageReference storageRef = storage.getReference();
+        upload(storageRef, newMessage, path, "images/");
+    }
+
+    private void sendFileMessage(String userId, String discussionID, String message, int messageType, String path){
+        Message newMessage = new FileMessage(userId, message, messageType, path);
+        Log.i("TEST", "Test: " + message + " de " + userID);
+        StorageReference storageRef = storage.getReference();
+        upload(storageRef, newMessage, path, "files/");
+    }
+
+    private void addToDatabase(Message message){
+        database.collection(Message.collectionPath)
+                .add(message)
+                .addOnSuccessListener(documentReference -> Log.d("sendMessage", "Nouveau message envoyé: " + //documentReference.getId()
+                          " " + message + " de " + userID))
+                .addOnFailureListener(e -> Log.d("sendMessage", "Erreur lors de l'ajout du document: " + e));
+    }
+
+    private void upload(StorageReference storageRef, Message newMessage, String path, String folder){
+        Uri file = Uri.fromFile(new File(path));
+        StorageReference imageRef = storageRef.child(folder+file.getLastPathSegment());
+        UploadTask uploadTask;
+        uploadTask = imageRef.putFile(file);
+        uploadWatch(uploadTask);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+                Toast.makeText(getApplicationContext(), "Echec", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // ...
+                messagesList.add(newMessage);
+                messageTyper();
+            }
+        });
+        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+                // Continue with the task to get the download URL
+                return imageRef.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    newMessage.downloadUri = Objects.requireNonNull(task.getResult()).toString();
+                    addToDatabase(newMessage);
+                } else {
+                    // Handle failures
+                    // ...
+                }
+            }
+        });
 
     }
 
-    private void setPermissions(){
-        int readExternalStoragePermission = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE);
-        if(readExternalStoragePermission != PackageManager.PERMISSION_GRANTED)
-        {
-            String requirePermission[] = {Manifest.permission.READ_EXTERNAL_STORAGE};
-            ActivityCompat.requestPermissions(ChatScreenActivity.this, requirePermission, REQUEST_CODE_READ_EXTERNAL_PERMISSION);
+    private void download(Message mes, String destination){
+        StorageReference httpsReference = storage.getReferenceFromUrl(mes.downloadUri.toString());
+        FileDownloadTask downloadTask = httpsReference.getFile(new File(getExternalCacheDir().getAbsolutePath()+"/"+destination+"/received/"+mes.message));
+        downloadWatch(downloadTask);
+        downloadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        }).addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
+                Toast.makeText(getApplicationContext(), "fichier telechargé", Toast.LENGTH_SHORT).show();
+                if (mes.path.contains("/Audios/")){
+                    mes.setMessageType(RecyclerViewAdapter.AUDIO_MESSAGE_TYPE_IN);
+
+                } else if (mes.path.contains("/Files/")){
+                    mes.setMessageType(RecyclerViewAdapter.FILE_MESSAGE_TYPE_IN);
+
+                } else if (mes.path.contains("/Images/")){
+                    mes.setMessageType(RecyclerViewAdapter.GALLERY_MESSAGE_TYPE_IN);
+                }
+                messageTyper();
+            }
+        });
+    }
+    private void uploadWatch(UploadTask uploadTask){
+        uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                binding.uploadBar.setVisibility(View.VISIBLE);
+                double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                binding.uploadBar.setProgress((int)progress, true);
+                Log.d(TAG, "Upload is " + progress + "% done");
+            }
+        }).addOnPausedListener(new OnPausedListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onPaused(UploadTask.TaskSnapshot taskSnapshot) {
+                Log.d(TAG, "Upload is paused");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                binding.uploadBar.setVisibility(View.GONE);
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                binding.uploadBar.setVisibility(View.GONE);
+                // Handle successful uploads on complete
+                // ...
+            }
+        });
+    }
+
+    private void downloadWatch(FileDownloadTask fileDownloadTask){
+        fileDownloadTask.addOnProgressListener(new OnProgressListener<FileDownloadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(@NonNull FileDownloadTask.TaskSnapshot snapshot) {
+                binding.downloadBar.setVisibility(View.VISIBLE);
+                double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
+                binding.downloadBar.setProgress((int)progress, true);
+                Log.d(TAG, "Upload is " + progress + "% done");
+            }
+        }).addOnPausedListener(new OnPausedListener<FileDownloadTask.TaskSnapshot>() {
+            @Override
+            public void onPaused(@NonNull FileDownloadTask.TaskSnapshot snapshot) {
+
+            }
+        }).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                binding.downloadBar.setVisibility(View.GONE);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                binding.downloadBar.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    private void deleteFile(StorageReference fileRef){
+        fileRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                // File deleted successfully
+                Toast.makeText(getApplicationContext(), "Le fichier a été supprimé", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Toast.makeText(getApplicationContext(), "Echec de la suppression", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // If there's a download in progress, save the reference so you can query it later
+        if (mStorageRef != null) {
+            outState.putString("reference", mStorageRef.toString());
         }
-        int audioPermission = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO);
-        if(audioPermission != PackageManager.PERMISSION_GRANTED)
-        {
-            String requirePermission[] = {Manifest.permission.RECORD_AUDIO};
-            ActivityCompat.requestPermissions(ChatScreenActivity.this, requirePermission, REQUEST_RECORD_AUDIO_PERMISSION);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // If there was a download in progress, get its reference and create a new StorageReference
+        final String stringRef = savedInstanceState.getString("reference");
+        if (stringRef == null) {
+            return;
+        }
+        mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl(stringRef);
+
+        // Find all DownloadTasks under this StorageReference (in this example, there should be one)
+        List<FileDownloadTask> tasks = mStorageRef.getActiveDownloadTasks();
+        List<UploadTask> tasks1 = mStorageRef.getActiveUploadTasks();
+
+        if (tasks.size()> 0 || tasks1.size()>0){
+            if (tasks.size() > 0) {
+                // Get the task monitoring the download
+                FileDownloadTask task = tasks.get(0);
+                // Add new listeners to the task using an Activity scope
+                task.addOnSuccessListener(this, new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(FileDownloadTask.TaskSnapshot state) {
+                        // Success!
+                        // ...
+                    }
+                });
+            } else if (tasks1.size() > 0) {
+                // Get the task monitoring the download
+                UploadTask itask = tasks1.get(0);
+                // Add new listeners to the task using an Activity scope
+                itask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    }
+                });
+            }
+        }
+
+    }
+
+    private void addItemsToMediaView(){
+        for (Message ms: messagesList
+             ) {
+            if (ms.getMessageType() == RecyclerViewAdapter.GALLERY_MESSAGE_TYPE_OUT){
+                if (new File(getExternalCacheDir().getAbsolutePath()+"/Images/"+ms.message).exists()){
+                    mediaList.add(ms.path);
+                }
+            } else if (ms.getMessageType() == RecyclerViewAdapter.GALLERY_MESSAGE_TYPE_IN){
+                if (new File(getExternalCacheDir().getAbsolutePath()+"/Images/received/"+ms.message).exists()){
+                    mediaList.add(ms.path);
+                }
+            }
+        }
+    }
+
+    private void initDiscussion(){
+        database.collection(Message.collectionPath)
+                .orderBy("messageTime", Query.Direction.ASCENDING)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            for (QueryDocumentSnapshot snap: task.getResult()
+                                 ) {
+                                Message message = snap.toObject(Message.class);
+                                if(message.getSenderID() != null){
+                                    messagesList.add(message);
+                                    messageTyper();
+                                }
+                                recyclerViewAdapter.notifyDataSetChanged();
+                                binding.recyclerChat.smoothScrollToPosition(messagesList.size());
+                            }
+                        }
+                        banner();
+
+                    }
+                });
+    }
+    private void banner(){
+        if (!messagesList.isEmpty()){
+            binding.newChat.setVisibility(View.GONE);
+        } else {
+            binding.newChat.setVisibility(View.VISIBLE);
         }
     }
 }

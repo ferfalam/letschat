@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 
-//import com.faridcodeur.letschat.entities.Message;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final Context context;
@@ -113,6 +112,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
+    private class NoMessageInViewHolder extends RecyclerView.ViewHolder {
+        TextView messageTV,dateTV;
+        NoMessageInViewHolder(final View itemView) {
+            super(itemView);
+            messageTV = itemView.findViewById(R.id.no_in_text);
+            dateTV = itemView.findViewById(R.id.no_receive_time);
+        }
+        void bind(int position) {
+            Message messageModel = list.get(position);
+            messageTV.setText(messageModel.message);
+            dateTV.setText(DateFormat.getTimeInstance(DateFormat.SHORT).format(messageModel.messageTime));
+        }
+    }
+
     private class ImageMessageOutViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
@@ -124,7 +137,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
         void bind(int position) {
             Message messageModel = list.get(position);
-            File imgFile = new File(messageModel.message);
+            File imgFile = new File(messageModel.path);
             if(imgFile.exists()){
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                 imageView.setImageBitmap(myBitmap);
@@ -132,8 +145,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             dateTV.setText(DateFormat.getTimeInstance(DateFormat.SHORT).format(messageModel.messageTime));
         }
     }
-    private class ImageMessageInViewHolder extends RecyclerView.ViewHolder {
 
+    private class ImageMessageInViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView dateTV;
         ImageMessageInViewHolder(final View itemView) {
@@ -143,7 +156,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
         void bind(int position) {
             Message messageModel = list.get(position);
-            File imgFile = new  File(messageModel.message);
+            File imgFile = new  File(messageModel.path);
             if(imgFile.exists()){
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                 imageView.setImageBitmap(myBitmap);
@@ -151,7 +164,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             dateTV.setText(DateFormat.getTimeInstance(DateFormat.SHORT).format(messageModel.messageTime));
         }
     }
-
 
     private class AudioMessageOutViewHolder extends RecyclerView.ViewHolder {
         LinearProgressIndicator progressIndicator;
@@ -196,7 +208,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 @Override
                 public void onCompletion(MediaPlayer mp) {
                     audioIsPlaying = false;
-                    playButtonOut.setImageResource(R.drawable.ic_play);
+                    playButtonOut.setImageResource(R.drawable.ic_play_light);
                     audioProgressHandler = null;
                 }
             });
@@ -208,7 +220,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     Uri audioUri = Uri.parse(vocal.toString());
                     if (!audioIsPlaying){
                         if(vocal.exists()) {
-                            playButtonOut.setImageResource(R.drawable.ic_pause);
+                            playButtonOut.setImageResource(R.drawable.ic_pause_light);
                             stopCurrentPlayAudio(inPlayer);
                             initAudioPlayer(messageModel.path, audioUri, inPlayer);
                             inPlayer.start();
@@ -244,7 +256,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         }
                     }
                     else {
-                            playButtonOut.setImageResource(R.drawable.ic_play);
+                            playButtonOut.setImageResource(R.drawable.ic_play_light);
                             inPlayer.pause();
                             audioIsPlaying = false;
                     }
@@ -299,7 +311,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 @Override
                 public void onCompletion(MediaPlayer mp) {
                     audioIsPlaying = false;
-                    playButtonIn.setImageResource(R.drawable.ic_play);
+                    playButtonIn.setImageResource(R.drawable.ic_play_light);
                     audioProgressHandler = null;
                 }
             });
@@ -311,7 +323,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     Uri audioUri = Uri.parse(vocal.toString());
                     if (!audioIsPlaying){
                         if(vocal.exists()) {
-                            playButtonIn.setImageResource(R.drawable.ic_pause);
+                            playButtonIn.setImageResource(R.drawable.ic_pause_light);
                             stopCurrentPlayAudio(inPlayer);
                             initAudioPlayer(messageModel.path, audioUri, inPlayer);
                             inPlayer.start();
@@ -347,7 +359,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         }
                     }
                     else {
-                        playButtonIn.setImageResource(R.drawable.ic_play);
+                        playButtonIn.setImageResource(R.drawable.ic_play_light);
                         inPlayer.pause();
                         audioIsPlaying = false;
                     }
@@ -359,9 +371,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-
-
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == MESSAGE_TYPE_IN) {
@@ -369,7 +378,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         } else if (viewType == AUDIO_MESSAGE_TYPE_OUT){
             return new AudioMessageOutViewHolder(LayoutInflater.from(context).inflate(R.layout.audio_message_out, parent, false));
         } else if (viewType == AUDIO_MESSAGE_TYPE_IN){
-            return new FileMessageOutViewHolder(LayoutInflater.from(context).inflate(R.layout.audio_message_in, parent, false));
+            return new AudioMessageInViewHolder(LayoutInflater.from(context).inflate(R.layout.audio_message_in, parent, false));
         }else if (viewType == FILE_MESSAGE_TYPE_OUT){
             return new FileMessageOutViewHolder(LayoutInflater.from(context).inflate(R.layout.file_message_out, parent, false));
         }else if (viewType == FILE_MESSAGE_TYPE_IN){
@@ -378,8 +387,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             return new ImageMessageInViewHolder(LayoutInflater.from(context).inflate(R.layout.image_message_in, parent, false));
         }else if (viewType == GALLERY_MESSAGE_TYPE_OUT){
             return new ImageMessageOutViewHolder(LayoutInflater.from(context).inflate(R.layout.image_message_out, parent, false));
+        }else if (viewType == MESSAGE_TYPE_OUT){
+            return new MessageOutViewHolder(LayoutInflater.from(context).inflate(R.layout.message_out, parent, false));
         }
-        return new MessageOutViewHolder(LayoutInflater.from(context).inflate(R.layout.message_out, parent, false));
+        return new NoMessageInViewHolder(LayoutInflater.from(context).inflate(R.layout.no_media, parent, false));
     }
 
     @Override
@@ -396,10 +407,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ((AudioMessageInViewHolder) holder).bind(position);
         } else if (list.get(position).messageType == FILE_MESSAGE_TYPE_IN) {
             ((FileMessageInViewHolder) holder).bind(position);
-        } else if (list.get(position).messageType == GALLERY_MESSAGE_TYPE_IN) {
-            ((ImageMessageInViewHolder) holder).bind(position);
-        } else{
+        } else if (list.get(position).messageType == MESSAGE_TYPE_OUT) {
             ((MessageOutViewHolder) holder).bind(position);
+        }  else if (list.get(position).messageType == GALLERY_MESSAGE_TYPE_IN){
+            ((ImageMessageInViewHolder) holder).bind(position);
+        } else {
+            ((NoMessageInViewHolder) holder).bind(position);
         }
     }
 
@@ -455,9 +468,5 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             mediaPlayer.release();
             mediaPlayer = null;
         }
-    }
-
-    private void setFalse(boolean f){
-        f = false;
     }
 }

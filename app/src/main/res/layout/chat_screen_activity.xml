@@ -41,8 +41,8 @@
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/contact_profile_pic"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:padding="0dp"
                         android:src="@drawable/deku" />
                 </LinearLayout>
@@ -124,8 +124,20 @@
 
         />
 
-
-
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/uploadBar"
+        android:visibility="gone"
+        app:indicatorColor="@color/_primary"
+        app:layout_constraintBottom_toTopOf="@+id/downloadBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/downloadBar"
+        android:visibility="gone"
+        app:indicatorColor="@color/_status_red"
+        app:layout_constraintBottom_toTopOf="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"

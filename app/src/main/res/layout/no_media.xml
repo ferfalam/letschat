@@ -3,42 +3,46 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="end"
+    android:layout_gravity="start"
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="4dp"
-    android:layout_marginEnd="4dp">
+    android:layout_marginStart="4dp">
     <LinearLayout
-        android:paddingRight="40dp"
+        android:paddingStart="4dp"
         android:orientation="vertical"
-        android:background="@drawable/border_message_out"
+        android:background="@drawable/border_message_in"
         android:layout_width="200dp"
+        android:paddingEnd="15dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintLeft_toLeftOf="parent">
         <LinearLayout
-            android:gravity="center_vertical"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <ImageView
-                android:padding="5dp"
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:src="@drawable/ic_download_white"/>
+
+            <TextView
+                android:id="@+id/no_in_text"
+                android:gravity="center"
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_file"/>
-            <TextView
-                android:id="@+id/file_name"
-                android:textColor="@color/white"
-                android:layout_width="150dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginVertical="2dp"
-                android:layout_height="wrap_content"/>
+                android:text="@string/t_l_charger_le_fichier"
+                android:layout_gravity="center_vertical"
+                android:layout_marginHorizontal="10dp"
+                />
         </LinearLayout>
 
         <TextView
-            android:id="@+id/file_send_time"
+            android:id="@+id/no_receive_time"
             android:text="11:45"
-            android:textColor="@color/white"
             android:textSize="10dp"
+            android:textColor="@color/white"
             android:paddingLeft="20dp"
             app:layout_constraintTop_toBottomOf="@+id/text_out"
             app:layout_constraintStart_toStartOf="parent"

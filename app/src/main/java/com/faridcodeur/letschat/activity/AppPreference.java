@@ -27,7 +27,7 @@ public class AppPreference {
         editor.putBoolean("CONNECTED", connect);
         editor.apply();
     }
-
+    
     public void setUserId(String uid) {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("USER_ID", uid);

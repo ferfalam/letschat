@@ -11,6 +11,9 @@ import androidx.fragment.app.Fragment;
 import com.faridcodeur.letschat.adapters.DiscussionListAdapter;
 import com.faridcodeur.letschat.databinding.FragmentDiscussionsBinding;
 import com.faridcodeur.letschat.entities.Discussion;
+import com.faridcodeur.letschat.entities.Message;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +33,8 @@ public class DiscussionsFragment extends Fragment {
     private DiscussionListAdapter discussionListAdapter;
     private FragmentDiscussionsBinding binding;
     private static DiscussionsFragment discussionsFragment;
-
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private String userId = user.getUid();
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -72,7 +76,7 @@ public class DiscussionsFragment extends Fragment {
 
     private void generateDiscussions(){
         for (int i=0; i<=13; i++) {
-            discussions.add(new Discussion("Ariel AHOGNISSE", "bof", "je suis amoureux de toi ", "il y a 5min"));
+            discussions.add(new Discussion(userId, "Ariel", new Message(userId, "Hi", 2, ""), "ID", "ff", "hier"));
         }
     }
 
