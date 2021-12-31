@@ -10,12 +10,12 @@ public class Surveys implements Serializable {
     private String questions;
     private Date created_at;
     private Boolean disabled;
-    private int userId;
+    private String userId;
 
     public Surveys() {
     }
 
-    public Surveys(int id, String title, String description, String questions, Date created_at, int userId) {
+    public Surveys(int id, String title, String description, String questions, Date created_at, String userId) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -25,7 +25,7 @@ public class Surveys implements Serializable {
         this.disabled = false;
     }
 
-    public Surveys(String title, String description, int userId) {
+    public Surveys(String title, String description, String  userId) {
         this.title = title;
         this.description = description;
         this.created_at = new Date();
@@ -81,11 +81,11 @@ public class Surveys implements Serializable {
         this.disabled = disabled;
     }
 
-    public int getUserId() {
+    public String  getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String  userId) {
         this.userId = userId;
     }
 

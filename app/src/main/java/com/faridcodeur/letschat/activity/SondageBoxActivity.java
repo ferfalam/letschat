@@ -55,8 +55,7 @@ public class SondageBoxActivity extends AppCompatActivity {
         binding.theme.setText(survey.getTitle());
         binding.surveyState.setText(DateUtils.getRelativeTimeSpanString(survey.getCreated_at().getTime(), new Date().getTime(), 0));
 
-        //TODO replace if condition by condition :: user.getId() == survey.getUserId()
-        if (Objects.equals(FirebaseAuth.getInstance().getUid(), String.valueOf(survey.getUserId()))){
+        if (FirebaseAuth.getInstance().getCurrentUser().getUid().equals(String.valueOf(survey.getUserId()))){
             if (survey.isDisabled()) {
                 binding.soumetre.setImageDrawable(getResources().getDrawable(R.drawable.ic_delete));
                 binding.soumetre.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF8B83")));
@@ -65,26 +64,24 @@ public class SondageBoxActivity extends AppCompatActivity {
                 binding.soumetre.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#86ED8B")));
             }
         }
-        //TODO Fin
 
         buildView();
 
         binding.soumetre.setOnClickListener(view -> {
-            if (submitResult()){
-                Toast.makeText(SondageBoxActivity.this, "Votre reponse à été envoyer. Merci pour la participation" , Toast.LENGTH_SHORT).show();
-                finish();
+            if (FirebaseAuth.getInstance().getCurrentUser().getUid().equals(String.valueOf(survey.getUserId()))){
+
             }else {
-                Toast.makeText(SondageBoxActivity.this, "Erreur de soumission. Veuillez verifier si tous les questions sont repondu" , Toast.LENGTH_SHORT).show();
+                if (submitResult()){
+                    Toast.makeText(SondageBoxActivity.this, "Votre reponse à été envoyer. Merci pour la participation" , Toast.LENGTH_SHORT).show();
+                    finish();
+                }else {
+                    Toast.makeText(SondageBoxActivity.this, "Erreur de soumission. Veuillez verifier si tous les questions sont repondu" , Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
 
-        binding.sondageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        binding.sondageView.setOnClickListener(v -> onBackPressed());
 
 
     }
@@ -155,8 +152,7 @@ public class SondageBoxActivity extends AppCompatActivity {
             }else return false;
         }
         if (responseList.size() != 0) {
-            //TODO replace 2 by : user.getId()
-            Answer answer = new Answer(survey.getId(), 2, new Gson().toJson(responseList), new Date());
+            Answer answer = new Answer(survey.getId(), FirebaseAuth.getInstance().getCurrentUser().getUid(), new Gson().toJson(responseList), new Date());
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection(Global.getAnswerCollectionPath())
                     .add(answer)

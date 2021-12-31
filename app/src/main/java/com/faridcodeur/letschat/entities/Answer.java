@@ -6,14 +6,14 @@ import java.util.Date;
 public class Answer implements Serializable {
     private int id;
     private int surveyId;
-    private int userId;
+    private String userId;
     private String response;
     private Date created_at;
 
     public Answer() {
     }
 
-    public Answer(int id, int surveyId, int userId, String response, Date created_at) {
+    public Answer(int id, int surveyId, String userId, String response, Date created_at) {
         this.id = id;
         this.surveyId = surveyId;
         this.userId = userId;
@@ -21,7 +21,7 @@ public class Answer implements Serializable {
         this.created_at = created_at;
     }
 
-    public Answer(int surveyId, int userId, String response, Date created_at) {
+    public Answer(int surveyId, String userId, String response, Date created_at) {
         this.surveyId = surveyId;
         this.userId = userId;
         this.response = response;
@@ -44,11 +44,11 @@ public class Answer implements Serializable {
         this.surveyId = surveyId;
     }
 
-    public int getUserId() {
+    public String  getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

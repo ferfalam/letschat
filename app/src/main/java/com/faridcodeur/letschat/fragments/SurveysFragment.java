@@ -75,7 +75,7 @@ public class SurveysFragment extends Fragment {
     }
 
     private void getSurveys(){
-        //db.collection(Surveys.getCollectionPath()).document(documentSnapshot.getId()).delete();
+//        db.collection(Global.getSurveysCollectionPath()).document(documentSnapshot.getId()).delete();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(Global.getSurveysCollectionPath())
