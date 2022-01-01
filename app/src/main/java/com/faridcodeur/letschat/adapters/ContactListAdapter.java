@@ -56,13 +56,13 @@ public class ContactListAdapter extends BaseAdapter {
 
         myView.setOnClickListener(view1 -> {
             //Toast.makeText(context, "CLICK ON " + i, Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(context, ChatScreenActivity.class);
             for (UserLocal user : Global.userLocals) {
                 if (user.getId().equals(contacts.get(i).getId())){
-                    Intent intent = new Intent(context, ChatScreenActivity.class);
                     intent.putExtra("user", user);
-                    context.startActivity(intent);
                 }
             }
+            context.startActivity(intent);
         });
         return myView;
     }
