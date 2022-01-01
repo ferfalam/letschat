@@ -35,6 +35,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -90,6 +91,17 @@ public class SondageBoxActivity extends AppCompatActivity {
                                     .delete()
                                     .addOnSuccessListener(unused -> Toast.makeText(SondageBoxActivity.this, "Le sondage à bien été supprimé" , Toast.LENGTH_SHORT).show())
                                     .addOnFailureListener(e -> Toast.makeText(SondageBoxActivity.this, "Une erreur est survenue lors de la suppression" , Toast.LENGTH_SHORT).show());
+
+                            db.collection(Global.getAnswerCollectionPath())
+                                    .whereEqualTo("surveyId", survey.getId())
+                                    .get()
+                                    .addOnCompleteListener(task -> {
+                                        if (task.isSuccessful()) {
+                                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                                db.collection(Global.getAnswerCollectionPath()).document(documentSnapshot.getId()).delete();
+                                            }
+                                        }
+                                    });
                             SurveysFragment.surveys.removeIf(survey1 -> survey1.equals(survey));
                             finish();
                         }).show();
