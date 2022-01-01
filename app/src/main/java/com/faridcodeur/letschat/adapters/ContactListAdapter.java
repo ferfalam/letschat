@@ -17,6 +17,8 @@ import com.faridcodeur.letschat.entities.Contact;
 import com.faridcodeur.letschat.entities.UserLocal;
 import com.faridcodeur.letschat.utiles.Global;
 import com.google.android.material.card.MaterialCardView;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
@@ -55,14 +57,18 @@ public class ContactListAdapter extends BaseAdapter {
         phone.setText(contacts.get(i).getPhoneNumber());
 
         myView.setOnClickListener(view1 -> {
-            //Toast.makeText(context, "CLICK ON " + i, Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(context, ChatScreenActivity.class);
+            GsonBuilder builder = new GsonBuilder();
+            builder.setPrettyPrinting();
+            Gson gson = builder.create();
+            String indata;
             for (UserLocal user : Global.userLocals) {
                 if (user.getId().equals(contacts.get(i).getId())){
-                    Intent intent = new Intent(context, ChatScreenActivity.class);
-                    intent.putExtra("user", user);
-                    context.startActivity(intent);
+                    indata = gson.toJson(user);
+                    intent.putExtra("user", indata);
                 }
             }
+            context.startActivity(intent);
         });
         return myView;
     }

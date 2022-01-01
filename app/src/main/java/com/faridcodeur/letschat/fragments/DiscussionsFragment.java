@@ -73,7 +73,6 @@ public class DiscussionsFragment extends Fragment {
         // Inflate the layout for this fragment
         generateDiscussions();
         buildCustomAdapter();
-
         return binding.getRoot();
     }
 
@@ -82,10 +81,17 @@ public class DiscussionsFragment extends Fragment {
         binding.listDiscussions.setAdapter(discussionListAdapter);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        discussionListAdapter.notifyDataSetChanged();
+    }
+
+
     private void generateDiscussions(){
         database.collection(Discussion.collectionPath)
                 .whereEqualTo("senderId", userId)
-                .orderBy("lastTime", Query.Direction.DESCENDING)
+                //.orderBy("lastTime", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -101,9 +107,6 @@ public class DiscussionsFragment extends Fragment {
 
                     }
                 });
-        for (int i=0; i<=13; i++) {
-            //discussions.add(new Discussion(userId, "Ariel", new Message(userId, "Hi", 2, ""), "ID", "ff", "hier"));
-        }
     }
 
     public FragmentDiscussionsBinding getBinding() {

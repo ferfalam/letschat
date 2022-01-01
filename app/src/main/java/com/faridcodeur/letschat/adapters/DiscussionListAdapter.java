@@ -3,18 +3,28 @@ package com.faridcodeur.letschat.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.activity.ChatScreenActivity;
+import com.faridcodeur.letschat.activity.MainActivity;
+import com.faridcodeur.letschat.fragments.DiscussionsFragment;
 import com.faridcodeur.letschat.entities.Discussion;
 import com.google.android.material.card.MaterialCardView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.text.DateFormat;
 import java.util.List;
 
 public class DiscussionListAdapter extends BaseAdapter {
@@ -48,12 +58,23 @@ public class DiscussionListAdapter extends BaseAdapter {
         TextView nameContact = myView.findViewById(R.id.contactName);
         TextView message = myView.findViewById(R.id.extraitChat);
         TextView time = myView.findViewById(R.id.timeSend);
+        ImageView imageView = myView.findViewById(R.id.profile_Img);
+
+            Uri photoImage = Uri.parse(discussions.get(i).getProfileImg());
+            if (photoImage != null){
+                Glide.with(context).load(photoImage).into(imageView);
+            }
+
         nameContact.setText(discussions.get(i).getTargetName());
         message.setText(discussions.get(i).getLastMessage().getMessageText());
-        time.setText(discussions.get(i).getLastTime());
+        time.setText(DateFormat.getTimeInstance(DateFormat.SHORT).format(discussions.get(i).getLastTime()));
         myView.setOnClickListener(view1 -> {
+            GsonBuilder builder = new GsonBuilder();
+            builder.setPrettyPrinting();
+            Gson gson = builder.create();
             Intent intent = new Intent(context, ChatScreenActivity.class);
-            intent.putExtra("discussion", discussions.get(i).getReceiverID());
+            String indata = gson.toJson(discussions.get(i).getTarget());
+            intent.putExtra("user", indata);
             context.startActivity(intent);
         });
         return myView;

@@ -2,17 +2,27 @@ package com.faridcodeur.letschat.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Discussion implements Serializable {
 
     private String senderId;
+    private UserLocal target;
     private String targetName;
     private Message lastMessage;
     private String receiverID;
     private String profileImg;
-    private String lastTime;
+    private Date lastTime;
     private ArrayList<Message> messages;
     public static String collectionPath = "discussions";
+
+    public UserLocal getTarget() {
+        return target;
+    }
+
+    public void setTarget(UserLocal target) {
+        this.target = target;
+    }
 
     public ArrayList<Message> getMessages() {
         return messages;
@@ -62,18 +72,18 @@ public class Discussion implements Serializable {
         this.profileImg = profileImg;
     }
 
-    public String getLastTime() {
+    public Date getLastTime() {
         return lastTime;
     }
 
-    public void setLastTime(String lastTime) {
+    public void setLastTime(Date lastTime) {
         this.lastTime = lastTime;
     }
 
     public Discussion(){
 
     }
-    public Discussion(String senderId, String targetName, Message lastMessage, String receiver, String profileImg, String lastTime, ArrayList<Message> messageArrayList) {
+    public Discussion(String senderId, String targetName, Message lastMessage, String receiver, String profileImg, Date lastTime, ArrayList<Message> messageArrayList, UserLocal user) {
         this.senderId = senderId;
         this.targetName = targetName;
         this.lastMessage = lastMessage;
@@ -81,5 +91,6 @@ public class Discussion implements Serializable {
         this.profileImg = profileImg;
         this.lastTime = lastTime;
         this.messages = messageArrayList;
+        this.target = user;
     }
 }
