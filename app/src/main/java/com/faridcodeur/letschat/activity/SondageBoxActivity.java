@@ -73,14 +73,11 @@ public class SondageBoxActivity extends AppCompatActivity {
 
         buildView();
 
-        binding.answer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (FirebaseAuth.getInstance().getCurrentUser().getUid().equals(String.valueOf(survey.getUserId()))) {
-                    Intent intent = new Intent(SondageBoxActivity.this, AnswerSondageActivity.class);
-                    intent.putExtra("survey", survey);
-                    startActivity(intent);
-                }
+        binding.answer.setOnClickListener(v -> {
+            if (FirebaseAuth.getInstance().getCurrentUser().getUid().equals(String.valueOf(survey.getUserId()))) {
+                Intent intent = new Intent(SondageBoxActivity.this, AnswerSondageActivity.class);
+                intent.putExtra("survey", survey);
+                startActivity(intent);
             }
         });
 
