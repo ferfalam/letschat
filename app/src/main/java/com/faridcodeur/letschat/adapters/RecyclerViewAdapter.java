@@ -111,7 +111,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             dateTV.setText(DateFormat.getTimeInstance(DateFormat.SHORT).format(messageModel.messageTime));
         }
     }
-
+    
     private class NoMessageInViewHolder extends RecyclerView.ViewHolder {
         TextView messageTV,dateTV;
         NoMessageInViewHolder(final View itemView) {

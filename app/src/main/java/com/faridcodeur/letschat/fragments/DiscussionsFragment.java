@@ -73,7 +73,6 @@ public class DiscussionsFragment extends Fragment {
         // Inflate the layout for this fragment
         generateDiscussions();
         buildCustomAdapter();
-
         return binding.getRoot();
     }
 
@@ -81,6 +80,13 @@ public class DiscussionsFragment extends Fragment {
         discussionListAdapter = new DiscussionListAdapter(getContext(), discussions);
         binding.listDiscussions.setAdapter(discussionListAdapter);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        discussionListAdapter.notifyDataSetChanged();
+    }
+
 
     private void generateDiscussions(){
         database.collection(Discussion.collectionPath)
@@ -101,7 +107,6 @@ public class DiscussionsFragment extends Fragment {
 
                     }
                 });
-
     }
 
     public FragmentDiscussionsBinding getBinding() {
