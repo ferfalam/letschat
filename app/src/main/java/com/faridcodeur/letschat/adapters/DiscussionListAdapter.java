@@ -28,6 +28,8 @@ import java.text.DateFormat;
 import java.util.List;
 
 public class DiscussionListAdapter extends BaseAdapter {
+    private FirebaseFirestore database;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     final List<Discussion> discussions;
     final Context context;
@@ -73,8 +75,16 @@ public class DiscussionListAdapter extends BaseAdapter {
             builder.setPrettyPrinting();
             Gson gson = builder.create();
             Intent intent = new Intent(context, ChatScreenActivity.class);
+            String state = "";
+            if (discussions.get(i).getSenderId().equals(user.getUid())){
+                state = "sender";
+            } else {
+                state = "receiver";
+            }
+            String outdata = gson.toJson(state);
             String indata = gson.toJson(discussions.get(i).getTarget());
             intent.putExtra("user", indata);
+            intent.putExtra("type", outdata);
             context.startActivity(intent);
         });
         return myView;

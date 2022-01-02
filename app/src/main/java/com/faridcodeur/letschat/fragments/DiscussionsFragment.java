@@ -87,11 +87,8 @@ public class DiscussionsFragment extends Fragment {
         discussionListAdapter.notifyDataSetChanged();
     }
 
-
     private void generateDiscussions(){
         database.collection(Discussion.collectionPath)
-                .whereEqualTo("senderId", userId)
-                //.orderBy("lastTime", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -100,11 +97,12 @@ public class DiscussionsFragment extends Fragment {
                             for (QueryDocumentSnapshot snap: task.getResult()
                             ) {
                                 Discussion discussion = snap.toObject(Discussion.class);
-                                discussions.add(discussion);
-                                discussionListAdapter.notifyDataSetChanged();
+                                if (discussion.getSenderId().equals(userId)||discussion.getReceiverID().equals(userId)){
+                                    discussions.add(discussion);
+                                    discussionListAdapter.notifyDataSetChanged();
+                                }
                             }
                         }
-
                     }
                 });
     }

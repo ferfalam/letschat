@@ -129,6 +129,9 @@ public class ChatScreenActivity extends AppCompatActivity {
 
     private boolean firstORNot;
     private UserLocal userTarget;
+    private String userType;
+    private String userP;
+    private String userR;
 
     //FIREBASE
     private FirebaseFirestore database;
@@ -137,6 +140,8 @@ public class ChatScreenActivity extends AppCompatActivity {
     FirebaseStorage storage = FirebaseStorage.getInstance(app, bucket);
     private StorageReference mStorageRef= storage.getReference();
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    DocumentReference newRef;
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -160,8 +165,7 @@ public class ChatScreenActivity extends AppCompatActivity {
                 .setPersistenceEnabled(true)
                 .build();
         database.setFirestoreSettings(settings);
-        userID = user.getUid();
-        userName = user.getDisplayName();
+
 
     }
 
@@ -175,14 +179,28 @@ public class ChatScreenActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
         this.configureOnClickRecyclerView();
 
-        firstORNot = atDiscussionCreation();
+        userID = user.getUid();
+        userName = user.getDisplayName();
+
         GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting();
-
         Gson gson = builder.create();
-        Intent intent = getIntent();
         String  intentData = getIntent().getStringExtra("user");
         userTarget = gson.fromJson(intentData, UserLocal.class);
+        String intentData2 = getIntent().getStringExtra("type");
+        userType = gson.fromJson(intentData2, String.class);
+
+        if (userType.equals("sender")){
+            userP = userID;
+            userR = userTarget.getId();
+            newRef = database.collection(Discussion.collectionPath).document("from: "+userP+ " to: "+userR);
+
+        } else {
+            userP = userTarget.getId();
+            userR = userID;
+            newRef = database.collection(Discussion.collectionPath).document("from: "+userTarget.getId() + " to: "+userID);
+        }
+
 
         mediaList = new ArrayList<>();
         messagesList = new ArrayList<>();
@@ -221,12 +239,7 @@ public class ChatScreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!binding.editChatMessage.getText().toString().isEmpty()){
-                    if (firstORNot){
-                        createDiscussion(new Message(userID, "ed", RecyclerViewAdapter.MESSAGE_TYPE_OUT, ""));
-                        firstORNot = !firstORNot;
-                    } else {
-                        sendTextMessage(userID, userTarget.getId(), binding.editChatMessage.getText().toString(), RecyclerViewAdapter.MESSAGE_TYPE_OUT, "");
-                    }
+                    sendTextMessage(userID, userTarget.getId(), binding.editChatMessage.getText().toString(), RecyclerViewAdapter.MESSAGE_TYPE_OUT, "");
                     binding.editChatMessage.setText("");
                     recyclerViewAdapter.notifyDataSetChanged();
                     messageTyper();
@@ -272,12 +285,9 @@ public class ChatScreenActivity extends AppCompatActivity {
                         binding.buttonAudioSend.setImageResource(R.drawable.ic_red_mic);
                     } else {
                         binding.buttonAudioSend.setImageResource(R.drawable.ic_vocal);
-                        if (firstORNot){
-                            createDiscussion(new AudioMessage(userID, audioFileName , RecyclerViewAdapter.AUDIO_MESSAGE_TYPE_OUT, audioFilePath));
-                            firstORNot = !firstORNot;
-                        } else {
-                            sendAudioMessage(userID, userTarget.getId(), audioFileName, RecyclerViewAdapter.AUDIO_MESSAGE_TYPE_OUT, audioFilePath);
-                        }
+
+                        sendAudioMessage(userID, userTarget.getId(), audioFileName, RecyclerViewAdapter.AUDIO_MESSAGE_TYPE_OUT, audioFilePath);
+
                                     }
                     mStartRecording = !mStartRecording;
                 }
@@ -302,24 +312,6 @@ public class ChatScreenActivity extends AppCompatActivity {
                             }
         });
 
-        final DocumentReference docRef = database.collection("discussion").document("farid");
-        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot snapshot,
-                                @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    Log.w(TAG, "Listen failed.", e);
-                    return;
-                }
-                if (snapshot != null && snapshot.exists()) {
-                    Log.d(TAG, "Current data: " + snapshot.getData());
-                    recyclerViewAdapter.notifyDataSetChanged();
-                    getSize();
-                } else {
-                    Log.d(TAG, "Current data: null");
-                }
-            }
-        });
     }
 
     @Override
@@ -415,12 +407,9 @@ public class ChatScreenActivity extends AppCompatActivity {
                 String imageName = imageFileUri.getPath().split("/")[imageFileUri.getPath().split("/").length-1]+".jpg";
                 copyFileFromUri(getApplicationContext(), imageFileUri,imageName, "Images");
                 imagePath = getExternalCacheDir().getAbsolutePath()+File.separatorChar+"Images"+File.separatorChar+imageName;
-                if (firstORNot){
-                    createDiscussion(new ImageMessage(userID, imageName , RecyclerViewAdapter.GALLERY_MESSAGE_TYPE_OUT, imagePath));
-                    firstORNot = !firstORNot;
-                } else {
+
                     sendImageMessage(userID, userTarget.getId(), imageName, RecyclerViewAdapter.GALLERY_MESSAGE_TYPE_OUT, imagePath);
-                }
+
                 //sendImageMessage(userID, userTarget.getId(), imageName, RecyclerViewAdapter.GALLERY_MESSAGE_TYPE_OUT,imagePath);
                 binding.recyclerChat.getRecycledViewPool().clear();
                 recyclerViewAdapter.notifyDataSetChanged();
@@ -433,12 +422,7 @@ public class ChatScreenActivity extends AppCompatActivity {
                 String fileName = fileFileUri.getPath().split("/")[fileFileUri.getPath().split("/").length-1];
                 copyFileFromUri(getApplicationContext(), fileFileUri,fileName, "Files");
                 filePath = getExternalCacheDir().getAbsolutePath()+File.separatorChar+"Files"+File.separatorChar+fileName;
-                if (firstORNot){
-                    createDiscussion(new ImageMessage(userID, fileName , RecyclerViewAdapter.FILE_MESSAGE_TYPE_OUT, filePath));
-                    firstORNot = !firstORNot;
-                } else {
                     sendFileMessage(userID, userTarget.getId(), fileName, RecyclerViewAdapter.FILE_MESSAGE_TYPE_OUT, filePath);
-                }
                 //sendFileMessage(userID, userTarget.getId(), fileName, RecyclerViewAdapter.FILE_MESSAGE_TYPE_OUT, filePath);
                 binding.recyclerChat.getRecycledViewPool().clear();
                 recyclerViewAdapter.notifyDataSetChanged();
@@ -639,8 +623,8 @@ public class ChatScreenActivity extends AppCompatActivity {
         ArrayList<Message> messages = new ArrayList<>();
          lastMessage = new Message();
         database.collection(Discussion.collectionPath)
-                .whereEqualTo("senderId", userID)
-                .whereEqualTo("receiverID", userTarget.getId())
+                .whereEqualTo("senderId", userP)
+                .whereEqualTo("receiverID", userR)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -658,9 +642,7 @@ public class ChatScreenActivity extends AppCompatActivity {
                         recyclerViewAdapter.notifyDataSetChanged();
                         getSize();
                         Discussion dis = new Discussion(userID, userTarget.getUsername(), messages.get(messages.size()-1), userTarget.getId(), userTarget.getImage_url(), new Date(), messages, userTarget);
-
-                        database.collection(Discussion.collectionPath).document("from: "+userName + " to: "+userTarget.getUsername())
-                                .set(dis)
+                        newRef.set(dis)
                                 .addOnSuccessListener(documentReference -> Log.d("sendMessage", "Nouveau message envoyé: " + //documentReference.getId()
                                         " " + message + " de " + userID))
                                 .addOnFailureListener(e -> Log.d("sendMessage", "Erreur lors de l'ajout du document: " + e));
@@ -886,8 +868,8 @@ public class ChatScreenActivity extends AppCompatActivity {
 
     private void initDiscussion(){
         database.collection(Discussion.collectionPath)
-                .whereEqualTo("senderId", userID)
-                .whereEqualTo("receiverID", userTarget.getId())
+                .whereEqualTo("receiverID", userR)
+                .whereEqualTo("senderId", userP)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -897,6 +879,7 @@ public class ChatScreenActivity extends AppCompatActivity {
                             ) {
                                 Discussion discussion = snap.toObject(Discussion.class);
                                 messagesList.addAll(discussion.getMessages());
+                                messageTyper();
                                 recyclerViewAdapter.notifyDataSetChanged();
                                 getSize();
                             }
@@ -904,39 +887,6 @@ public class ChatScreenActivity extends AppCompatActivity {
                     }
                 });
 
-    }
-
-    private void createDiscussion(Message message){
-        ArrayList<Message> messages = new ArrayList<>();
-        messages.add(message);
-        Discussion neo = new Discussion(userID, userTarget.getUsername(), message, userTarget.getId(), userTarget.getImage_url(), message.getMessageTime(), messages, userTarget);
-        database.collection(Discussion.collectionPath).document("from: "+userName + " to: "+userTarget.getUsername())
-                .set(neo)
-                .addOnSuccessListener(documentReference -> Log.d("sendMessage", "Nouveau message envoyé: " + //documentReference.getId()
-                        " "+ userID))
-                .addOnFailureListener(e -> Log.d("sendMessage", "Erreur lors de l'ajout du document: " + e));
-    }
-
-    private boolean atDiscussionCreation(){
-        ArrayList<Message> messages = new ArrayList<>();
-        database.collection(Discussion.collectionPath)
-                .whereEqualTo("senderId", userID)
-                //.whereEqualTo("receiverID", userTarget.getId())
-                //.limit(1)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()){
-                            for (QueryDocumentSnapshot snap: task.getResult()
-                            ) {
-                                Discussion discussion = snap.toObject(Discussion.class);
-                                messages.addAll(discussion.getMessages());
-                            }
-                        }
-                    }
-                });
-        return messages.isEmpty();
     }
 
     private void getSize(){
