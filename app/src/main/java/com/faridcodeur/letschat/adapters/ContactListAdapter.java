@@ -43,6 +43,11 @@ public class ContactListAdapter extends BaseAdapter {
     String out = "sender";
     String indata = "";
     String outdata = "";
+    String nom ;
+    String id;
+    String pc;
+    String autre;
+    Discussion disc;
 
     public ContactListAdapter(Context context, List<Contact> contacts) {
         this.contacts = contacts;
@@ -74,19 +79,20 @@ public class ContactListAdapter extends BaseAdapter {
         nameContact.setText(contacts.get(i).getName());
         phone.setText(contacts.get(i).getPhoneNumber());
 
-
         myView.setOnClickListener(view1 -> {
             Intent intent = new Intent(context, ChatScreenActivity.class);
             GsonBuilder builder = new GsonBuilder();
             builder.setPrettyPrinting();
             Gson gson = builder.create();
 
-
-
             for (UserLocal user : Global.userLocals) {
                 if (user.getId().equals(contacts.get(i).getId())){
                     indata = gson.toJson(user);
                     userLocal = user;
+                    nom = userLocal.getUsername();
+                    id = userLocal.getId();
+                    pc = userLocal.getImage_url();
+                    autre = userLocal.getId();
                 }
             }
             database.collection(Discussion.collectionPath)
@@ -98,22 +104,48 @@ public class ContactListAdapter extends BaseAdapter {
                                 for (QueryDocumentSnapshot snap: task.getResult()
                                 ) {
                                     Discussion discussion = snap.toObject(Discussion.class);
-                                    if ((discussion.getSenderId().equals(userId) && discussion.getReceiverID().equals(userLocal.getId()))){
-                                        out = "sender";
-                                    } else if ((discussion.getSenderId().equals(userLocal.getId()) && discussion.getReceiverID().equals(userId))){
-                                        out = "receiver";
-                                    } else {
-                                        out = "sender";
+                                    if (discussion.getFf().contains(user.getUid()) && discussion.getFf().contains(userLocal.getId())){
+                                        disc = discussion;
+                                        //Toast.makeText(context, discussion.getFf().toString(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
-                            }
 
+                                if (disc != null){
+                                    if ((disc.getSenderId().equals(userId) && disc.getReceiverID().equals(userLocal.getId()))){
+                                        out = "sender";
+                                        nom = userLocal.getUsername();
+                                        id = userLocal.getId();
+                                        pc = userLocal.getImage_url();
+                                        autre = userLocal.getId();
+                                        Toast.makeText(context, out, Toast.LENGTH_SHORT).show();
+
+                                    } else if ((disc.getSenderId().equals(userLocal.getId()) && disc.getReceiverID().equals(userId))){
+                                        out = "receiver";
+                                        nom = user.getDisplayName();
+                                        id = user.getUid();
+                                        pc = disc.getProfileImg();
+                                        autre = disc.getSenderId();
+                                        Toast.makeText(context, out, Toast.LENGTH_SHORT).show();
+
+                                    }
+
+                                }
+                                                                String theId = gson.toJson(id);
+                                String theName = gson.toJson(nom);
+                                String thePic = gson.toJson(pc);
+                                String theOther = gson.toJson(autre);
+                                outdata = gson.toJson(out);
+
+                                intent.putExtra("nom", theName);
+                                intent.putExtra("id", theId);
+                                intent.putExtra("pic", thePic);
+                                intent.putExtra("vrai", theOther);
+                                intent.putExtra("type", outdata);
+
+                            }
+                            context.startActivity(intent);
                         }
                     });
-            outdata = gson.toJson(out);
-            intent.putExtra("user", indata);
-            intent.putExtra("type", outdata);
-            context.startActivity(intent);
         });
         return myView;
     }

@@ -10,11 +10,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.activity.ChatScreenActivity;
 import com.faridcodeur.letschat.activity.MainActivity;
+import com.faridcodeur.letschat.entities.UserLocal;
 import com.faridcodeur.letschat.fragments.DiscussionsFragment;
 import com.faridcodeur.letschat.entities.Discussion;
 import com.google.android.material.card.MaterialCardView;
@@ -30,6 +32,7 @@ import java.util.List;
 public class DiscussionListAdapter extends BaseAdapter {
     private FirebaseFirestore database;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    UserLocal ul;
 
     final List<Discussion> discussions;
     final Context context;
@@ -67,7 +70,12 @@ public class DiscussionListAdapter extends BaseAdapter {
                 Glide.with(context).load(photoImage).into(imageView);
             }
 
-        nameContact.setText(discussions.get(i).getTargetName());
+            if (discussions.get(i).getReceiverID().equals(user.getUid())){
+                nameContact.setText(discussions.get(i).getSenderName());
+            } else {
+                nameContact.setText(discussions.get(i).getTargetName());
+            }
+
         message.setText(discussions.get(i).getLastMessage().getMessageText());
         time.setText(DateFormat.getTimeInstance(DateFormat.SHORT).format(discussions.get(i).getLastTime()));
         myView.setOnClickListener(view1 -> {
@@ -76,15 +84,36 @@ public class DiscussionListAdapter extends BaseAdapter {
             Gson gson = builder.create();
             Intent intent = new Intent(context, ChatScreenActivity.class);
             String state = "";
+            String nom = "";
+            String id = "";
+            String pc = "";
+            String autre = "";
+
             if (discussions.get(i).getSenderId().equals(user.getUid())){
                 state = "sender";
-            } else {
+                nom = discussions.get(i).getTargetName();
+                id = discussions.get(i).getReceiverID();
+                pc = discussions.get(i).getProfileImg();
+                autre = discussions.get(i).getReceiverID();
+
+            } else if (discussions.get(i).getReceiverID().equals(user.getUid())){
                 state = "receiver";
+                nom = discussions.get(i).getTargetName();
+                id = user.getUid();
+                pc = discussions.get(i).getProfileImg();
+                autre = discussions.get(i).getSenderId();
             }
+
             String outdata = gson.toJson(state);
-            String indata = gson.toJson(discussions.get(i).getTarget());
-            intent.putExtra("user", indata);
+            String theId = gson.toJson(id);
+            String theName = gson.toJson(nom);
+            String thePic = gson.toJson(pc);
+            String theOther = gson.toJson(autre);
+            intent.putExtra("nom", theName);
+            intent.putExtra("id", theId);
             intent.putExtra("type", outdata);
+            intent.putExtra("pic", thePic);
+            intent.putExtra("vrai", theOther);
             context.startActivity(intent);
         });
         return myView;

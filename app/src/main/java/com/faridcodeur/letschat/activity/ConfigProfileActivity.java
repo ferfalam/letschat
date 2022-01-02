@@ -119,6 +119,9 @@ public class ConfigProfileActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 if (imageUri != null){
                                     updateUserProfilePicture(imageUri);
+                                } else {
+                                    imageUri = Uri.parse("android.resource://com.faridcodeur.letschat/drawable/default_user_img");
+                                    updateUserProfilePicture(imageUri);
                                 }
                                 appPreference.setUserName(binding.username.getText().toString());
                                 Toast.makeText(ConfigProfileActivity.this, appPreference.getUserName(),Toast.LENGTH_LONG).show();
@@ -130,16 +133,16 @@ public class ConfigProfileActivity extends AppCompatActivity {
                                 if (present){
                                     userLocal = new UserLocal(firebaseUser.getUid(), firebaseUser.getPhoneNumber(), firebaseUser.getDisplayName(), firebaseUser.getPhotoUrl().toString(), true);
                                 }else{
-                                    userLocal = new UserLocal(firebaseUser.getUid(), firebaseUser.getPhoneNumber(), firebaseUser.getDisplayName(), firebaseUser.getPhotoUrl().toString());
+                                    userLocal = new UserLocal(firebaseUser.getUid(), firebaseUser.getPhoneNumber(), firebaseUser.getDisplayName(), firebaseUser.getPhotoUrl().toString(), false);
                                 }
 
                                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                db.collection("users")
-                                .add(userLocal)
-                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                db.collection("users").document(userLocal.getId())
+                                .set(userLocal)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
-                                    public void onSuccess(DocumentReference documentReference) {
-                                        Log.d("TAG", "DocumentSnapshot added with ID: " + documentReference.getId());
+                                    public void onSuccess(Void unused) {
+
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
