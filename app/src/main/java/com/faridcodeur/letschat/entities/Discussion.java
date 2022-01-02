@@ -7,22 +7,33 @@ import java.util.Date;
 public class Discussion implements Serializable {
 
     private String senderId;
-    private UserLocal target;
     private String targetName;
+    private String senderName;
     private Message lastMessage;
     private String receiverID;
+    private String receiverName;
     private String profileImg;
     private Date lastTime;
     private ArrayList<Message> messages;
     public static String collectionPath = "discussions";
+    private ArrayList<String> ff = new ArrayList<>();
 
-    public UserLocal getTarget() {
-        return target;
+    public ArrayList<String> getFf() {
+        return ff;
     }
 
-    public void setTarget(UserLocal target) {
-        this.target = target;
+    public void setFf(ArrayList<String> ff) {
+        this.ff = ff;
     }
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
+
 
     public ArrayList<Message> getMessages() {
         return messages;
@@ -83,7 +94,7 @@ public class Discussion implements Serializable {
     public Discussion(){
 
     }
-    public Discussion(String senderId, String targetName, Message lastMessage, String receiver, String profileImg, Date lastTime, ArrayList<Message> messageArrayList, UserLocal user) {
+    public Discussion(String senderName,String senderId, String targetName, Message lastMessage, String receiver, String profileImg, Date lastTime, ArrayList<Message> messageArrayList) {
         this.senderId = senderId;
         this.targetName = targetName;
         this.lastMessage = lastMessage;
@@ -91,6 +102,8 @@ public class Discussion implements Serializable {
         this.profileImg = profileImg;
         this.lastTime = lastTime;
         this.messages = messageArrayList;
-        this.target = user;
+        this.senderName = senderName;
+        this.ff.add(0, receiver);
+        this.ff.add(1, senderId);
     }
 }

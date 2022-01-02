@@ -45,13 +45,15 @@
             android:id="@+id/contact_detail_pp"
             app:civ_border_color="@color/_secondary"
             app:civ_border_width="5dp"
-            android:src="@drawable/deku"
+            android:src="@drawable/default_user_img"
             android:layout_width="130dp"
             android:layout_height="130dp"
-            android:layout_margin="8dp"
+            android:layout_marginTop="40dp"
             />
         <TextView
+
             android:id="@+id/contact_detail_name"
+            android:layout_marginTop="20dp"
             android:text="Ariel"
             android:textSize="20sp"
             android:textColor="@color/black"
@@ -59,6 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
+            android:visibility="gone"
             android:id="@+id/contact_detail_phone_number"
             android:text="+229 95123456"
             android:layout_margin="8dp"

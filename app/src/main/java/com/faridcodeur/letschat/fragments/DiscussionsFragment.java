@@ -1,6 +1,10 @@
 package com.faridcodeur.letschat.fragments;
 
+import static android.content.ContentValues.TAG;
+
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +20,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.annotations.Nullable;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -73,6 +81,7 @@ public class DiscussionsFragment extends Fragment {
         // Inflate the layout for this fragment
         generateDiscussions();
         buildCustomAdapter();
+
         return binding.getRoot();
     }
 
@@ -81,17 +90,9 @@ public class DiscussionsFragment extends Fragment {
         binding.listDiscussions.setAdapter(discussionListAdapter);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        discussionListAdapter.notifyDataSetChanged();
-    }
-
 
     private void generateDiscussions(){
         database.collection(Discussion.collectionPath)
-                .whereEqualTo("senderId", userId)
-                .orderBy("lastTime", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -100,11 +101,12 @@ public class DiscussionsFragment extends Fragment {
                             for (QueryDocumentSnapshot snap: task.getResult()
                             ) {
                                 Discussion discussion = snap.toObject(Discussion.class);
-                                discussions.add(discussion);
-                                discussionListAdapter.notifyDataSetChanged();
+                                if (discussion.getSenderId().equals(userId)||discussion.getReceiverID().equals(userId)){
+                                    discussions.add(discussion);
+                                    discussionListAdapter.notifyDataSetChanged();
+                                }
                             }
                         }
-
                     }
                 });
     }
