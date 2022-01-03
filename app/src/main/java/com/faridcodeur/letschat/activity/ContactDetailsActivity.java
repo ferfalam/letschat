@@ -2,6 +2,7 @@ package com.faridcodeur.letschat.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -13,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
 import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.databinding.ActivityContactDetails2Binding;
 import com.faridcodeur.letschat.fragments.SettingsFragment;
@@ -49,7 +51,12 @@ public class ContactDetailsActivity extends AppCompatActivity {
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = binding.tabs;
         tabs.setupWithViewPager(viewPager);
+        binding.contactDetailName.setText(getIntent().getStringExtra("name"));
 
+        Uri photoImage = Uri.parse(getIntent().getStringExtra("uri"));
+        if (photoImage != null){
+            Glide.with(getApplicationContext()).load(photoImage).into(binding.contactDetailPp);
+        }
 
         binding.contactDetailsReturnButton.setOnClickListener(
                 v -> onBackPressed()

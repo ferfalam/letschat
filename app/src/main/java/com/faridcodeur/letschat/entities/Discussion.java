@@ -2,17 +2,38 @@ package com.faridcodeur.letschat.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Discussion implements Serializable {
 
     private String senderId;
     private String targetName;
+    private String senderName;
     private Message lastMessage;
     private String receiverID;
+    private String receiverName;
     private String profileImg;
-    private String lastTime;
+    private Date lastTime;
     private ArrayList<Message> messages;
     public static String collectionPath = "discussions";
+    private ArrayList<String> ff = new ArrayList<>();
+
+    public ArrayList<String> getFf() {
+        return ff;
+    }
+
+    public void setFf(ArrayList<String> ff) {
+        this.ff = ff;
+    }
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
+
 
     public ArrayList<Message> getMessages() {
         return messages;
@@ -62,18 +83,18 @@ public class Discussion implements Serializable {
         this.profileImg = profileImg;
     }
 
-    public String getLastTime() {
+    public Date getLastTime() {
         return lastTime;
     }
 
-    public void setLastTime(String lastTime) {
+    public void setLastTime(Date lastTime) {
         this.lastTime = lastTime;
     }
 
     public Discussion(){
 
     }
-    public Discussion(String senderId, String targetName, Message lastMessage, String receiver, String profileImg, String lastTime, ArrayList<Message> messageArrayList) {
+    public Discussion(String senderName,String senderId, String targetName, Message lastMessage, String receiver, String profileImg, Date lastTime, ArrayList<Message> messageArrayList) {
         this.senderId = senderId;
         this.targetName = targetName;
         this.lastMessage = lastMessage;
@@ -81,5 +102,8 @@ public class Discussion implements Serializable {
         this.profileImg = profileImg;
         this.lastTime = lastTime;
         this.messages = messageArrayList;
+        this.senderName = senderName;
+        this.ff.add(0, receiver);
+        this.ff.add(1, senderId);
     }
 }

@@ -28,6 +28,7 @@ public class Contact implements Comparable<Contact> {
         return phoneNumber;
     }
 
+
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
