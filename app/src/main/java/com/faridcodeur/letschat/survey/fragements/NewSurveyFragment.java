@@ -92,6 +92,8 @@ public class NewSurveyFragment extends Fragment {
             }
             return true;
         });
+
+        binding.newSurveyReturnButton.setOnClickListener(view1 -> requireActivity().finish());
     }
 
     @Override

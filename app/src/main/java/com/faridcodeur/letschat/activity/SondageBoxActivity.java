@@ -116,8 +116,7 @@ public class SondageBoxActivity extends AppCompatActivity {
         });
 
 
-        binding.sondageView.setOnClickListener(v -> onBackPressed());
-
+        binding.sondageBoxReturnButton.setOnClickListener(v -> finish());
 
     }
 

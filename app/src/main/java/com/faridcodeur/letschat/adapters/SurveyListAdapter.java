@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.text.format.DateUtils;
-import android.text.format.Time;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,8 +53,9 @@ public class SurveyListAdapter extends BaseAdapter {
         title.setText(surveys.get(i).getTitle());
         description.setText(surveys.get(i).getDescription());
         created_at.setText(DateUtils.getRelativeTimeSpanString(surveys.get(i).getCreated_at().getTime(), new Date().getTime(), 0));
-        long time = new Date().getTime() - surveys.get(i).getCreated_at().getTime();
-        Log.e("TAG", "getView: " + time );
+        if ((new Date().getTime() - surveys.get(i).getCreated_at().getTime()) > DateUtils.DAY_IN_MILLIS){
+            myView.findViewById(R.id.survey_state).setVisibility(View.INVISIBLE);
+        }
         myView.setOnClickListener(view1 -> {
             Intent intent = new Intent(context, SondageBoxActivity.class);
             intent.putExtra("survey", surveys.get(i));

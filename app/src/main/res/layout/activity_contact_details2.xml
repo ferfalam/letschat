@@ -33,7 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_arrow_back_24"
-                    android:background="@color/_transparent_color"
+                    android:background="@drawable/backgound_message"
                     android:id="@+id/contact_details_return_button"
                     android:contentDescription="Button to return to back" />
 

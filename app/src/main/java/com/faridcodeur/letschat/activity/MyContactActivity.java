@@ -169,15 +169,15 @@ public class MyContactActivity extends AppCompatActivity {
     }
 
     public void getFromDB(String name, String number){
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("users")
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    try {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                try {
 
                                     UserLocal userLocal = document.toObject(UserLocal.class);
                                     Global.userLocals.add(userLocal);
@@ -186,14 +186,14 @@ public class MyContactActivity extends AppCompatActivity {
                                         contacts.add(new Contact(name, number, userLocal.getId()));
                                         break;
                                     }
-                                    }catch (Throwable th){
-                                        th.printStackTrace();
-                                    }
+                                }catch (Throwable th){
+                                    th.printStackTrace();
                                 }
-                            } else {
-                                Log.e("E", "Error getting documents.", task.getException());
                             }
+                        } else {
+                            Log.e("E", "Error getting documents.", task.getException());
                         }
-                    });
+                    }
+                });
     }
 }

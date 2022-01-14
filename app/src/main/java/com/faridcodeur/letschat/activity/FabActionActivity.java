@@ -1,8 +1,6 @@
 package com.faridcodeur.letschat.activity;
 
-import android.app.Activity;
 import android.content.ContentResolver;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;

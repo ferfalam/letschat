@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/_background_message"/>
+    <solid android:color="@color/_survey_back_color"/>
+    <corners android:radius="@dimen/_new_corner_rounded"/>
 </shape>

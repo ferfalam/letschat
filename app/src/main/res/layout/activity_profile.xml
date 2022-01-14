@@ -23,14 +23,24 @@
             app:layout_scrollFlags="scroll|enterAlways"
             app:titleTextColor="@color/_primary"
             android:layout_height="?attr/actionBarSize">
+
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_baseline_arrow_back_24"
-                android:background="@color/_transparent_color"
+                android:background="@drawable/backgound_message"
                 android:id="@+id/return_button"
                 android:contentDescription="Button to return to back" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:text="Profil"
+                />
         </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -47,11 +57,11 @@
             android:layout_marginTop="20dp">
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@id/profile_image"
-                android:layout_width="170dp"
-                android:layout_height="170dp"
+                android:layout_width="210dp"
+                android:layout_height="210dp"
                 android:src="@drawable/default_user_img"
-                app:civ_border_width="0dp"
-                app:civ_border_color="#2196F3"
+                app:civ_border_width="30dp"
+                app:civ_border_color="@color/_survey_back_color"
                 android:clickable="true"
                 android:focusable="true"/>
         </LinearLayout>
@@ -64,7 +74,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginHorizontal="14dp">
+            android:background="@drawable/backgound_message"
+            android:layout_marginHorizontal="14dp"
+            android:padding="10dp">
 
             <ImageView
                 android:layout_marginTop="7dp"
@@ -79,7 +91,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="290dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
@@ -89,9 +101,9 @@
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:layout_centerVertical="true"
                             android:layout_height="wrap_content"
-                            android:text="Nom" />
+                            android:text="Nom"
+                            android:textStyle="bold" />
 
                         <ImageView
                             android:id="@+id/edit_user_name"
@@ -110,6 +122,7 @@
                         android:id="@+id/user_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textStyle="bold"
                         android:text="Lucky" />
 
                     <Space
@@ -119,10 +132,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:paddingStart="5dp"
                         android:text="Ce n'est pas votre nom d'utilisateur ou code d'accès. Ce nom sera visible par vos contacts Uchat" />
-;
-            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-            startActivity(intent);
                 </LinearLayout>
 
             </LinearLayout>
@@ -137,7 +148,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginHorizontal="14dp">
+            android:background="@drawable/backgound_message"
+            android:layout_marginHorizontal="14dp"
+            android:padding="10dp">
 
             <ImageView
                 android:layout_marginTop="7dp"
@@ -152,13 +165,14 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="290dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textStyle="bold"
                         android:text="Téléphone" />
 
                     <Space
@@ -169,6 +183,7 @@
                         android:id="@+id/user_phone_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textStyle="bold"
                         android:text="+229 98 14 55 64" />
 
                 </LinearLayout>
@@ -180,8 +195,6 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="20dp"/>
-
-
     </LinearLayout>
 
     <LinearLayout
@@ -198,6 +211,7 @@
             android:textColor="@color/_status_red"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
+            android:textStyle="bold"
             android:text="Supprimer mon compte" />
     </LinearLayout>
 
