@@ -33,13 +33,19 @@
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/activity_auth.xml" value="0.16197916666666667" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/activity_config_profile.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/activity_contact_details2.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/activity_fab_action.xml" value="0.209375" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/activity_main.xml" value="0.209375" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/activity_media_view.xml" value="0.209375" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/activity_my_contact.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/activity_profile.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/activity_sondage_box.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/activity_splash.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/audio_message_in.xml" value="0.209375" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/audio_message_out.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/chat_screen_activity.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/content_auth.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/file_message_out.xml" value="0.14270833333333333" />
+        <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/fragment_discussions.xml" value="0.209375" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/fragment_first2.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/fragment_second2.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/banko/AndroidStudioProjects/letschat/app/src/main/res/layout/fragment_surveys.xml" value="0.22447916666666667" />

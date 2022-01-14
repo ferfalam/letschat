@@ -31,20 +31,10 @@
                     android:layout_height="match_parent"
                     >
 
-                    <ImageButton
-                        android:id="@+id/sondage_box_return_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_baseline_arrow_back_24"
-                        android:background="@drawable/backgound_message"
-                        android:contentDescription="Button to return to back" />
-
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/sondage_pic"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_marginStart="@dimen/_text_smale"
                         android:background="@drawable/rounded"
                         android:src="@drawable/ic_baseline_show_chart_24" />
 

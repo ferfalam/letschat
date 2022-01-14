@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -24,6 +25,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
+import java.util.Objects;
+
 public class ProfileActivity extends AppCompatActivity {
     private ActivityProfileBinding binding;
     private FirebaseUser firebaseUser;
@@ -35,6 +38,9 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        setSupportActionBar(binding.toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
 
         final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -52,17 +58,17 @@ public class ProfileActivity extends AppCompatActivity {
         binding.profileImage.setOnClickListener(changeProfilImage());
 
         binding.deleteAccountBtn.setOnClickListener(deleteAccount());
+    }
 
-        binding.returnButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = getIntent();
-                        setResult(Activity.RESULT_OK, intent);
-                        finish();
-                    }
-                }
-        );
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            Intent intent = getIntent();
+            setResult(Activity.RESULT_OK, intent);
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private View.OnClickListener deleteAccount() {

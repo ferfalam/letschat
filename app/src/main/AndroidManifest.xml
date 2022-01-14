@@ -28,6 +28,7 @@
             android:exported="true" />
         <activity
             android:name=".activity.FabActionActivity"
+            android:parentActivityName=".activity.FabActionActivity"
             android:exported="true" />
         <activity
             android:name=".activity.SondageBoxActivity"

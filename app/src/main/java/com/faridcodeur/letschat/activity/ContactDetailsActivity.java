@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +23,8 @@ import com.faridcodeur.letschat.fragments.SettingsFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
+import java.util.Objects;
+
 import com.faridcodeur.letschat.fragments.MediaFragment;
 
 public class ContactDetailsActivity extends AppCompatActivity {
@@ -41,6 +45,9 @@ public class ContactDetailsActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         Intent intent = getIntent();
 
+        setSupportActionBar(binding.toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
         mediasList = intent.getStringArrayListExtra("medias");
         Bundle bundle = new Bundle();
         bundle.putStringArrayList("messages", mediasList);
@@ -57,11 +64,17 @@ public class ContactDetailsActivity extends AppCompatActivity {
         if (photoImage != null){
             Glide.with(getApplicationContext()).load(photoImage).into(binding.contactDetailPp);
         }
-
-        binding.contactDetailsReturnButton.setOnClickListener(
-                v -> onBackPressed()
-        );
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 

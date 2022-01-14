@@ -12,11 +12,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.faridcodeur.letschat.R;
 import com.faridcodeur.letschat.adapters.ContactListAdapter;
 import com.faridcodeur.letschat.databinding.ActivityMyContactBinding;
 import com.faridcodeur.letschat.entities.Contact;
@@ -32,6 +34,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class MyContactActivity extends AppCompatActivity {
 
@@ -47,6 +50,9 @@ public class MyContactActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMyContactBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        setSupportActionBar(binding.toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         String[] PERMISSIONS_CONTACT = {Manifest.permission.READ_CONTACTS};
 
@@ -65,13 +71,6 @@ public class MyContactActivity extends AppCompatActivity {
             contacts = Global.contacts;
         }
         buildCustomAdapter();
-        binding.listContactReturnButton.setOnClickListener(
-                v -> {
-                    Intent intent = getIntent();
-                    setResult(Activity.RESULT_OK, intent);
-                    finish();
-                }
-        );
     }
 
 
@@ -157,15 +156,18 @@ public class MyContactActivity extends AppCompatActivity {
                     contacts = Global.contacts;
                 }
                 buildCustomAdapter();
-                binding.listContactReturnButton.setOnClickListener(
-                        v -> {
-                            Intent intent = getIntent();
-                            setResult(Activity.RESULT_OK, intent);
-                            finish();
-                        }
-                );
             }
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            Intent intent = getIntent();
+            setResult(Activity.RESULT_OK, intent);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void getFromDB(String name, String number){

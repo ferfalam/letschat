@@ -3,12 +3,14 @@ package com.faridcodeur.letschat.activity;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.format.DateUtils;
+import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.faridcodeur.letschat.R;
@@ -40,6 +42,9 @@ public class AnswerSondageActivity extends AppCompatActivity {
         binding = ActivityAnswerSondageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        setSupportActionBar(binding.toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
         survey = (Surveys)getIntent().getSerializableExtra("survey");
         if (survey == null) {
             finish();
@@ -64,6 +69,15 @@ public class AnswerSondageActivity extends AppCompatActivity {
                         buildView();
                     }
                 });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @SuppressLint("SetTextI18n")

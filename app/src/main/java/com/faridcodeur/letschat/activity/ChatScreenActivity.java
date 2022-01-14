@@ -185,7 +185,10 @@ public class ChatScreenActivity extends AppCompatActivity {
         setContentView(R.layout.chat_screen_activity);
         binding = ChatScreenActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         setSupportActionBar(binding.toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
         this.configureOnClickRecyclerView();
 
         userID = user.getUid();
@@ -226,13 +229,6 @@ public class ChatScreenActivity extends AppCompatActivity {
 
         binding.recyclerChat.setLayoutManager(lManager);
         binding.recyclerChat.setAdapter(recyclerViewAdapter);
-
-        binding.contactView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
 
         binding.contactName.setText(nameR);
         Uri photoImage = Uri.parse(targetPic);
@@ -358,27 +354,28 @@ public class ChatScreenActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.delete_discussion:
-                //TODO
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("Voulez-vous supprimer cette conversation?")
-                        .setNegativeButton("Non", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        }).setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+        if (item.getItemId() == R.id.delete_discussion) {//TODO
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Voulez-vous supprimer cette conversation?")
+                    .setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    }).setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
 
-                    }
-                }).setCancelable(false);
-                AlertDialog dialog = builder.create();
-                dialog.setTitle("Confirmation de suppression");
-                dialog.show();
-                return true;
-
+                }
+            }).setCancelable(false);
+            AlertDialog dialog = builder.create();
+            dialog.setTitle("Confirmation de suppression");
+            dialog.show();
+            return true;
+        }
+        else if(item.getItemId() == android.R.id.home){
+            onBackPressed();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

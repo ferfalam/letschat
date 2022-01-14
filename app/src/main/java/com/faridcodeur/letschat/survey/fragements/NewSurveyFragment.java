@@ -1,7 +1,9 @@
 package com.faridcodeur.letschat.survey.fragements;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -59,6 +61,10 @@ public class NewSurveyFragment extends Fragment {
         BottomNavigationView bottomNavigationView = binding.bottomNavigation;
         ScrollView scrollView = binding.surveyContentLayoutScroll;
 
+        requireActivity().setActionBar(binding.toolbar);
+        requireActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
+        requireActivity().getActionBar().setDisplayShowTitleEnabled(false);
+
         AtomicInteger ids = new AtomicInteger();
         bottomNavigationView.setOnItemSelectedListener(item -> {
 
@@ -93,7 +99,6 @@ public class NewSurveyFragment extends Fragment {
             return true;
         });
 
-        binding.newSurveyReturnButton.setOnClickListener(view1 -> requireActivity().finish());
     }
 
     @Override
@@ -101,6 +106,16 @@ public class NewSurveyFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(NewSurveyViewModel.class);
         // TODO: Use the ViewModel
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Log.e("kkkkkkkkkkkkkkkkkkk", "onOptionsItemSelected: ttttttttttttttttttttt" );
+        if (item.getItemId() == android.R.id.home){
+            requireActivity().finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.faridcodeur.letschat.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -9,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -51,12 +53,15 @@ public class SondageBoxActivity extends AppCompatActivity {
     List<AnswerModel> answerModelList = new ArrayList<>();
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    @SuppressLint("UseCompatLoadingForDrawables")
+    @SuppressLint({"UseCompatLoadingForDrawables"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySondageBoxBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        setSupportActionBar(binding.toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         survey = (Surveys)getIntent().getSerializableExtra("survey");
         if (survey == null) {
@@ -115,10 +120,17 @@ public class SondageBoxActivity extends AppCompatActivity {
             }
         });
 
-
-        binding.sondageBoxReturnButton.setOnClickListener(v -> finish());
-
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     @SuppressLint("SetTextI18n")
     void buildView() {
